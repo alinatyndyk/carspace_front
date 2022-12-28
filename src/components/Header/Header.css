@@ -1,0 +1,12 @@
+.menu{
+    background-color: black;
+    color: silver;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu_navbar{
+    display: flex;
+    column-gap: 30px;
+}
