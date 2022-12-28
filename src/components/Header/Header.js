@@ -1,9 +1,11 @@
 import {Link} from "react-router-dom";
 import BrandsPage from "../../pages/BrandsPage";
 import {useState} from "react";
+import './Header.css'
 
 export default function Header() {
     const [isShown, setIsShown] = useState(false);
+
     return (
         <div>
             <div className={'menu'}>
