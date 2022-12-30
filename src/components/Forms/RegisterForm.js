@@ -10,8 +10,8 @@ export default function RegisterForm() {
     const navigate = useNavigate();
 
     const submit = async (data) => {
-        const {error} = await dispatch(authActions.register({user: data}))
-        console.log(data.image[0]);
+        const {error} = await dispatch(authActions.register({user: {...data, image: data.image[0]}}))
+        console.log(data.image);
         if(!error){
             navigate('/login');
         }
@@ -26,7 +26,7 @@ export default function RegisterForm() {
             <input type="number" placeholder={'age'} {...register('age')}/>
             <input type="text" placeholder={'email'} {...register('email')}/>
             <input type="text" placeholder={'password'} {...register('password')}/>
-            {/*<input type="file" name={'image'} placeholder={'image'} {...register('image')}/>*/}
+            <input type="file" name={'image'} placeholder={'image'} {...register('image')}/>
             <button>Register</button>
             <Link to={'/login'}>Already have an account?</Link>
         </form>

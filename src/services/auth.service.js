@@ -6,7 +6,9 @@ const _refreshTokenKey = 'refresh_token'
 
 const authService = {
     loginUser: (user) => axiosService.post('http://localhost:5000/auth/user/login', user),
-    loginCompany: (company) => axiosService.post('http://localhost:5000/auth/company/login', company),
+    loginCompany: (company) => axiosService.post('http://localhost:5000/auth/company/login', company, {
+        'Content-Type': 'multipart/form-data'
+    }),
     registerUser: (user) => axiosService.post('http://localhost:5000/users', user),
     forgotPasswordUser: (email) => axiosService.post('http://localhost:5000/auth/password_forgot/user', email),
     forgotPasswordCompany: (contact_number) => axiosService.post('http://localhost:5000/auth/password_forgot/company', contact_number),

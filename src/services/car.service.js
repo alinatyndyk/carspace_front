@@ -15,7 +15,11 @@ const carService = {
     }),
     postCar: (car) => axiosService.post('http://localhost:5000/cars', car),
     getUploads: () => axiosService.get('http://localhost:5000/upload'),
-    postUpload: () => axiosService.get('http://localhost:5000/upload'),
+    postUpload: (data) => axiosService.get('http://localhost:5000/upload', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    }),
 }
 export {
     carService

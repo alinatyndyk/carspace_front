@@ -22,6 +22,7 @@ function App() {
                         </Route>
                         <Route path={'home'} element={<HomePage/>}/>
                         <Route path={'locations'} element={<CarPage/>}/>
+                        {/*<Route path={'upload'} element={<Uplo/>}/>*/}
                         <Route path={'locations/:location'} element={<CarPage/>}/>
                         <Route path={'/brands'} element={<BrandsPage/>}/>
                         <Route path={'/brands/:brand'} element={<CarPage/>}/>
