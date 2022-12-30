@@ -9,6 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import HomePage from "./pages/HomePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import Users from "./components/Users/Users";
 
 function App() {
     // const [isShown, setIsShown] = useState(false);
@@ -22,7 +23,7 @@ function App() {
                         </Route>
                         <Route path={'home'} element={<HomePage/>}/>
                         <Route path={'locations'} element={<CarPage/>}/>
-                        {/*<Route path={'upload'} element={<Uplo/>}/>*/}
+                        <Route path={'users'} element={<Users/>}/>
                         <Route path={'locations/:location'} element={<CarPage/>}/>
                         <Route path={'/brands'} element={<BrandsPage/>}/>
                         <Route path={'/brands/:brand'} element={<CarPage/>}/>

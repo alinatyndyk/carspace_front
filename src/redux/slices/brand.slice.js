@@ -6,7 +6,7 @@ const initialState = {
 }
 
 const getAll = createAsyncThunk(
-    'brandSlice/getAll',
+    'brandSlice/getAllUsers',
     async () =>{
         const {data} = await brandsService.getAll();
         console.log(data, 'async thunk');

@@ -23,6 +23,7 @@ export default function Header() {
                     </p>
                     <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
                     <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
+                    <p><Link className={'menu_navbar_link'} to={'/users'}>Users</Link></p>
                 </div>
                 <div className={'auth_links'}>
                     <span><Link className={'menu_navbar_link'} to={'/login/company'}>Sign in your property</Link></span>
