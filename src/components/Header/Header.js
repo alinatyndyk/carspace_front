@@ -5,28 +5,29 @@ import './Header.css'
 
 export default function Header() {
     const [isShown, setIsShown] = useState(false);
-
     return (
         <div>
             <div className={'menu'}>
-                <h2>Carspace</h2>
-                <ul className={'menu_navbar'}>
-                    <li><Link to={'/'}>Home</Link></li>
-                    <li><Link to={'/locations'}>Locations</Link></li>
-                    <li
+                <h3>Carspace.</h3>
+                <div className={'menu_navbar'}>
+                    <p><Link className={'menu_navbar_link'} to={'/home'}>Home</Link></p>
+                    <p><Link className={'menu_navbar_link'} to={'/locations'}>Locations</Link></p>
+                    <p
                         onMouseOver={() => setIsShown(true)}
                         onMouseLeave={() => setIsShown(false)}>
-                        <Link to={'/brands'}>Brands</Link> {isShown && (
+                        <Link className={'menu_navbar_link'} to={'/brands'}>Brands</Link> {isShown && (
                         <div className={'brands'}>
                             <BrandsPage/>
                         </div>
                     )}
-                    </li>
-                    <li><Link to={'/about'}>About us</Link></li>
-                </ul>
-                <div>
-                    <span><Link to={'/login'}>Sign in</Link></span>
-                    <Link to={'/register'}>Sign up</Link>
+                    </p>
+                    <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
+                    <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
+                </div>
+                <div className={'auth_links'}>
+                    <span><Link className={'menu_navbar_link'} to={'/login/company'}>Sign in your property</Link></span>
+                    <span><Link className={'menu_navbar_link'} to={'/login'}>Sign in</Link></span>
+                    <span><Link className={'menu_navbar_link'} to={'/register'}>Sign up</Link></span>
                 </div>
             </div>
         </div>

@@ -1,12 +1,25 @@
 .menu{
-    background-color: black;
-    color: silver;
+    background-color: darkblue;
+    color: white;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.menu_navbar{
+.menu_navbar {
     display: flex;
     column-gap: 30px;
+    font-size: 13px;
+}
+
+.menu_navbar_link{
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    font-size: 13px;
+}
+
+.auth_links span:first-child{
+    border: 1px solid white;
 }

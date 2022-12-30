@@ -1,17 +1,24 @@
-import LoginForm from "../components/Forms/LoginForm";
-import Modal from "../components/Modal/Modal";
-import {useState} from "react";
+
 import './Pages.css';
+import LoginForm from "../components/Forms/LoginForm";
+import {useParams} from "react-router";
+import CompanyLoginForm from "../components/Forms/CompanyLoginForm";
 
 export default function LoginPage() {
-    const [modalActive, setModalActive] = useState(true);
+    const {element} = useParams()
+    if(element){
+        return (
+            <div>
+                company login form
+                <CompanyLoginForm/>
+            </div>
+        )
+    }
     return (
-        <div className={'login_page'}>
+        <div>
             login page
-            <Modal active={modalActive} setActive={setModalActive}>
-                <LoginForm/>
-            </Modal>
-            <button onClick={() => setModalActive(true)}>Modal</button>
+            {JSON.stringify(element)}
+            <LoginForm/>
         </div>
     )
 }

@@ -20,17 +20,17 @@
 
 .modal_content{
     padding: 20px;
-    border-radius: 15px;
     width: 100vh;
     transform: scale(0.5);
     transition: 0.4s all;
-    background: linear-gradient(
-    135deg,
-    rgba(160, 159, 159, 0.4),
-    rgba(160, 159, 159, 0.2)
-    );
-    border: 1px solid white;
-    backdrop-filter: blur(1px);
+    background-color: white;
+    /*background: linear-gradient(*/
+    /*135deg,*/
+    /*rgba(160, 159, 159, 0.4),*/
+    /*rgba(160, 159, 159, 0.2)*/
+    /*);*/
+    /*border: 1px solid white;*/
+    /*backdrop-filter: blur(1px);*/
 }
 
 .modal_content.active{
