@@ -58,7 +58,19 @@ const register = createAsyncThunk(
     'authSlice/register',
     async ({user}, {rejectWithValue}) => {
         try {
+            console.log(user, 'user in async');
             await authService.registerUser(user)
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const upload = createAsyncThunk(
+    'authSlice/upload',
+    async ({data}, {rejectWithValue}) => {
+        try {
+            await authService.uploadUser(data)
         } catch (e) {
             return rejectWithValue(e.response.data);
         }
@@ -131,6 +143,7 @@ const {reducer: authReducer, actions: {}} = authSlice;
 const authActions = {
     register,
     login,
+    upload,
     forgotPasswordUser,
     resetPasswordUser,
     loginCompany,

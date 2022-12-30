@@ -6,10 +6,17 @@ const _refreshTokenKey = 'refresh_token'
 
 const authService = {
     loginUser: (user) => axiosService.post('http://localhost:5000/auth/user/login', user),
-    loginCompany: (company) => axiosService.post('http://localhost:5000/auth/company/login', company, {
-        'Content-Type': 'multipart/form-data'
+    loginCompany: (company) => axiosService.post('http://localhost:5000/auth/company/login', company),
+    registerUser: (user) => axiosService.post('http://localhost:5000/users', user, {
+        headers:{
+            'Content-type':  'multipart/form-data'
+        }
     }),
-    registerUser: (user) => axiosService.post('http://localhost:5000/users', user),
+    uploadUser: (data) => axiosService.post('http://localhost:5000/upload', data, {
+        headers:{
+            'Content-type':  'multipart/form-data'
+        }
+    }),
     forgotPasswordUser: (email) => axiosService.post('http://localhost:5000/auth/password_forgot/user', email),
     forgotPasswordCompany: (contact_number) => axiosService.post('http://localhost:5000/auth/password_forgot/company', contact_number),
     resetPasswordUser: (password) => axiosService.put('http://localhost:5000/auth/password_reset/user', password, {
