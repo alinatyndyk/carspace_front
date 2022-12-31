@@ -13,7 +13,12 @@ const carService = {
             access_token: `${authService.getAccessToken()}`
         }
     }),
-    postCar: (car) => axiosService.post('http://localhost:5000/cars', car),
+    postCar: (car) => axiosService.post('http://localhost:5000/cars', car, {
+        headers: {
+            access_token: `${authService.getAccessToken()}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    }),
     getUploads: () => axiosService.get('http://localhost:5000/upload'),
     postUpload: (data) => axiosService.get('http://localhost:5000/upload', data, {
         headers: {

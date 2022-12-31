@@ -12,9 +12,10 @@ export default function LoginForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
+        console.log(data, 'in submit');
         const {error} = await dispatch(authActions.login({user: data}))
         if(!error){
-
+            navigate('/')
         }
         console.log(error, 'error');
     }
@@ -28,7 +29,7 @@ export default function LoginForm() {
             <input type="text" placeholder={'password'} {...register('password')}/>
             {errors}
             <span>
-            <button onClick={() => reset()}>Login</button>
+            <button>Login</button>
                 {/*<Link to={'/register'}>Already have an account?</Link>*/}
                 <Link to={'/password-forgot'}>Forgot password?</Link>
             </span>

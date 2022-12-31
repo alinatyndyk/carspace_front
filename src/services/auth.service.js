@@ -56,7 +56,6 @@ const authService = {
 
     getAccessToken: () => {
         const access = localStorage.getItem(_accessTokenKey)
-        console.log(access);
         return access
     },
 

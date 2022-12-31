@@ -2,30 +2,36 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {carService} from "../../services";
 
 const initialState = {
-    uploads: {},
     cars: [],
     car: []
 }
 
 const getAll = createAsyncThunk(
     'carSlice/getAll',
-    async () =>{
+    async () => {
         const {data} = await carService.getAll();
         return data
     }
 )
 
-const getUploads = createAsyncThunk(
-    'carSlice/getUploads',
-    async () =>{
-        const {data} = await carService.getUploads();
-        return data
+const postCar = createAsyncThunk(
+    'authSlice/postCar',
+    async ({car}, {rejectWithValue}) => {
+        try {
+            console.log(car, 'car in async');
+            const {data} = await carService.postCar(car);
+            console.log(data, 'data car from async');
+            return data
+        } catch (e) {
+            console.log(e.response.data, 'err in async');
+            return rejectWithValue(e.response.data);
+        }
     }
 )
 
 const getById = createAsyncThunk(
     'carSlice/getById',
-    async ({_id}) =>{
+    async ({_id}) => {
         console.log(_id, 'id in async');
         const {data} = await carService.getById(_id);
         return data
@@ -34,7 +40,7 @@ const getById = createAsyncThunk(
 
 const getByBrand = createAsyncThunk(
     'carSlice/getByBrand',
-    async ({brand}) =>{
+    async ({brand}) => {
         console.log(brand, 'in async');
         const {data} = await carService.getByBrand(brand);
         return data
@@ -44,15 +50,15 @@ const getByBrand = createAsyncThunk(
 const carSlice = createSlice({
     name: 'carSlice',
     initialState,
-    reducers:{},
+    reducers: {},
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
-            .addCase(getUploads.fulfilled, (state, action) => {
-                console.log(action.payload);
-                state.uploads = action.payload;
+            .addCase(postCar.fulfilled, (state, action) => {
+                console.log(action.payload, 'ap addcase postcar');
+                state.cars.push(action.payload)
             })
             .addCase(getById.fulfilled, (state, action) => {
                 console.log(action.payload, 'car in add case');
@@ -60,6 +66,15 @@ const carSlice = createSlice({
             })
             .addCase(getByBrand.fulfilled, (state, action) => {
                 state.cars = action.payload;
+            })
+            .addDefaultCase((state, action) => {
+                const [type] = action.type.split('/').splice(-1);
+                if (type === 'rejected') {
+                    console.log('ERROR', action.payload);
+                    state.errors = action.payload
+                } else {
+                    state.errors = null;
+                }
             })
 });
 
@@ -69,7 +84,7 @@ const carActions = {
     getAll,
     getById,
     getByBrand,
-    getUploads
+    postCar
 }
 
 export {

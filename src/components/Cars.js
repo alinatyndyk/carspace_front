@@ -5,10 +5,10 @@ import {carActions} from "../redux";
 import {useParams} from "react-router";
 
 const Cars = () => {
-    const {cars, car, uploads} = useSelector(state => state.cars);
+    const {cars, car} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, car_id} = useParams();
-    console.log(brand, car_id);
+    console.log(brand, car_id, 'use params');
     useEffect(() => {
         if (brand) {
             console.log('else if brand');
@@ -17,7 +17,7 @@ const Cars = () => {
         }else if (car_id) {
             console.log('else if car id');
             const res = dispatch(carActions.getById({_id: car_id}))
-            console.log(res);
+            console.log(res, 'res from dispatch');
         } else {
             const res = dispatch(carActions.getAll())
             console.log(res);

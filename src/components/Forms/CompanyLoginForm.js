@@ -15,6 +15,7 @@ export default function CompanyLoginForm() {
         console.log(data);
         const {error} = await dispatch(authActions.loginCompany({company: data}))
         if (!error) {
+            navigate('/')
         }
         console.log(error, 'error');
     }
