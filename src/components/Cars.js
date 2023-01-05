@@ -1,39 +1,45 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import Car from "./Car";
+import CarCard from "./CarCard";
 import {carActions} from "../redux";
 import {useParams} from "react-router";
 
-const Cars = () => {
-    const {cars, car} = useSelector(state => state.cars);
+const Cars = ({id}) => {
+    const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
-    const {brand, car_id} = useParams();
-    console.log(brand, car_id, 'use params');
+    console.log(id, 'ID IN CARS');
+    const {brand} = useParams();
     useEffect(() => {
-        if (brand) {
-            console.log('else if brand');
-            const res = dispatch(carActions.getByBrand({brand}))
-            console.log(res);
-        }else if (car_id) {
-            console.log('else if car id');
-            const res = dispatch(carActions.getById({_id: car_id}))
-            console.log(res, 'res from dispatch');
+        // if (brand) {
+        //     console.log('else if brand');
+        //     const res = dispatch(carActions.getByBrand({brand}))
+        //     console.log(res);
+        // } else
+        if (id) {
+            console.log(id, 'if id cars');
+            dispatch(carActions.getById({_id: id}))
+            // console.log(car);
         } else {
-            const res = dispatch(carActions.getAll())
-            console.log(res);
+            console.log(id, 'if all cars');
+            const {errors} = dispatch(carActions.getAll())
+            console.log(errors, 'if all cars');
         }
-    }, [brand, car_id])
-    if (car_id) {
+    }, [id]);
+    if (id !== undefined) {
         return (
             <div>
-                <Car car={car}/>
+                sinfle cra gape
+                <CarCard car={car} id={id}/>
 
             </div>
         )
     }
     return (
         <div>
-            {cars?.map(car => <Car key={car._id} car={car}/>)}
+            {errors}
+            {cars?.map(car => <CarCard key={car._id} car={car}/>)}
+            {/*{id ? <div><CarCard key={id} car={car}/></div>*/}
+            {/*    : null}*/}
         </div>
     );
 };

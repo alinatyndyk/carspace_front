@@ -14,7 +14,7 @@ export default function LoginForm() {
     const submit = async (data) => {
         console.log(data, 'in submit');
         const {error} = await dispatch(authActions.login({user: data}))
-        if(!error){
+        if (!error) {
             navigate('/')
         }
         console.log(error, 'error');
@@ -24,16 +24,16 @@ export default function LoginForm() {
         <div className={'login_div'}>
             <h3>Sign in</h3>
             <p>Enter your email address below and we will email you your login page</p>
-        <form className={'login_form'} onSubmit={handleSubmit(submit)}>
-            <input type="text" placeholder={'email'} {...register('email')}/>
-            <input type="text" placeholder={'password'} {...register('password')}/>
-            {errors}
-            <span>
+            <form className={'login_form'} onSubmit={handleSubmit(submit)}>
+                <input type="text" placeholder={'email'} {...register('email')}/>
+                <input type="text" placeholder={'password'} {...register('password')}/>
+                {errors}
+                <span>
             <button>Login</button>
-                {/*<Link to={'/register'}>Already have an account?</Link>*/}
-                <Link to={'/password-forgot'}>Forgot password?</Link>
+                <Link to={'/password-forgot'}>Forgot password?</Link> |
+                <Link to={'/login/company'}>You are an employer?</Link>
             </span>
-        </form>
+            </form>
 
         </div>
     )

@@ -1,9 +1,11 @@
-const baseUrl = 'http://localhost:5000';
+const baseURL = 'http://localhost:5000';
 
 const urls = {
-    cars: '/cars'
+    cars: '/cars',
+    auth: '/auth',
+    users: '/users',
 }
 export {
-    baseUrl,
+    baseURL,
     urls
 }

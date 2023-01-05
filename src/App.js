@@ -10,6 +10,9 @@ import HomePage from "./pages/HomePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import Users from "./components/Users/Users";
+import CompanyPage from "./pages/CompanyPage";
+import CarFull from "./components/CarFull";
+import CompanyFull from "./components/Companies/CompanyFull";
 
 function App() {
     // const [isShown, setIsShown] = useState(false);
@@ -18,13 +21,15 @@ function App() {
             <div className={'content'}>
                 <Routes>
                     <Route path={'/'} element={<LayoutPage/>}>
-                        <Route path={'/cars'} element={<CarPage/>}>
-                            <Route path={':car_id'} element={<CarPage/>}/>
-                        </Route>
+                        <Route path={'/cars'} element={<CarPage/>}/>
+                        <Route path={'/cars/:car_id'} element={<CarFull/>}/>
+                        <Route path={'/account'} element={<AboutPage/>}/>
+                        <Route path={'/account/orders'} element={<AboutPage/>}/>
                         <Route path={'home'} element={<HomePage/>}/>
-                        <Route path={'locations'} element={<CarPage/>}/>
                         <Route path={'users'} element={<Users/>}/>
-                        <Route path={'locations/:location'} element={<CarPage/>}/>
+                        <Route path={'users/:user_id'} element={<Users/>}/>
+                        <Route path={'/companies'} element={<CompanyPage/>}/>
+                        <Route path={'/companies/:company_id'} element={<CompanyFull/>}/>
                         <Route path={'/brands'} element={<BrandsPage/>}/>
                         <Route path={'/brands/:brand'} element={<CarPage/>}/>
                         <Route path={'login'} element={<LoginPage/>}/>

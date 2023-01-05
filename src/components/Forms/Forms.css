@@ -49,3 +49,14 @@
     border: 1px solid silver;
     backdrop-filter: blur(1px);
 }
+
+.car-form{
+    background-color: darkblue;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    width: 300px;
+    padding: 20px;
+    box-sizing: border-box;
+    color: white;
+}

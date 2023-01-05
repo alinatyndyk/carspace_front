@@ -66,21 +66,11 @@ const register = createAsyncThunk(
     }
 )
 
-const upload = createAsyncThunk(
-    'authSlice/upload',
-    async ({data}, {rejectWithValue}) => {
-        try {
-            await authService.uploadUser(data)
-        } catch (e) {
-            return rejectWithValue(e.response.data);
-        }
-    }
-)
-
 const login = createAsyncThunk(
     'authSlice/login',
     async ({user}, {rejectWithValue}) => {
         try {
+            console.log(user, 'in async');
             const {data} = await authService.loginUser(user);
             return data
         } catch (e) {
@@ -94,9 +84,12 @@ const loginCompany = createAsyncThunk(
     'authSlice/loginCompany',
     async ({company}, {rejectWithValue}) => {
         try {
+            console.log(company, 'IN ASYNC');
             const {data} = await authService.loginCompany(company);
+            console.log(data, 'res in async');
             return data
         } catch (e) {
+            console.log(e.response.data);
             return rejectWithValue(e.response.data);
         }
     }
@@ -143,7 +136,6 @@ const {reducer: authReducer, actions: {}} = authSlice;
 const authActions = {
     register,
     login,
-    upload,
     forgotPasswordUser,
     resetPasswordUser,
     loginCompany,

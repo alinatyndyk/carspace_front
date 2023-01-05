@@ -6,13 +6,13 @@ import "./Forms.css"
 import {Link} from "react-router-dom";
 
 export default function CompanyLoginForm() {
-    const {register, handleSubmit, reset} = useForm();
+    const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        console.log(data);
+        console.log(data, 'data from form');
         const {error} = await dispatch(authActions.loginCompany({company: data}))
         if (!error) {
             navigate('/')

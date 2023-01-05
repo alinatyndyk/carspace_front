@@ -1,0 +1,6 @@
+.company-full img{
+    height: 150px;
+    width: 250px;
+    object-fit: cover;
+    border: orange 1px solid;
+}

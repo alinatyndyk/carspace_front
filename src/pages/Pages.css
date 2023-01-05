@@ -2,3 +2,7 @@
     background-image: url(../photo_2022-12-29_13-08-50.jpg);
     height: 500px;
 }
+
+.car-page{
+    display: flex;
+}

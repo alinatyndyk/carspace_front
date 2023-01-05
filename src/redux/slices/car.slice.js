@@ -3,23 +3,59 @@ import {carService} from "../../services";
 
 const initialState = {
     cars: [],
-    car: []
+    car: {},
+    errors: null
 }
 
 const getAll = createAsyncThunk(
     'carSlice/getAll',
-    async () => {
-        const {data} = await carService.getAll();
-        return data
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await carService.getAll();
+            // console.log('get all cars asunc', data);
+            return data
+        } catch (e) {
+            console.log(e.response.status);
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const getByDescription = createAsyncThunk(
+    'carSlice/getByDescription',
+    async ({search}, {rejectWithValue}) => {
+        try {
+            console.log(search, 'searxh in async');
+            const {data} = await carService.getByDescription(search);
+            return data
+
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
     }
 )
 
 const postCar = createAsyncThunk(
-    'authSlice/postCar',
+    'carSlice/postCar',
     async ({car}, {rejectWithValue}) => {
         try {
             console.log(car, 'car in async');
             const {data} = await carService.postCar(car);
+            console.log(data, 'data car from async');
+            return data
+        } catch (e) {
+            console.log(e.response.data, 'err in async');
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const postCarOrder = createAsyncThunk(
+    'carSlice/postCarOrder',
+    async ({_id, dates}, {rejectWithValue}) => {
+        try {
+            console.log(dates, _id, 'dates in async');
+            const {data} = await carService.postCarOrder(_id, dates);
             console.log(data, 'data car from async');
             return data
         } catch (e) {
@@ -34,6 +70,7 @@ const getById = createAsyncThunk(
     async ({_id}) => {
         console.log(_id, 'id in async');
         const {data} = await carService.getById(_id);
+        console.log(data, 'data in async');
         return data
     }
 )
@@ -54,6 +91,9 @@ const carSlice = createSlice({
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
+                state.cars = action.payload;
+            })
+            .addCase(getByDescription.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
             .addCase(postCar.fulfilled, (state, action) => {
@@ -84,7 +124,9 @@ const carActions = {
     getAll,
     getById,
     getByBrand,
-    postCar
+    postCar,
+    getByDescription,
+    postCarOrder
 }
 
 export {
