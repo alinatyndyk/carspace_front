@@ -14,22 +14,40 @@ export default function Header() {
     const [isShown, setIsShown] = useState(false);
     const [isLocation, setIsLocation] = useState(false);
     const [isAccount, setIsAccount] = useState(false);
-    // const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+    const [Id, setId] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const {errors} = useSelector(state => state.cars)
     const {register, handleSubmit} = useForm();
 
-    // const access = authService.getAccessToken();
-    // const {_id} = jwt_decode(access);
-    // useEffect(() => {
-    //     if (access) {
-    //         console.log('auth done');
-    //         setIsAuth(true);
-    //     } else {
-    //         setIsAuth(false);
-    //     }
-    // }, [])
+    // if (!access) {
+    //     console.log('no access');
+    // } else if (access) {
+    //     const {_id} = jwt_decode(access);
+    //     setIsAuth(true)
+    //     console.log(access, _id);
+    //
+    // }
+
+    const access = authService.getAccessToken();
+    useEffect(() => {
+        if (!access) {
+            console.log('no access');
+        } else if (access) {
+            const {_id} = jwt_decode(access);
+            setId(_id);
+            setIsAuth(true)
+            console.log(access, _id);
+
+        }
+        // if (access) {
+        //     console.log('auth done');
+        //     setIsAuth(true);
+        // } else {
+        //     setIsAuth(false);
+        // }
+    }, [])
 
     const submit = async (data) => {
         dispatch(carActions.getByDescription({search: data}))
@@ -39,29 +57,29 @@ export default function Header() {
         <div>
             <div className={'menu'}>
                 <h3>Carspace.</h3>
-                {/*{isAuth === true ?*/}
-                {/*    <span*/}
-                {/*        onClick={() => navigate(`/account`, { state: { _id } })}*/}
-                {/*        onMouseOver={() => setIsAccount(true)}*/}
-                {/*        onMouseLeave={() => setIsAccount(false)}><span*/}
-                {/*        className={'menu_link'}>Account</span> {isAccount && (*/}
-                {/*        <div className={'brands'}>*/}
-                {/*            <Link to={`/my`} state={{}}>my orders</Link>*/}
-                {/*            <div><Link to={`/account/orders`} state={{}}>my orders</Link></div>*/}
-                {/*            <Link to={`/login`} state={{}}>logout</Link>*/}
-                {/*        </div>*/}
-                {/*    )}</span> :*/}
-                {/*    <div className={'auth_links'}>*/}
-                {/*        <span><Link className={'menu_link'} to={'/login/company'}>Sign in your property</Link></span>*/}
-                {/*        <span><Link className={'menu_link'} to={'/login'}>Sign in</Link></span>*/}
-                {/*        <span><Link className={'menu_link'} to={'/register'}>Sign up</Link></span>*/}
-                {/*    </div>*/}
-                {/*}*/}
+                {isAuth === true ?
+                    <span
+                        onMouseOver={() => setIsAccount(true)}
+                        onMouseLeave={() => setIsAccount(false)}><span
+                        onClick={() => navigate(`/account`, { state: { Id } })}
+                        className={'menu_link'}>Account</span> {isAccount && (
+                        <div className={'brands'}>
+                            <div onClick={() => navigate(`/account/orders`)}>Company Orders</div>
+                            <div onClick={() => navigate(`/account/orders?today=true`)}>Company Orders Today</div>
+                            {/*<Link to={`/account/orders?today=true`}>Company Orders Today</Link>*/}
+                        </div>
+                    )}</span> :
                     <div className={'auth_links'}>
                         <span><Link className={'menu_link'} to={'/login/company'}>Sign in your property</Link></span>
                         <span><Link className={'menu_link'} to={'/login'}>Sign in</Link></span>
                         <span><Link className={'menu_link'} to={'/register'}>Sign up</Link></span>
                     </div>
+                }
+                {/*<div className={'auth_links'}>*/}
+                {/*    <span><Link className={'menu_link'} to={'/login/company'}>Sign in your property</Link></span>*/}
+                {/*    <span><Link className={'menu_link'} to={'/login'}>Sign in</Link></span>*/}
+                {/*    <span><Link className={'menu_link'} to={'/register'}>Sign up</Link></span>*/}
+                {/*</div>*/}
             </div>
             <div>
                 <div className={'menu_navbar'}>

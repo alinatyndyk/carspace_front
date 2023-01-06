@@ -95,6 +95,34 @@ const loginCompany = createAsyncThunk(
     }
 )
 
+const logoutCompany = createAsyncThunk(
+    'authSlice/logoutCompany',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await authService.logoutCompany();
+            console.log(data, 'res in async');
+            return data
+        } catch (e) {
+            console.log(e.response.data);
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const logoutUser = createAsyncThunk(
+    'authSlice/logoutUser',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await authService.logoutUser();
+            console.log(data, 'res in async');
+            return data
+        } catch (e) {
+            console.log(e.response.data);
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: 'authSlice',
     initialState,
@@ -106,10 +134,20 @@ const authSlice = createSlice({
                 console.log(action.payload);
                 authService.setTokens({...action.payload});
             })
+            .addCase(logoutUser.fulfilled, (state, action) => {
+                state.isAuth = false;
+                console.log(action.payload);
+                authService.deleteTokens();
+            })
             .addCase(loginCompany.fulfilled, (state, action) => {
                 state.isAuth = true;
                 console.log(action.payload);
                 authService.setTokens({...action.payload});
+            })
+            .addCase(logoutCompany.fulfilled, (state, action) => {
+                state.isAuth = false;
+                console.log(action.payload);
+                authService.deleteTokens();
             })
             .addCase(forgotPasswordUser.fulfilled, (state, action) => {
                 console.log(action.payload, 'action token');
@@ -139,6 +177,7 @@ const authActions = {
     forgotPasswordUser,
     resetPasswordUser,
     loginCompany,
+    logoutCompany,
     forgotPasswordCompany,
     resetPasswordCompany
 }

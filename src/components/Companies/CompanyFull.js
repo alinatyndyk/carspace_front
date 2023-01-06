@@ -1,25 +1,33 @@
-import {useLocation, useParams} from "react-router";
+import {useLocation, useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {companyActions} from "../../redux";
+import {authActions, companyActions} from "../../redux";
 import './Company.css'
 import {useEffect, useState} from "react";
 import CarCard from "../CarCard";
 import CarForm from "../Forms/CarForm";
 import {authService} from "../../services";
+import {Outlet} from "react-router";
 import jwt_decode from "jwt-decode";
 
 const CompanyFull = () => {
     const location = useLocation();
+    const navigate = useNavigate();
+    console.log(location);
     const {company_id} = useParams();
     console.log(company_id, 'use params id');
     const dispatch = useDispatch();
+    // if(!company_id && !Id){
+    //     navigate('/login')
+    // }
 
     useEffect(() => {
-        if (!company_id) {
-            const {_id} = location.state
+        // const {Id} = location.state
+        if (!company_id && location.state === null) {
+            navigate('/login');
+        } else if (!company_id) {
             console.log('no id from params');
-            console.log(_id, 'state use location');
-            const {errors} = dispatch(companyActions.getById({_id: _id}));
+            console.log(location.state.Id, 'state use location');
+            const {errors} = dispatch(companyActions.getById({_id: location.state.Id}));
             console.log(errors);
         } else {
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
@@ -43,7 +51,7 @@ const CompanyFull = () => {
             console.log(decoded, decoded._id, 'decoded');
             console.log(decoded._id, company_id, 'decoded token in company');
             setDecoded(decoded);
-        } else if(!token){
+        } else if (!token) {
             console.log('no token');
         }
         console.log(token, 'token in company');
@@ -58,6 +66,29 @@ const CompanyFull = () => {
         }
 
     })
+    const logout = () => {
+        const {errors} = dispatch(authActions.logoutCompany());
+        if(!errors){
+            navigate('/home');
+        }
+        console.log(errors);
+    }
+
+    const getCompanyOrders = () => {
+        const {errors} = dispatch(companyActions.getCompanyOrders());
+        // if(!errors){
+        //     navigate('/orders');
+        // }
+        console.log(errors);
+    }
+
+    const getCompanyOrdersToday = () => {
+        const {errors} = dispatch(companyActions.getCompanyOrdersToday());
+        // if(!errors){
+        //     navigate('/orders');
+        // }
+        console.log(errors);
+    }
 
     return (
         <div>
@@ -70,7 +101,14 @@ const CompanyFull = () => {
                 <img src={`${image?.link}`} alt="Red dot"/>
             </div>
             <div className={'company-full'}>
-                {equal === true ? <div><CarForm/></div> : null}
+                {equal === true ? <div>
+                    <button onClick={() => logout()}>Logout</button>
+                    <button onClick={() => getCompanyOrders()}>Company Orders</button>
+                    <button onClick={() => getCompanyOrdersToday()}>Company Orders Today</button>
+                    <CarForm/>
+                </div> : null}
+                {/*{equal === true ? <div><CarForm/></div> : null}*/}
+                <Outlet/>
                 <div className={'company-full-cars'}>
                     <h3>COMPANY CARS</h3>
                     {cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}

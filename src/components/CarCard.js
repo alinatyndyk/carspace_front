@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import './Car.css'
@@ -7,6 +7,8 @@ const CarCard = ({car, auth}) => {
 
     const {_id, model, brand, model_year, image} = car;
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log(location, 'location');
     console.log(auth, 'auth car card');
     const [equal, setEqual] = useState(false);
 
@@ -16,7 +18,7 @@ const CarCard = ({car, auth}) => {
         }
     });
 
-    // console.log(car, 'car in CarCard.js');
+
     return (
         <div className={'car'} onClick={() => navigate(`/cars/${_id}`)}>
             <h2>Car card</h2>

@@ -5,6 +5,8 @@ import {companyService} from "../../services";
 const initialState = {
     companies: [],
     company: {},
+    orders: [],
+    order: [],
     companyForUpdate: null,
     errors: null
 }
@@ -14,6 +16,42 @@ const getAll = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await companyService.getAll()
+            return data
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const getCompanyOrders = createAsyncThunk(
+    'authSlice/getCompanyOrders',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await companyService.getCompanyOrders();
+            return data
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const getCompanyOrderById = createAsyncThunk(
+    'authSlice/getCompanyOrderById',
+    async ({_id}, {rejectWithValue}) => {
+        try {
+            const {data} = await companyService.getCompanyOrderById(_id);
+            return data
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const getCompanyOrdersToday = createAsyncThunk(
+    'authSlice/getCompanyOrdersToday',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await companyService.getCompanyOrdersToday();
             return data
         } catch (e) {
             return rejectWithValue(e.response.data);
@@ -61,6 +99,15 @@ const companySlice = createSlice({
             .addCase(getById.fulfilled, (state, action) => {
                 state.company = action.payload;
             })
+            .addCase(getCompanyOrders.fulfilled, (state, action) => {
+                state.orders = action.payload;
+            })
+            .addCase(getCompanyOrderById.fulfilled, (state, action) => {
+                state.order = action.payload;
+            })
+            .addCase(getCompanyOrdersToday.fulfilled, (state, action) => {
+                state.orders = action.payload;
+            })
             .addCase(update.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap in addcase update');
                 const currentCompany = state.companies.find(value => value === action.payload._id)
@@ -84,7 +131,10 @@ const companyActions = {
     getAll,
     getById,
     update,
-    setCompanyForUpdate
+    setCompanyForUpdate,
+    getCompanyOrders,
+    getCompanyOrdersToday,
+    getCompanyOrderById
 }
 
 export {
