@@ -18,8 +18,8 @@ const carService = {
             'Content-Type': 'multipart/form-data'
         }
     }),
-    getUploads: () => axiosService.get('http://localhost:5000/upload'),
-    postCarOrder: (_id, dates) => axiosService.post(`http://localhost:5000/cars/${_id}/order`, dates)
+    postCarOrder: (_id, dates) => axiosService.post(`http://localhost:5000/cars/${_id}/order`, dates),
+    updateCar: (_id, car) => axiosService.patch(`http://localhost:5000/cars/${_id}`, car)
 }
 
 export {

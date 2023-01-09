@@ -14,6 +14,7 @@ import CompanyPage from "./pages/CompanyPage";
 import CarFull from "./components/CarFull";
 import CompanyFull from "./components/Companies/CompanyFull";
 import OrdersPage from "./pages/OrdersPage";
+import AccountPage from "./pages/AccountPage";
 
 function App() {
     // const [isShown, setIsShown] = useState(false);
@@ -24,8 +25,9 @@ function App() {
                     <Route path={'/'} element={<LayoutPage/>}>
                         <Route path={'/cars'} element={<CarPage/>}/>
                         <Route path={'/cars/:car_id'} element={<CarFull/>}/>
-                        <Route path={'/account'} element={<CompanyFull/>}/>
+                        {/*<Route path={'/account'} element={<CompanyFull/>}/>*/}
                         <Route path={'/account/orders'} element={<OrdersPage/>}/>
+                        <Route path={'/account'} element={<AccountPage/>}/>
                         <Route path={'home'} element={<HomePage/>}/>
                         <Route path={'users'} element={<Users/>}/>
                         <Route path={'users/:user_id'} element={<Users/>}/>

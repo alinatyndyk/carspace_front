@@ -8,8 +8,8 @@ const CarCard = ({car, auth}) => {
     const {_id, model, brand, model_year, image} = car;
     const navigate = useNavigate();
     const location = useLocation();
-    console.log(location, 'location');
-    console.log(auth, 'auth car card');
+    // console.log(location, 'location');
+    // console.log(auth, 'auth car card');
     const [equal, setEqual] = useState(false);
 
     useEffect(() => {

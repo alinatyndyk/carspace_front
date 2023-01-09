@@ -1,15 +1,17 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {brandsService} from "../../services";
+import {userService} from "../../services";
 
 const initialState = {
     users: [],
-    user: null
+    user: null,
+    orders: [],
+    errors: null
 }
 
 const getAll = createAsyncThunk(
     'brandSlice/getAll',
-    async () =>{
-        const {data} = await brandsService.getAllUsers();
+    async () => {
+        const {data} = await userService.getAllUsers();
         console.log(data, 'async thunk');
         return data
     }
@@ -17,17 +19,30 @@ const getAll = createAsyncThunk(
 
 const getById = createAsyncThunk(
     'brandSlice/getById',
-    async ({_id}) =>{
-        const {data} = await brandsService.getUserById(_id);
+    async ({_id}) => {
+        console.log(_id, 'user i din async');
+        const {data} = await userService.getUserById(_id);
         console.log(data, 'async thunk get user by id');
         return data
+    }
+)
+
+const getUserOrders = createAsyncThunk(
+    'authSlice/getUserOrders',
+    async (_, {rejectWithValue}) => {
+        try {
+            const {data} = await userService.getUserOrders();
+            return data
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
     }
 )
 
 const userSlice = createSlice({
     name: 'brandSlice',
     initialState,
-    reducers:{},
+    reducers: {},
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
@@ -38,13 +53,26 @@ const userSlice = createSlice({
                 console.log(action.payload, 'action payload get user by id');
                 state.user = action.payload;
             })
+            .addCase(getUserOrders.fulfilled, (state, action) => {
+                state.orders = action.payload;
+            })
+            .addDefaultCase((state, action) => {
+                const [type] = action.type.split('/').splice(-1);
+                if (type === 'rejected') {
+                    console.log('ERROR', action.payload);
+                    state.errors = action.payload
+                } else {
+                    state.errors = null;
+                }
+            })
 });
 
 const {reducer: userReducer, actions: {}} = userSlice;
 
 const userActions = {
     getAll,
-    getById
+    getById,
+    getUserOrders
 }
 
 export {

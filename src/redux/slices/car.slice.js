@@ -4,6 +4,7 @@ import {carService} from "../../services";
 const initialState = {
     cars: [],
     car: {},
+    carForUpdate: null,
     errors: null
 }
 
@@ -39,9 +40,44 @@ const postCar = createAsyncThunk(
     'carSlice/postCar',
     async ({car}, {rejectWithValue}) => {
         try {
+            delete car['digital_hud']
+            delete car['cruise_control']
+            delete car['adaptive_cruise_control']
+            delete car['parking_assist']
+            delete car['parking_sensors']
+            delete car['reverse_camera']
+            delete car['three_d_surround_camera']
+            delete car['tinted_windows']
+            delete car['power_seats']
+            delete car['leather_seats']
+            delete car['massaging_seats']
+            delete car['rear_ac']
+            delete car['sunroof_moonroof']
+            delete car['premium_audio']
+            delete car['front_rear_airbags']
+            delete car['apple_carplay']
+            delete car['android_auto']
+            delete car['bluetooth']
+            delete car['usb']
+            delete car['chiller_freezer']
             console.log(car, 'car in async');
             const {data} = await carService.postCar(car);
             console.log(data, 'data car from async');
+            return data
+        } catch (e) {
+            console.log(e.response.data, 'err in async');
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const updateCar = createAsyncThunk(
+    'carSlice/updateCar',
+    async ({_id, car}, {rejectWithValue}) => {
+        try {
+            console.log(_id, car, 'update in async');
+            const {data} = await carService.updateCar(_id, car);
+            console.log(data, 'data updateCar from async');
             return data
         } catch (e) {
             console.log(e.response.data, 'err in async');
@@ -87,7 +123,11 @@ const getByBrand = createAsyncThunk(
 const carSlice = createSlice({
     name: 'carSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        setCarForUpdate: (state, action) => {
+            state.carForUpdate = action.payload;
+        }
+    },
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
@@ -95,6 +135,12 @@ const carSlice = createSlice({
             })
             .addCase(getByDescription.fulfilled, (state, action) => {
                 state.cars = action.payload;
+            })
+            .addCase(updateCar.fulfilled, (state, action) => {
+                console.log(action.payload, 'ap addcase postcar');
+                const currentCar = state.cars.find(value => value === action.payload._id);
+                Object.assign(currentCar, action.payload);
+                state.carForUpdate = null;
             })
             .addCase(postCar.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap addcase postcar');
@@ -118,7 +164,7 @@ const carSlice = createSlice({
             })
 });
 
-const {reducer: carReducer, actions: {}} = carSlice;
+const {reducer: carReducer, actions: {setCarForUpdate}} = carSlice;
 
 const carActions = {
     getAll,
@@ -126,7 +172,9 @@ const carActions = {
     getByBrand,
     postCar,
     getByDescription,
-    postCarOrder
+    postCarOrder,
+    setCarForUpdate,
+    updateCar
 }
 
 export {

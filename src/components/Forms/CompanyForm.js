@@ -3,26 +3,26 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {companyActions} from "../../redux";
 
-export default function CompanyForm() {
+export default function CompanyForm({company}) {
     const {companyForUpdate, errors} = useSelector(state => state.companies);
     const dispatch = useDispatch();
+    console.log(company, 'company in form');
 
     useEffect(() => {
-        if (companyForUpdate) {
-            setValue('name', companyForUpdate.name)
-            setValue('contact_number', companyForUpdate.contact_number)
-            setValue('email', companyForUpdate.email)
-            setValue('description', companyForUpdate.description)
-        }
-    }, [companyForUpdate])
+            setValue('name', company.name)
+            setValue('contact_number', company.contact_number)
+            setValue('email', company.email)
+            setValue('description', company.description)
+    }, [company])
     console.log(companyForUpdate, 'company for update');
     const submit = async (data) => {
         console.log(data, 'in submit');
-        await dispatch(companyActions.update({_id: companyForUpdate._id, company: data}))
+        await dispatch(companyActions.update({_id: company._id, company: data}))
     }
     const {register, handleSubmit, reset, setValue} = useForm();
     return (
         <div>
+            <h3>COMPANY FORM</h3>
             <form onSubmit={handleSubmit(submit)}>
                 <input type="text" placeholder={'name'} {...register('name')}/>
                 <input type="text" placeholder={'contact_number'} {...register('contact_number')}/>

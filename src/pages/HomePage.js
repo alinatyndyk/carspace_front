@@ -1,7 +1,7 @@
 import Modal from "../components/Modal/Modal";
 import LoginForm from "../components/Forms/LoginForm";
-import {useState} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Link, useSearchParams} from "react-router-dom";
 
 export default function HomePage() {
     const [modalActive, setModalActive] = useState(true);
@@ -14,7 +14,7 @@ export default function HomePage() {
     console.log(params.toString(), 'outside'); // "foo=1&bar=2&baz=3"
 
 // Add a third parameter.
-let query;
+    let query;
     const handleChange = (event) => {
         if (event.target.checked) {
             console.log(event.target.name);
@@ -26,10 +26,22 @@ let query;
             return query
         }
     };
-        console.log(query, 'query outside');
+    console.log(query, 'query outside');
+
+    // const [searchParams, setSearchParams] = useSearchParams();
+    // useEffect(() => {
+    //     setSearchParams({'leave': 'goodbye'})
+    //     const greeting = searchParams.toString();
+    //     console.log(greeting, 'to string');
+    //
+    // }, [searchParams])
+    // console.log(searchParams, 'greeting ******************************');
+
+
     return (
         <div className={'login_page'}>
             Home page ...
+            {/*<button onClick={() => setSearchParams({'greeting': 'bonjour'})}>set search</button>*/}
             <Modal active={modalActive} setActive={setModalActive}>
                 <LoginForm/>
             </Modal>

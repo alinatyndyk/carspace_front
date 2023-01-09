@@ -133,21 +133,25 @@ const authSlice = createSlice({
                 state.isAuth = true;
                 console.log(action.payload);
                 authService.setTokens({...action.payload});
+                window.location.reload();
             })
             .addCase(logoutUser.fulfilled, (state, action) => {
                 state.isAuth = false;
                 console.log(action.payload);
                 authService.deleteTokens();
+                window.location.reload();
             })
             .addCase(loginCompany.fulfilled, (state, action) => {
                 state.isAuth = true;
                 console.log(action.payload);
                 authService.setTokens({...action.payload});
+                window.location.reload();
             })
             .addCase(logoutCompany.fulfilled, (state, action) => {
                 state.isAuth = false;
                 console.log(action.payload);
                 authService.deleteTokens();
+                window.location.reload();
             })
             .addCase(forgotPasswordUser.fulfilled, (state, action) => {
                 console.log(action.payload, 'action token');
@@ -178,6 +182,7 @@ const authActions = {
     resetPasswordUser,
     loginCompany,
     logoutCompany,
+    logoutUser,
     forgotPasswordCompany,
     resetPasswordCompany
 }

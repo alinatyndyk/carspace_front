@@ -10,11 +10,11 @@ const Cars = ({id}) => {
     console.log(id, 'ID IN CARS');
     const {brand} = useParams();
     useEffect(() => {
-        // if (brand) {
-        //     console.log('else if brand');
-        //     const res = dispatch(carActions.getByBrand({brand}))
-        //     console.log(res);
-        // } else
+        if (brand) {
+            console.log('else if brand');
+            const res = dispatch(carActions.getByBrand({brand}))
+            console.log(res);
+        } else
         if (id) {
             console.log(id, 'if id cars');
             dispatch(carActions.getById({_id: id}))
@@ -28,7 +28,7 @@ const Cars = ({id}) => {
     if (id !== undefined) {
         return (
             <div>
-                sinfle cra gape
+                single cra gape
                 <CarCard car={car} id={id}/>
 
             </div>

@@ -1,28 +1,23 @@
 import {useNavigate} from "react-router";
 
-
 const User = ({user}) => {
-    const {_id, name, image,} = user;
     const navigate = useNavigate();
-    console.log(image?.link);
-    // const [img, setImg] = useState(null);
-    // useEffect(() => {
-    //     axios.get('http://localhost:5000/photos/3c43c24a8ca1a4abaad4158617545e44.png')
-    //         .then(value => setImg(value.data));
-    // }, [])
+    console.log(user, 'in user.js');
 
     return (
-        <div onClick={() => navigate(`/users/${_id.toString()}`)}>
-            <div>id:{_id}</div>
-            <div>user:{name}</div>
-            <div>link: {image.link}</div>
-            {/*<img src={`data:text/plain;base64,${userProfileImage}`} alt="Red dot" />*/}
-            <img src={`${image.link}`} alt="Red dot"/>
-            {/*<div><img src={base64String}/></div>*/}
-            {/*<div>image:{JSON.stringify(image.data)}</div>*/}
-            <button>Get cars with this brand</button>
+        <div>
+            <div>id:{user?._id}</div>
+            <div>user:{user?.name}</div>
+            <img src={`${user?.image.link}`} alt="Red dot"/>
+            <div>
+                <button onClick={() => navigate(`/account/orders`, {state: {type: 'user-orders'}})}>update user</button>
+                <button>create order</button>
+                <button>manage/cancel order</button>
+            </div>
             <hr/>
             <br/>
+            user js
+            {JSON.stringify(user)}
         </div>
     );
 };
