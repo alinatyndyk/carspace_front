@@ -10,10 +10,16 @@ export default function OrderCard({order}) {
         <div>
             <h3>Order Card</h3>
             <div>Order id: {_id}</div>
-            {state.type = 'user_orders' ? <div>Order car:{car.brand} -- {car.model}
-                <div><img src={car.image?.link} alt=""/></div>
-            </div> : <div>Order car: {car}</div>}
-            {/*<div>Order car: {car.image?.link}</div>*/}
+            {state.type === 'company-orders' ? <div className={'user'}>
+                <div>User: {user.name} {user.last_name}</div>
+                <div>User-email/phone: {user.email}/{user.contact_number}</div>
+            </div> : null }
+            <div className={'car'}>
+                <div>Car brand: {car.brand}</div>
+                <div>Car model: {car.model}</div>
+                <div>Car model_year: {car.model_year}</div>
+            <div><img src={car.image?.link} alt=""/></div>
+            </div>
             <div>Order starting date: {from_date}</div>
             <div>Order finishing date: {to_date}</div>
             <div>Order duration: {Difference_In_Days}</div>

@@ -111,7 +111,8 @@ const companySlice = createSlice({
             .addCase(update.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap in addcase update');
                 const currentCompany = state.companies.find(value => value === action.payload._id)
-                Object.assign(currentCompany, action.payload)
+                // Object.assign(currentCompany, action.payload);
+                window.location.reload();
             })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);

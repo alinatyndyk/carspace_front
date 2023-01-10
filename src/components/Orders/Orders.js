@@ -20,17 +20,17 @@ export default function Orders() {
     console.log(today, 'today search');
 
     useEffect(() => {
-        if (state?.type === 'user-orders') {
+        if (today && state?.type === 'company-orders') {
+            console.log('in  true today xxx');
+            const {errors} = dispatch(companyActions.getCompanyOrdersToday());
+            console.log(errors);
+        } else if (state?.type === 'user-orders') {
             console.log('in type user-orders');
             const {errors} = dispatch(userActions.getUserOrders());
             console.log(errors);
         } else if (state?.type === 'company-orders') {
             console.log('in all company orders');
             const {errors} = dispatch(companyActions.getCompanyOrders());
-            console.log(errors);
-        } else if (today) {
-            console.log('in  true today xxx');
-            const {errors} = dispatch(companyActions.getCompanyOrdersToday());
             console.log(errors);
         }
     }, [today])

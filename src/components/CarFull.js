@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {authService} from "../services";
 import jwt_decode from "jwt-decode";
+import CarOrderForm from "./Forms/CarOrderForm";
 
 export default function CarFull() {
     const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export default function CarFull() {
 
     const [equal, setEqual] = useState(false);
     const [getDecoded, setDecoded] = useState(false);
+    const [book, setBook] = useState(false);
 
     console.log(getDecoded, 'get decoded');
     useEffect(() => {
@@ -100,6 +102,8 @@ export default function CarFull() {
             <div>description:{description}</div>
             <img src={`${image?.link}`} alt=''/>
             <button onClick={() => dispatch(carActions.setCarForUpdate(car))}>set for update</button>
+            <button onClick={() => setBook(true)}>Book this car</button>
+            {book === true ? <div><CarOrderForm/></div> : null}
             <h4>Car features</h4>
             {/*<div>hud{digital_hud.toString()}</div>*/}
             {/*<div>{cruise_control.toString()}</div>*/}

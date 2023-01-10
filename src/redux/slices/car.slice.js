@@ -139,12 +139,13 @@ const carSlice = createSlice({
             .addCase(updateCar.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap addcase postcar');
                 const currentCar = state.cars.find(value => value === action.payload._id);
-                Object.assign(currentCar, action.payload);
+                // Object.assign(currentCar, action.payload);
                 state.carForUpdate = null;
             })
             .addCase(postCar.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap addcase postcar');
                 state.cars.push(action.payload)
+                window.location.reload();
             })
             .addCase(getById.fulfilled, (state, action) => {
                 console.log(action.payload, 'car in add case');

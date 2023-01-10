@@ -86,7 +86,7 @@ export default function Header() {
                             className={'menu_link'}>Account</span> {isAccount && (
                         <div className={'brands'}>
                             <div onClick={() => navigate(`/account/orders`, {state: {type: 'company-orders'}})}>Company Orders</div>
-                            <div onClick={() => navigate(`/account/orders?today=true`)}>Company Orders Today</div>
+                            <div onClick={() => navigate(`/account/orders?today=true`, {state: {type: 'company-orders'}})}>Company Orders Today</div>
                             <span><button onClick={() => logout()}>Logout</button></span>
                             {/*<Link to={`/account/orders?today=true`}>Company Orders Today</Link>*/}
                         </div>
