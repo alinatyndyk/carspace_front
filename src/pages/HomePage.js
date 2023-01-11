@@ -1,10 +1,20 @@
 import Modal from "../components/Modal/Modal";
 import LoginForm from "../components/Forms/LoginForm";
-import {useEffect, useState} from "react";
-import {Link, useSearchParams} from "react-router-dom";
+import {useState} from "react";
+import {useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router";
+import {carActions} from "../redux";
+import CarCard from "../components/CarCard";
+import {history} from "../services";
+import CarParamsForm from "../components/Forms/CarParamsForm";
 
 export default function HomePage() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
+    const {cars} = useSelector(state => state.cars)
 
 
 //Add a second foo parameter.
@@ -38,6 +48,16 @@ export default function HomePage() {
     // console.log(searchParams, 'greeting ******************************');
 
 
+    const submit = (data) => {
+        console.log(data);
+        const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
+        if (!errors) {
+            history.push('/cars')
+        }
+
+        console.log(errors);
+    }
+
     return (
         <div className={'login_page'}>
             Home page ...
@@ -46,10 +66,14 @@ export default function HomePage() {
                 <LoginForm/>
             </Modal>
             {/*<button onClick={() => setModalActive(true)}>Modal</button>*/}
-            <div>
-                brand
-                <input type="checkbox" name={'brand'} value={'AUDI'} onChange={handleChange}/>
-            </div>
+            <form onSubmit={handleSubmit(submit)}>
+                <input type="date" placeholder={'from_date'} {...register('from_date')}/>
+                <input type="date" placeholder={'to_date'} {...register('to_date')}/>
+                <input type="text" placeholder={'Car search'} {...register('description')}/>
+                <button>Find</button>
+                {/*<CarParamsForm/>*/}
+            </form>
+            {/*{cars.map(car => <CarCard car={car}/>)}*/}
         </div>
     )
 }

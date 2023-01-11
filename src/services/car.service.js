@@ -3,8 +3,9 @@ import {authService} from "./auth.service";
 import {urls} from "../constants/urls";
 
 const carService = {
-    // getAll: () => axiosService.get('http://localhost:5000/cars'),
+    getAllWithParams: (params) => axiosService.get(`http://localhost:5000/cars/${params}`),
     getAll: () => axiosService.get(urls.cars),
+    getFilteredByDate: (data) => axiosService.post('http://localhost:5000/cars/filter/date', data),
     getById: (_id) => axiosService.get(`http://localhost:5000/cars/${_id}`),
     getByDescription: (search) => axiosService.post(`http://localhost:5000/cars/search/description`, search),
     getByBrand: (brand) => axiosService.get(`http://localhost:5000/cars?brand=${brand}`, {

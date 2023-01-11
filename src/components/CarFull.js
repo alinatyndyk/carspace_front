@@ -31,12 +31,29 @@ export default function CarFull() {
         company,
         location,
         description,
-        digital_hud,
-        cruise_control,
-        adaptive_cruise_control
+        digital_hud
     } = car;
-    console.log(digital_hud);
+    // console.log(car_features);
     console.log(car);
+
+    // for (const [key, value] of Object.entries(car_features)) {
+    //     console.log(`${key}: ${value}`);
+    //     // if (value === true) {
+    //     // console.log(key);
+    //     // }
+    // }
+    // presentFeatures.push({key: value})
+    // console.log(presentFeatures, 'present features');
+
+    // const presentFeatures = [];
+    // for (const [key, value] of Object.entries(car_features)) {
+    //     console.log(`${key}: ${value}`);
+    //     if (value === true) {
+    //         console.log(`${key}: ${value}`);
+    //         presentFeatures.push({key, value})
+    //     }
+    // }
+    // console.log(presentFeatures, 'present features');
 
     useEffect(() => {
         if (carForUpdate) {
@@ -77,7 +94,7 @@ export default function CarFull() {
         if (company === getDecoded._id) {
             // console.log('equals', company, getDecoded._id);
             setEqual(true);
-        }else {
+        } else {
             setEqual(false)
             // console.log('not equals', company, 'company id', getDecoded._id._id);
         }
@@ -88,12 +105,12 @@ export default function CarFull() {
         <div>
             <h2>Car Full</h2>
             {equal === true ?
-            <form onSubmit={handleSubmit(submit)}>
-                <input type="text" placeholder={'model'} {...register('model')}/>
-                <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                <input type="text" placeholder={'description'} {...register('description')}/>
-                <button>Update car</button>
-            </form> : null}
+                <form onSubmit={handleSubmit(submit)}>
+                    <input type="text" placeholder={'model'} {...register('model')}/>
+                    <input type="number" placeholder={'model_year'} {...register('model_year')}/>
+                    <input type="text" placeholder={'description'} {...register('description')}/>
+                    <button>Update car</button>
+                </form> : null}
             <div>id:{_id}</div>
             <div>brand:{brand}</div>
             <div>model:{model}</div>
@@ -105,6 +122,11 @@ export default function CarFull() {
             <button onClick={() => setBook(true)}>Book this car</button>
             {book === true ? <div><CarOrderForm/></div> : null}
             <h4>Car features</h4>
+            driver: {digital_hud?.toString()}
+            {/*{JSON.stringify(car_features)}*/}
+            {/*{JSON.stringify(presentFeatures)}*/}
+            ---------------------------
+            {/*{presentFeatures.map(present => <div>{present.key}</div>)}*/}
             {/*<div>hud{digital_hud.toString()}</div>*/}
             {/*<div>{cruise_control.toString()}</div>*/}
             {/*<div>{adaptive_cruise_control.toString()}</div>*/}

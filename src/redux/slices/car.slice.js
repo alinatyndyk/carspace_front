@@ -22,12 +22,41 @@ const getAll = createAsyncThunk(
     }
 )
 
+const getAllWithParams = createAsyncThunk(
+    'carSlice/getAllWithParams',
+    async ({params}, {rejectWithValue}) => {
+        try {
+            console.log(params, "PARAMS GET ALL ASYNC");
+            const {data} = await carService.getAllWithParams(params);
+            console.log('get all cars asunc', data);
+            return data
+        } catch (e) {
+            console.log(e.response.status);
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
 const getByDescription = createAsyncThunk(
     'carSlice/getByDescription',
     async ({search}, {rejectWithValue}) => {
         try {
             console.log(search, 'searxh in async');
             const {data} = await carService.getByDescription(search);
+            return data
+
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
+const getFilteredByDate = createAsyncThunk(
+    'carSlice/getFilteredByDate',
+    async ({info}, {rejectWithValue}) => {
+        try {
+            console.log(info, 'info in async');
+            const {data} = await carService.getFilteredByDate(info);
             return data
 
         } catch (e) {
@@ -133,12 +162,18 @@ const carSlice = createSlice({
             .addCase(getAll.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
+            .addCase(getAllWithParams.fulfilled, (state, action) => {
+                state.cars = action.payload;
+            })
             .addCase(getByDescription.fulfilled, (state, action) => {
+                state.cars = action.payload;
+            })
+            .addCase(getFilteredByDate.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
             .addCase(updateCar.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap addcase postcar');
-                const currentCar = state.cars.find(value => value === action.payload._id);
+                // const currentCar = state.cars.find(value => value === action.payload._id);
                 // Object.assign(currentCar, action.payload);
                 state.carForUpdate = null;
             })
@@ -175,7 +210,9 @@ const carActions = {
     getByDescription,
     postCarOrder,
     setCarForUpdate,
-    updateCar
+    updateCar,
+    getFilteredByDate,
+    getAllWithParams
 }
 
 export {
