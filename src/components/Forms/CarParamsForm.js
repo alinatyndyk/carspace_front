@@ -34,6 +34,8 @@ export default function CarParamsForm() {
     const [isLocation, setIsLocation] = useState(false);
     const [isTransmission, setIsTransmission] = useState(false);
     const [getTransmission, setTransmission] = useState(false);
+    const [getType, setType] = useState(false);
+    const [getIsType, setIsType] = useState(false);
     // console.log(getBrand, 'get brand');
     // console.log(getLocation, 'get location');
     // console.log(getYear, 'get year');
@@ -55,7 +57,7 @@ export default function CarParamsForm() {
         // setSearchParams(searchParams);
 
         setSearchParams(searchParams);
-    }, [getBrand, getYear, getLocation, getAge, getTransmission])
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType])
 
 
     const searchString = window.location.search;
@@ -188,12 +190,76 @@ export default function CarParamsForm() {
                             setValue('transmission', 'manual');
                             setTransmission('manual');
                             searchParams.set('transmission', 'manual');
-                        }}>Manual</div>
+                        }}>Manual
+                        </div>
                     </div> : null}
                 </span>
+                <span
+                    onMouseOver={() => setIsType(true)}
+                    onMouseLeave={() => setIsType(false)}>
                 <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
+                    {getIsType === true ?
+                        <div>
+                            CAR TYPES
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Luxury');
+                                setType('luxury');
+                                searchParams.set('vehicle_type', 'luxury')
+                            }}>Luxury</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Economy');
+                                setType('economy');
+                                searchParams.set('vehicle_type', 'economy')
+                            }}>Economy</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'SUV');
+                                setType('suv');
+                                searchParams.set('vehicle_type', 'suv')
+                            }}>SUV</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Sedan');
+                                setType('sedan');
+                                searchParams.set('vehicle_type', 'sedan')
+                            }}>Sedan</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Sports');
+                                setType('sports');
+                                searchParams.set('vehicle_type', 'sports')
+                            }}>Sports</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Crossover');
+                                setType('crossover');
+                                searchParams.set('vehicle_type', 'crossover');
+                            }}>Crossover</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Convertible');
+                                setType('convertible');
+                                searchParams.set('vehicle_type', 'convertible');
+                            }}>Convertible</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Electric');
+                                setType('electric');
+                                searchParams.set('vehicle_type', 'electric');
+                            }}>Electric</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Truck');
+                                setType('truck');
+                                searchParams.set('vehicle_type', 'truck');
+                            }}>Truck</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Minivan');
+                                setType('minivan');
+                                searchParams.set('vehicle_type', 'minivan');
+                            }}>Minivan</div>
+                            <div onClick={() => {
+                                setValue('vehicle_type', 'Coupe');
+                                setType('coupe');
+                                searchParams.set('vehicle_type', 'coupe');
+                            }}>Coupe</div>
+                        </div> : null}
+                </span>
                 <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}/>
-                <input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>
+                {/*<input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>*/}
                 <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>
                 <input type="checkbox" name={'digital_hud'} onClick={handleParams}
                        placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
