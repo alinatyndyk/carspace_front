@@ -36,34 +36,18 @@ export default function CarParamsForm() {
     const [getTransmission, setTransmission] = useState(false);
     const [getType, setType] = useState(false);
     const [getIsType, setIsType] = useState(false);
-    // console.log(getBrand, 'get brand');
-    // console.log(getLocation, 'get location');
-    // console.log(getYear, 'get year');
+    const [getSeats, setSeats] = useState(false);
+    const [getPriceDay, setPriceDay] = useState(false);
 
     useEffect(() => {
-        // searchParams.set('brand', getBrand);
-        // searchParams.set('model_year', getYear);
-        // searchParams.set('location', getLocation);
-        console.log(getBrand, 'get brand IN EFFECT');
-        console.log(getLocation, 'get location IN EFFECT');
-
-        // searchParams.forEach((value, key) => {
-        //     console.log(value, key, "PARSEEEEEEEE");
-        //     // if (value !== null) {
-        //     //     searchParams.set(`${key}`, `${value}`);
-        //     //
-        //     // }
-        // });
-        // setSearchParams(searchParams);
-
         setSearchParams(searchParams);
-    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType])
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay])
 
 
     const searchString = window.location.search;
     console.log(searchString, 'search string');
 
-    const submit = async (data) => {
+    const submit = async () => {
         // console.log(data, 'data in submit **************************');
         dispatch(carActions.getAllWithParams({params: searchString}))
 
@@ -210,57 +194,75 @@ export default function CarParamsForm() {
                                 setValue('vehicle_type', 'Economy');
                                 setType('economy');
                                 searchParams.set('vehicle_type', 'economy')
-                            }}>Economy</div>
+                            }}>Economy
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'SUV');
                                 setType('suv');
                                 searchParams.set('vehicle_type', 'suv')
-                            }}>SUV</div>
+                            }}>SUV
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Sedan');
                                 setType('sedan');
                                 searchParams.set('vehicle_type', 'sedan')
-                            }}>Sedan</div>
+                            }}>Sedan
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Sports');
                                 setType('sports');
                                 searchParams.set('vehicle_type', 'sports')
-                            }}>Sports</div>
+                            }}>Sports
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Crossover');
                                 setType('crossover');
                                 searchParams.set('vehicle_type', 'crossover');
-                            }}>Crossover</div>
+                            }}>Crossover
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Convertible');
                                 setType('convertible');
                                 searchParams.set('vehicle_type', 'convertible');
-                            }}>Convertible</div>
+                            }}>Convertible
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Electric');
                                 setType('electric');
                                 searchParams.set('vehicle_type', 'electric');
-                            }}>Electric</div>
+                            }}>Electric
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Truck');
                                 setType('truck');
                                 searchParams.set('vehicle_type', 'truck');
-                            }}>Truck</div>
+                            }}>Truck
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Minivan');
                                 setType('minivan');
                                 searchParams.set('vehicle_type', 'minivan');
-                            }}>Minivan</div>
+                            }}>Minivan
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Coupe');
                                 setType('coupe');
                                 searchParams.set('vehicle_type', 'coupe');
-                            }}>Coupe</div>
+                            }}>Coupe
+                            </div>
                         </div> : null}
                 </span>
-                <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}/>
+                <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}
+                       onChange={(e) => {
+                           searchParams.set('no_of_seats', e.target.value);
+                           setSeats(e.target.value);
+                       }}/>
                 {/*<input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>*/}
-                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>
+                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}
+                onChange={(e) => {
+                    searchParams.set('price_day_basis', e.target.value);
+                    setPriceDay(e.target.value);
+                }}/>
                 <input type="checkbox" name={'digital_hud'} onClick={handleParams}
                        placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
                 <input type="checkbox" name={'cruise_control'} onClick={handleParams}
