@@ -2,54 +2,88 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useSearchParams} from "react-router-dom";
-import {carActions} from "../../redux";
+import {brandActions, carActions} from "../../redux";
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-    const {register, handleSubmit} = useForm();
-    // const {errors} = useSelector(state => state.auth);
+    const {register, handleSubmit, setValue} = useForm();
+    const {errors} = useSelector(state => state.cars);
+    const {brands} = useSelector(state => state.brands);
 
     const handleParams = (e) => {
         // e.preventDefault()
-        console.log(e.target);
+        console.log(e.target, "HERE");
+        console.log(e.target.value, "HERE VALUE");
+        console.log(e.target.placeholder, "HERE NAME");
         console.log(e.target.checked);
         if (e.target.checked === true) {
             searchParams.set(e.target.name, e.target.checked);
         } else if (e.target.checked === false) {
             searchParams.delete(e.target.name, e.target.checked);
         }
-        setSearchParams(searchParams);
 
         // for (const [key, value] of searchParams.entries()) {
         //     console.log(key, value.toString(), "ITER PARAMS");
         // }
+        setSearchParams(searchParams);
     }
+
+    const [getBrand, setBrand] = useState(null);
+    console.log(getBrand, 'get brand');
+    useEffect(() => {
+        searchParams.set('brand', getBrand);
+        console.log(getBrand, 'get brand IN EFFECT');
+        setSearchParams(searchParams);
+
+    }, [getBrand])
 
     const searchString = window.location.search;
     console.log(searchString, 'search string');
 
     const submit = async (data) => {
         console.log(data, 'data in submit **************************');
-        // for (const [key, value] of searchParams.entries()) {
-        //     console.log(key, value, "ITER PARAMS");
-        // }
-        // const entries = searchParams.entries();
-        // console.log(entries, 'entries');
-
         dispatch(carActions.getAllWithParams({params: searchString}))
 
     }
+    const [isBrand, setIsBrand] = useState(false);
+    useEffect(() => {
+        if (isBrand === true) {
+            const {errors} = dispatch(brandActions.getAll());
+        }
+    }, [])
+
+
+    // function handleChange(event) {
+    //     if (event.target.value) {
+    //         console.log(event.target.value, 'event');
+    //         setBrand(event.target.value);
+    //
+    //     }
+    // }
 
     return (
         <div>
+            {errors}
+            {/*<input type="text" onChange={handleChange}/>*/}
             <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
-                <input type="text" name={'brand'} onChange={handleParams} placeholder={'brand'} {...register('brand')}/>
                 {/*<input type="text" placeholder={'model'} {...register('model')}/>*/}
+                <span onMouseOver={() => setIsBrand(true)}
+                      onMouseLeave={() => setIsBrand(false)}>
+                    <input type="text" {...register('brand')} name={'brand'}/>
+                    {isBrand === true ?
+                        // JSON.stringify(brands)
+                        // <div><BrandsPage/></div>
+                        // <div>mnsanmasasnm</div>
+                        <div>{brands.map(item => <div
+                            placeholder={'brand'}
+                            onClick={() => setValue('brand', item.brand)}
+                            onDoubleClick={() => setBrand(item.brand)}>
+                            {item.brand}</div>)}</div>
+                        : null}
+                </span>
                 <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                {/*<input type="text" placeholder={'description'} {...register('description')}/>*/}
-                {/*<input type="file" placeholder={'testImage'} {...register('testImage')}/>*/}
                 <input type="text" placeholder={'location'} {...register('location')}/>
                 <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}/>
                 <input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>

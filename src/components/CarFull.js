@@ -31,7 +31,7 @@ export default function CarFull() {
         company,
         location,
         description,
-        digital_hud
+        car_features
     } = car;
     // console.log(car_features);
     console.log(car);
@@ -122,8 +122,8 @@ export default function CarFull() {
             <button onClick={() => setBook(true)}>Book this car</button>
             {book === true ? <div><CarOrderForm/></div> : null}
             <h4>Car features</h4>
-            driver: {digital_hud?.toString()}
-            {/*{JSON.stringify(car_features)}*/}
+            {/*driver: {digital_hud?.toString()}*/}
+            {JSON.stringify(car_features)}
             {/*{JSON.stringify(presentFeatures)}*/}
             ---------------------------
             {/*{presentFeatures.map(present => <div>{present.key}</div>)}*/}
