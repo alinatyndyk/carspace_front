@@ -11,92 +11,190 @@ export default function CarParamsForm() {
     const {errors} = useSelector(state => state.cars);
     const {brands} = useSelector(state => state.brands);
 
-    const handleParams = (e) => {
-        // e.preventDefault()
-        console.log(e.target, "HERE");
-        console.log(e.target.value, "HERE VALUE");
-        console.log(e.target.placeholder, "HERE NAME");
-        console.log(e.target.checked);
-        if (e.target.checked === true) {
-            searchParams.set(e.target.name, e.target.checked);
-        } else if (e.target.checked === false) {
-            searchParams.delete(e.target.name, e.target.checked);
-        }
-
-        // for (const [key, value] of searchParams.entries()) {
-        //     console.log(key, value.toString(), "ITER PARAMS");
-        // }
-        setSearchParams(searchParams);
-    }
-
-    const [getBrand, setBrand] = useState(null);
-    console.log(getBrand, 'get brand');
-    useEffect(() => {
-        searchParams.set('brand', getBrand);
-        console.log(getBrand, 'get brand IN EFFECT');
-        setSearchParams(searchParams);
-
-    }, [getBrand])
-
-    const searchString = window.location.search;
-    console.log(searchString, 'search string');
-
-    const submit = async (data) => {
-        console.log(data, 'data in submit **************************');
-        dispatch(carActions.getAllWithParams({params: searchString}))
-
-    }
-    const [isBrand, setIsBrand] = useState(false);
     useEffect(() => {
         if (isBrand === true) {
             const {errors} = dispatch(brandActions.getAll());
         }
     }, [])
 
+    const handleParams = (e) => {
+        console.log(e.target.checked);
+        if (e.target.checked === true) {
+            searchParams.set(e.target.name, e.target.checked);
+        } else if (e.target.checked === false) {
+            searchParams.delete(e.target.name, e.target.checked);
+        }
+        setSearchParams(searchParams);
+    }
 
-    // function handleChange(event) {
-    //     if (event.target.value) {
-    //         console.log(event.target.value, 'event');
-    //         setBrand(event.target.value);
-    //
-    //     }
-    // }
+    const [getBrand, setBrand] = useState(null);
+    const [getLocation, setLocation] = useState(null);
+    const [getYear, setYear] = useState(null);
+    const [getAge, setAge] = useState(null);
+    const [isLocation, setIsLocation] = useState(false);
+    const [isTransmission, setIsTransmission] = useState(false);
+    const [getTransmission, setTransmission] = useState(false);
+    // console.log(getBrand, 'get brand');
+    // console.log(getLocation, 'get location');
+    // console.log(getYear, 'get year');
+
+    useEffect(() => {
+        // searchParams.set('brand', getBrand);
+        // searchParams.set('model_year', getYear);
+        // searchParams.set('location', getLocation);
+        console.log(getBrand, 'get brand IN EFFECT');
+        console.log(getLocation, 'get location IN EFFECT');
+
+        // searchParams.forEach((value, key) => {
+        //     console.log(value, key, "PARSEEEEEEEE");
+        //     // if (value !== null) {
+        //     //     searchParams.set(`${key}`, `${value}`);
+        //     //
+        //     // }
+        // });
+        // setSearchParams(searchParams);
+
+        setSearchParams(searchParams);
+    }, [getBrand, getYear, getLocation, getAge, getTransmission])
+
+
+    const searchString = window.location.search;
+    console.log(searchString, 'search string');
+
+    const submit = async (data) => {
+        // console.log(data, 'data in submit **************************');
+        dispatch(carActions.getAllWithParams({params: searchString}))
+
+    }
+    const [isBrand, setIsBrand] = useState(false);
 
     return (
         <div>
             {errors}
-            {/*<input type="text" onChange={handleChange}/>*/}
             <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
-                {/*<input type="text" placeholder={'model'} {...register('model')}/>*/}
                 <span onMouseOver={() => setIsBrand(true)}
                       onMouseLeave={() => setIsBrand(false)}>
-                    <input type="text" {...register('brand')} name={'brand'}/>
+                    <input type="text" {...register('brand')}/>
                     {isBrand === true ?
-                        // JSON.stringify(brands)
-                        // <div><BrandsPage/></div>
-                        // <div>mnsanmasasnm</div>
                         <div>{brands.map(item => <div
-                            placeholder={'brand'}
-                            onClick={() => setValue('brand', item.brand)}
-                            onDoubleClick={() => setBrand(item.brand)}>
-                            {item.brand}</div>)}</div>
+                            onClick={() => {
+                                setValue('brand', item.brand);
+                                setBrand(item.brand);
+                                searchParams.set('brand', item.brand);
+                            }}>{item.brand}</div>)}
+                            <div onClick={() => {
+                                setValue('brand', '');
+                                setBrand(null);
+                                searchParams.delete('brand')
+                            }}>None
+                            </div>
+                        </div>
                         : null}
                 </span>
-                <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                <input type="text" placeholder={'location'} {...register('location')}/>
-                <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}/>
-                <input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>
+                <span>
+                <input type="number" maxLength='4' minLength={4} {...register('model_year')}
+                       onChange={(e) => {
+                           setYear(e.target.value);
+                           searchParams.set('model_year', e.target.value)
+                       }}/>
+                    <div onClick={() => {
+                        setValue('model_year', '');
+                        setYear(null);
+                        searchParams.delete('model_year');
+                    }}>Reset year</div>
+                </span>
+                <span
+                    onMouseOver={() => setIsLocation(true)}
+                    onMouseLeave={() => setIsLocation(false)}>
+                <input type="text" placeholder={'location'} {...register('location')}/>{isLocation === true ?
+                    <div>
+                        <div onClick={() => {
+                            setValue('location', 'london');
+                            setLocation('london');
+                            searchParams.set('location', 'london')
+                        }}>London
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'birmingham');
+                            setLocation('Birmingham');
+                            searchParams.set('location', 'birmingham');
+                        }}>Birmingham
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Manchester');
+                            setLocation('Manchester');
+                            searchParams.set('location', 'Manchester');
+                        }}>Manchester
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Leeds');
+                            setLocation('Leeds');
+                            searchParams.set('location', 'Leeds');
+                        }}>Leeds
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Sheffield');
+                            setLocation('Sheffield');
+                            searchParams.set('location', 'Sheffield');
+                        }}>Sheffield
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Liverpool');
+                            setLocation('Liverpool');
+                            searchParams.set('location', 'Liverpool');
+                        }}>Liverpool
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Bristol');
+                            setLocation('Bristol');
+                            searchParams.set('location', 'Bristol');
+                        }}>Bristol
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', 'Wakefield');
+                            setLocation('Wakefield');
+                            searchParams.set('location', 'Wakefield');
+                        }}>Wakefield
+                        </div>
+                        <div onClick={() => {
+                            setValue('location', '');
+                            setLocation(null);
+                            searchParams.delete('location')
+                        }}>No location
+                        </div>
+                    </div> : null}
+                </span>
+                <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}
+                       onChange={(e) => {
+                           searchParams.set('min_drivers_age', e.target.value);
+                           setAge(e.target.value)
+                       }}/>
+                {/*<input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>*/}
                 <input type="checkbox" name={'driver_included'} onClick={handleParams}
                        placeholder={'driver_included'} {...register('driver_included')}/>driver
-                {/*<input type="text" placeholder={'transmission'} {...register('transmission')}/>*/}
-                {/*<input type="text" placeholder={'engine_capacity'} {...register('engine_capacity')}/>*/}
+                <span
+                    onMouseOver={() => setIsTransmission(true)}
+                    onMouseLeave={() => setIsTransmission(false)}>
+                <input type="text" placeholder={'transmission'} {...register('transmission')}/>
+                    {isTransmission === true ? <div>
+                        <div onClick={() => {
+                            setValue('transmission', 'auto');
+                            setTransmission('auto');
+                            searchParams.set('transmission', 'auto');
+                        }}>Auto
+                        </div>
+                        <div onClick={() => {
+                            setValue('transmission', 'manual');
+                            setTransmission('manual');
+                            searchParams.set('transmission', 'manual');
+                        }}>Manual</div>
+                    </div> : null}
+                </span>
                 <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
                 <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}/>
                 <input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>
-                {/*<input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>*/}
-                {/*<input type="number" placeholder={'security_deposit'} {...register('security_deposit')}/>*/}
-                {/*<input type="number" placeholder={'add_milage_charge'} {...register('add_milage_charge')}/>*/}
+                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>
                 <input type="checkbox" name={'digital_hud'} onClick={handleParams}
                        placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
                 <input type="checkbox" name={'cruise_control'} onClick={handleParams}
@@ -139,7 +237,6 @@ export default function CarParamsForm() {
                 <input type="checkbox" name={'usb'} onClick={handleParams} placeholder={'usb'} {...register('usb')}/>USB
                 <input type="checkbox" name={'chiller_freezer'} onClick={handleParams}
                        placeholder={'chiller_freezer'} {...register('chiller_freezer')}/>chiller/freezer
-                {/*<input type="checkbox" placeholder={'cruise_control'} {...register('cruise_control')}/>cruise control*/}
                 <button>Search Cars</button>
             </form>
         </div>
