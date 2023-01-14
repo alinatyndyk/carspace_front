@@ -17,10 +17,11 @@
 }
 
 .brands{
-  background-color: darkblue;
-  border-radius: 5px;
+  background-color: black;
   padding: 10px;
   box-sizing: border-box;
+  border: darkgrey 1px solid;
+  border-top: none;
   row-gap: 10px;
   position: absolute;
 }

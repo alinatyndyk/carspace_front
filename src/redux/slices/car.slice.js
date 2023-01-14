@@ -13,8 +13,8 @@ const getAll = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await carService.getAll();
-            // console.log('get all cars asunc', data);
-            return data
+            console.log('get all cars asunc', data.cars);
+            return data.cars
         } catch (e) {
             console.log(e.response.status);
             return rejectWithValue(e.response.data);
@@ -29,7 +29,7 @@ const getAllWithParams = createAsyncThunk(
             console.log(params, "PARAMS GET ALL ASYNC");
             const {data} = await carService.getAllWithParams(params);
             console.log('get all cars asunc', data);
-            return data
+            return data.cars
         } catch (e) {
             console.log(e.response.status);
             return rejectWithValue(e.response.data);
@@ -43,7 +43,7 @@ const getByDescription = createAsyncThunk(
         try {
             console.log(search, 'searxh in async');
             const {data} = await carService.getByDescription(search);
-            return data
+            return data.cars
 
         } catch (e) {
             return rejectWithValue(e.response.data);
@@ -145,7 +145,7 @@ const getByBrand = createAsyncThunk(
     async ({brand}) => {
         console.log(brand, 'in async');
         const {data} = await carService.getByBrand(brand);
-        return data
+        return data.cars
     }
 )
 

@@ -51,7 +51,7 @@
 }
 
 .car-form{
-    background-color: darkblue;
+    background-color: black;
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -59,4 +59,9 @@
     padding: 20px;
     box-sizing: border-box;
     color: white;
+}
+
+.car_features_params{
+    display: flex;
+    flex-direction: column;
 }

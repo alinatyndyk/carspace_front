@@ -8,7 +8,6 @@ export default function CarPage() {
 
     return (
         <div>
-            <h2>CarPage</h2>
             <div className={'car-page'}>
                 <div><CarParamsForm/></div>
                 <div><Cars id={car_id}/></div>

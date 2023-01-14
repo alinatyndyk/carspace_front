@@ -8,6 +8,7 @@ import {carActions} from "../redux";
 import CarCard from "../components/CarCard";
 import {history} from "../services";
 import CarParamsForm from "../components/Forms/CarParamsForm";
+import CarPage from "./CarPage";
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -62,17 +63,22 @@ export default function HomePage() {
         <div className={'login_page'}>
             Home page ...
             {/*<button onClick={() => setSearchParams({'greeting': 'bonjour'})}>set search</button>*/}
+            {/*<button onClick={() => setModalActive(true)}>Modal</button>*/}
+            <div className={'login_page_insides'}>
+                <h2>RENT A CAR IN DUBAI</h2>
+                <div>Book directly from local suppliers. No commission, no mark-ups.</div>
+                <form className={'find_by_date_form'} onSubmit={handleSubmit(submit)}>
+                    <input type="date" placeholder={'from_date'} {...register('from_date')}/>
+                    <input type="date" placeholder={'to_date'} {...register('to_date')}/>
+                    <input type="text" placeholder={'Car search'} {...register('description')}/>
+                    <button>Find</button>
+                    {/*<CarParamsForm/>*/}
+                </form>
+
+            </div>
             <Modal active={modalActive} setActive={setModalActive}>
                 <LoginForm/>
             </Modal>
-            {/*<button onClick={() => setModalActive(true)}>Modal</button>*/}
-            <form onSubmit={handleSubmit(submit)}>
-                <input type="date" placeholder={'from_date'} {...register('from_date')}/>
-                <input type="date" placeholder={'to_date'} {...register('to_date')}/>
-                <input type="text" placeholder={'Car search'} {...register('description')}/>
-                <button>Find</button>
-                {/*<CarParamsForm/>*/}
-            </form>
             {/*{cars.map(car => <CarCard car={car}/>)}*/}
         </div>
     )

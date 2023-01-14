@@ -1,8 +1,48 @@
-.login_page{
-    background-image: url(../photo_2022-12-29_13-08-50.jpg);
-    height: 500px;
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
+
+.login_page {
+    /*background-image: url(../photo_2022-12-29_13-08-50.jpg);*/
+    background-image: url(../black_cars.jpg);
+    background-size: cover;
+    height: 400px;
+    padding: 0 200px 0 200px
 }
 
-.car-page{
+.car-page {
     display: flex;
+}
+
+.login_page_insides {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+    row-gap: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login_page_insides input {
+    border: none;
+    height: 30px;
+    margin-right: 10px;
+    border-bottom: 1px solid white;
+}
+
+.login_page_insides input[type=text] {
+    width: 200px;
+}
+
+.login_page_insides button {
+    width: 100px;
+    height: 30px;
 }

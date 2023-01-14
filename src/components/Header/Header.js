@@ -85,10 +85,14 @@ export default function Header() {
                             onClick={() => navigate(`/account`, {state: {Id, type: 'company'}})}
                             className={'menu_link'}>Account</span> {isAccount && (
                         <div className={'brands'}>
-                            <div onClick={() => navigate(`/account/orders`, {state: {type: 'company-orders'}})}>Company Orders</div>
-                            <div onClick={() => navigate(`/account/orders?today=true`, {state: {type: 'company-orders'}})}>Company Orders Today</div>
+                            <div onClick={() => navigate(`/account/orders`, {state: {type: 'company-orders'}})}>Company
+                                Orders
+                            </div>
+                            <div
+                                onClick={() => navigate(`/account/orders?today=true`, {state: {type: 'company-orders'}})}>Company
+                                Orders Today
+                            </div>
                             <span><button onClick={() => logout()}>Logout</button></span>
-                            {/*<Link to={`/account/orders?today=true`}>Company Orders Today</Link>*/}
                         </div>
                     )}</span> : isAuthUser === true ?
                         <span
@@ -98,29 +102,25 @@ export default function Header() {
                             onClick={() => navigate(`/account`, {state: {Id, type: 'user'}})}
                             className={'menu_link'}> User Account</span> {isAccount && (
                             <div className={'brands'}>
-                                <div onClick={() => navigate(`/account/orders`, {state: {type: 'user-orders'}})}>My orders</div>
-                                {/*<div onClick={() => navigate(`/account/orders?today=true`)}>Company Orders Today</div>*/}
+                                <div onClick={() => navigate(`/account/orders`, {state: {type: 'user-orders'}})}>My
+                                    orders
+                                </div>
                                 <span><button onClick={() => logoutUser()}>Logout User</button></span>
-                                {/*<Link to={`/account/orders?today=true`}>Company Orders Today</Link>*/}
                             </div>
                         )}</span> :
                         <div className={'auth_links'}>
-                            <span><Link className={'menu_link'}
+                            <span><Link className={'auth_link'}
                                         to={'/login/company'}>Sign in your property</Link></span>
-                            <span><Link className={'menu_link'} to={'/login'}>Sign in</Link></span>
-                            <span><Link className={'menu_link'} to={'/register'}>Sign up</Link></span>
+                            <span><Link className={'auth_link'} to={'/login'}>Sign in</Link></span>
+                            <span><Link className={'auth_link'} to={'/register'}>Sign up</Link></span>
                         </div>
                 }
-                {/*<div className={'auth_links'}>*/}
-                {/*    <span><Link className={'menu_link'} to={'/login/company'}>Sign in your property</Link></span>*/}
-                {/*    <span><Link className={'menu_link'} to={'/login'}>Sign in</Link></span>*/}
-                {/*    <span><Link className={'menu_link'} to={'/register'}>Sign up</Link></span>*/}
-                {/*</div>*/}
             </div>
             <div>
                 <div className={'menu_navbar'}>
+                    <div className={'menu_navbar_links'}>
+
                     <p><Link className={'menu_navbar_link'} to={'/home'}>Home</Link></p>
-                    {/*<p><Link className={'menu_navbar_link'} to={'/locations'}>Locations</Link></p>*/}
                     <p
                         onMouseOver={() => setIsLocation(true)}
                         onMouseLeave={() => setIsLocation(false)}>
@@ -145,12 +145,14 @@ export default function Header() {
                     </p>
                     <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
                     <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
-                    {/*<p><Link className={'menu_navbar_link'} to={'/users'}>Users</Link></p>*/}
                     <p><Link className={'menu_navbar_link'} to={'/companies'}>Companies</Link></p>
-                    <form onSubmit={handleSubmit(submit)}>
-                        <input type="text" placeholder={'Car rentals in London'} {...register('search')}/>
-                        <button onClick={() => navigate('/cars')}>Search</button>
-                    </form>
+                    </div>
+                    <div className={'menu_navbar_form'}>
+                        <form onSubmit={handleSubmit(submit)}>
+                            <input type="text" placeholder={'Car rentals in London'} {...register('search')}/>
+                            <button onClick={() => navigate('/cars')}>Search</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

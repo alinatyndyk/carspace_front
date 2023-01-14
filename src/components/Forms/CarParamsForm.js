@@ -3,9 +3,15 @@ import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useSearchParams} from "react-router-dom";
 import {brandActions, carActions} from "../../redux";
+import {useNavigate, useParams} from "react-router";
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory();
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
+    const {brand} = useParams();
+    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit, setValue} = useForm();
     const {errors} = useSelector(state => state.cars);
@@ -16,6 +22,7 @@ export default function CarParamsForm() {
             const {errors} = dispatch(brandActions.getAll());
         }
     }, [])
+
 
     const handleParams = (e) => {
         console.log(e.target.checked);
@@ -38,19 +45,28 @@ export default function CarParamsForm() {
     const [getIsType, setIsType] = useState(false);
     const [getSeats, setSeats] = useState(false);
     const [getPriceDay, setPriceDay] = useState(false);
+    const [carFeatures, setCarFeatures] = useState(false);
 
     useEffect(() => {
         setSearchParams(searchParams);
     }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay])
 
 
-    const searchString = window.location.search;
-    console.log(searchString, 'search string');
-
     const submit = async () => {
-        // console.log(data, 'data in submit **************************');
-        dispatch(carActions.getAllWithParams({params: searchString}))
+        const searchString = window.location.search;
+        console.log(searchString, 'search string');
+        if (brand) {
+            setValue('brand', brand)
 
+        }
+        // console.log(data, 'data in submit **************************');
+        searchParams.set('page', 1)
+        dispatch(carActions.getAllWithParams({params: searchParams}))
+        if (brand) {
+            // searchParams.set('page', 1)
+            // history.push(`/cars?${searchParams}`)
+            navigate(`/cars?${searchParams}`)
+        }
     }
     const [isBrand, setIsBrand] = useState(false);
 
@@ -59,9 +75,14 @@ export default function CarParamsForm() {
             {errors}
             <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
-                <span onMouseOver={() => setIsBrand(true)}
-                      onMouseLeave={() => setIsBrand(false)}>
-                    <input type="text" {...register('brand')}/>
+                <span onClick={() => {
+                    if (isBrand === false) {
+                        setIsBrand(true)
+                    } else {
+                        setIsBrand(false)
+                    }
+                }}>
+                    <input type="text" disabled={true} placeholder={'brand'} {...register('brand')}/>
                     {isBrand === true ?
                         <div>{brands.map(item => <div
                             onClick={() => {
@@ -72,14 +93,14 @@ export default function CarParamsForm() {
                             <div onClick={() => {
                                 setValue('brand', '');
                                 setBrand(null);
-                                searchParams.delete('brand')
+                                searchParams.delete('brand');
                             }}>None
                             </div>
                         </div>
                         : null}
                 </span>
                 <span>
-                <input type="number" maxLength='4' minLength={4} {...register('model_year')}
+                <input type="number" placeholder={'model_year'} {...register('model_year')}
                        onChange={(e) => {
                            setYear(e.target.value);
                            searchParams.set('model_year', e.target.value)
@@ -157,8 +178,10 @@ export default function CarParamsForm() {
                            setAge(e.target.value)
                        }}/>
                 {/*<input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>*/}
+                <span>
                 <input type="checkbox" name={'driver_included'} onClick={handleParams}
                        placeholder={'driver_included'} {...register('driver_included')}/>driver
+                </span>
                 <span
                     onMouseOver={() => setIsTransmission(true)}
                     onMouseLeave={() => setIsTransmission(false)}>
@@ -259,52 +282,101 @@ export default function CarParamsForm() {
                        }}/>
                 {/*<input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>*/}
                 <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}
-                onChange={(e) => {
-                    searchParams.set('price_day_basis', e.target.value);
-                    setPriceDay(e.target.value);
-                }}/>
+                       onChange={(e) => {
+                           searchParams.set('price_day_basis', e.target.value);
+                           setPriceDay(e.target.value);
+                       }}/>
+                <div onClick={() => {
+                    if (carFeatures === false) {
+                        setCarFeatures(true)
+                    } else {
+                        setCarFeatures(false)
+                    }
+                }}>Car features
+                </div>
+                {carFeatures === true ? <div className={'car_features_params'}>
+                        <span>
                 <input type="checkbox" name={'digital_hud'} onClick={handleParams}
                        placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
+                </span>
+                    <span>
                 <input type="checkbox" name={'cruise_control'} onClick={handleParams}
                        placeholder={'cruise_control'} {...register('cruise_control')}/>cruise control
+                </span>
+                    <span>
                 <input type="checkbox" name={'adaptive_cruise_control'} onClick={handleParams}
-                       placeholder={'adaptive_cruise_control'} {...register('adaptive_cruise_control')}/>auto cruise
-                control
+                       placeholder={'adaptive_cruise_control'} {...register('adaptive_cruise_control')}/>auto cruise control
+                </span>
+                    <span>
                 <input type="checkbox" name={'parking_assist'} onClick={handleParams}
                        placeholder={'parking_assist'} {...register('parking_assist')}/>parking assist
+                </span>
+                    <span>
                 <input type="checkbox" name={'parking_sensors'} onClick={handleParams}
                        placeholder={'parking_sensors'} {...register('parking_sensors')}/>parking sensors
+                </span>
+                    <span>
                 <input type="checkbox" name={'reverse_camera'} onClick={handleParams}
                        placeholder={'reverse_camera'} {...register('reverse_camera')}/>reverse camera
+                </span>
+                    <span>
                 <input type="checkbox" name={'three_d_surround_camera'} onClick={handleParams}
-                       placeholder={'three_d_surround_camera'} {...register('three_d_surround_camera')}/>3d surround
-                camera
+                       placeholder={'three_d_surround_camera'} {...register('three_d_surround_camera')}/>3d surround camera
+                </span>
+                    <span>
                 <input type="checkbox" name={'tinted_windows'} onClick={handleParams}
                        placeholder={'tinted_windows'} {...register('tinted_windows')}/>tinted windows
+                </span>
+                    <span>
                 <input type="checkbox" name={'power_seats'} onClick={handleParams}
                        placeholder={'power_seats'} {...register('power_seats')}/>power seats
+                </span>
+                    <span>
                 <input type="checkbox" name={'leather_seats'} onClick={handleParams}
                        placeholder={'leather_seats'} {...register('leather_seats')}/>leather seats
+                </span>
+                    <span>
                 <input type="checkbox" name={'massaging_seats'} onClick={handleParams}
                        placeholder={'massaging_seats'} {...register('massaging_seats')}/>massaging seats
+                </span>
+                    <span>
                 <input type="checkbox" name={'rear_ac'} onClick={handleParams}
                        placeholder={'rear_ac'} {...register('rear_ac')}/>rear ac
+                </span>
+                    <span>
                 <input type="checkbox" name={'sunroof_moonroof'} onClick={handleParams}
                        placeholder={'sunroof_moonroof'} {...register('sunroof_moonroof')}/>sonroof/moonroof
+                </span>
+                    <span>
                 <input type="checkbox" name={'premium_audio'} onClick={handleParams}
                        placeholder={'premium_audio'} {...register('premium_audio')}/>premium audio
+                </span>
+                    <span>
                 <input type="checkbox" name={'apple_carplay'} onClick={handleParams}
                        placeholder={'apple_carplay'} {...register('apple_carplay')}/>apple carplay
+                </span>
+                    <span>
                 <input type="checkbox" name={'android_auto'} onClick={handleParams}
                        placeholder={'android_auto'} {...register('android_auto')}/>android auto
+                </span>
+                    <span>
                 <input type="checkbox" name={'front_rear_airbags'} onClick={handleParams}
                        placeholder={'front_rear_airbags'} {...register('front_rear_airbags')}/>front
                 rear airbags
+                </span>
+                    <span>
                 <input type="checkbox" name={'bluetooth'} onClick={handleParams}
                        placeholder={'bluetooth'} {...register('bluetooth')}/>bluetooth
+                </span>
+                    <span>
                 <input type="checkbox" name={'usb'} onClick={handleParams} placeholder={'usb'} {...register('usb')}/>USB
+                </span>
+                    <span>
                 <input type="checkbox" name={'chiller_freezer'} onClick={handleParams}
                        placeholder={'chiller_freezer'} {...register('chiller_freezer')}/>chiller/freezer
+                </span>
+                </div> : null}
+
                 <button>Search Cars</button>
             </form>
         </div>

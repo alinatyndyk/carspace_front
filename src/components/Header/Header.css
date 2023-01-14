@@ -1,38 +1,58 @@
-.menu{
-    background-color: darkblue;
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
+.menu {
+    background-color: black;
     color: white;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: orange solid 4px;
+    border-bottom: darkgrey solid 1px;
+    padding: 0 20px 0 20px;
+}
+
+.menu h3 {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.auth_links {
+    display: flex;
+    column-gap: 15px;
+}
+
+.auth_link {
+    color: white;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .menu_navbar {
     display: flex;
-    background-color:aliceblue;
+    justify-content: space-between;
+    background-color: black;
     column-gap: 30px;
     font-size: 13px;
 }
 
-.menu_navbar_link{
-    color: darkslategray;
-    text-decoration: none;
-    margin-left: 15px;
-    font-size: 13px;
-}
-
-.menu_link{
+.menu_navbar_link {
     color: white;
     text-decoration: none;
     margin-left: 15px;
-    font-size: 15px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.auth_links span:first-child{
-    border: 1px solid white;
+.menu_navbar_links {
+    display: flex;
+    column-gap: 15px;
+
 }
 
-.main_span {
-    background-color: green;
+.auth_links :hover {
+    color: darkgrey;
 }
+
+/*input[type=text] {*/
+/*    background: transparent;*/
+/*    border: none;*/
+/*    border-bottom: 1px solid white;*/
+/*}*/
