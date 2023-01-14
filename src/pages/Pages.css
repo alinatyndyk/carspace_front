@@ -5,7 +5,7 @@
     background-image: url(../black_cars.jpg);
     background-size: cover;
     height: 400px;
-    padding: 0 200px 0 200px
+    padding: 0 200px 0 200px;
 }
 
 .car-page {
@@ -14,11 +14,13 @@
 
 .login_page_insides {
     margin-top: 100px;
+    margin-left: 150px;
     display: flex;
     flex-direction: column;
-    /*justify-content: center;*/
+    justify-content: center;
     align-items: center;
     row-gap: 15px;
+    width: 600px;
     padding: 15px;
     box-sizing: border-box;
     color: white;

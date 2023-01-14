@@ -22,7 +22,11 @@
   box-sizing: border-box;
   border: darkgrey 1px solid;
   border-top: none;
+  display: flex;
+  flex-direction: column;
   row-gap: 10px;
+  /*position: absolute;*/
+  color: white;
   position: absolute;
 }
 

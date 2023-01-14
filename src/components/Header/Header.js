@@ -1,27 +1,32 @@
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import BrandsPage from "../../pages/BrandsPage";
 import {useEffect, useState} from "react";
 import './Header.css'
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {authActions, carActions} from "../../redux";
 import React from "react";
 import {useNavigate} from "react-router";
 import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory();
 
 export default function Header() {
     const [isShown, setIsShown] = useState(false);
     const [isLocation, setIsLocation] = useState(false);
+    const [location, setLocation] = useState(false);
     const [isAccount, setIsAccount] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [isAuthUser, setIsAuthUser] = useState(false);
     const [Id, setId] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
     // const {errors} = useSelector(state => state.cars)
     const {register, handleSubmit} = useForm();
-
+    const {cars} = useSelector(state => state.cars);
     // if (!access) {
     //     console.log('no access');
     // } else if (access) {
@@ -51,8 +56,21 @@ export default function Header() {
         }
     }, [])
 
+    useEffect(() => {
+        searchParams.set('location', location)
+        setSearchParams(searchParams);
+        const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+        if(!errors){
+            navigate(`/cars?${searchParams}`);
+        }
+    }, [location])
+
     const submit = async (data) => {
-        dispatch(carActions.getByDescription({search: data}))
+        console.log(data, "DATA**************************");
+        const {errors} = dispatch(carActions.getByDescription({description: data}));
+        if (!errors) {
+            navigate(`/cars`, {state: {description: data}})
+        }
     }
     // const isAuth = authService.getAccessToken();
 
@@ -73,7 +91,7 @@ export default function Header() {
     }
 
     return (
-        <div>
+        <div className={'header'}>
             <div className={'menu'}>
                 <h3>Carspace.</h3>
                 <button onClick={() => window.location.reload()}>Reload page</button>
@@ -120,37 +138,59 @@ export default function Header() {
                 <div className={'menu_navbar'}>
                     <div className={'menu_navbar_links'}>
 
-                    <p><Link className={'menu_navbar_link'} to={'/home'}>Home</Link></p>
-                    <p
-                        onMouseOver={() => setIsLocation(true)}
-                        onMouseLeave={() => setIsLocation(false)}>
-                        <Link className={'menu_navbar_link'} to={'/brands'}>Brands</Link> {isLocation && (
-                        <div className={'brands'}>
-                            <BrandsPage/>
-                        </div>
-                    )}
-                    </p>
-                    <p
-                        onMouseOver={() => setIsShown(true)}
-                        onMouseLeave={() => setIsShown(false)}>
-                        <Link className={'menu_navbar_link'} to={'/brands'}>Locations</Link> {isShown && (
-                        <div className={'brands'}>
-                            {/*<BrandsPage/>*/}
-                            <div>London</div>
-                            <div>Manchester</div>
-                            <div>Dubai</div>
-                            <input type="checkbox"/>
-                        </div>
-                    )}
-                    </p>
-                    <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
-                    <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
-                    <p><Link className={'menu_navbar_link'} to={'/companies'}>Companies</Link></p>
+                        <p><Link className={'menu_navbar_link'} to={'/home'}>Home</Link></p>
+                        <p
+                            onMouseOver={() => setIsLocation(true)}
+                            onMouseLeave={() => setIsLocation(false)}>
+                            <Link className={'menu_navbar_link'} to={'/brands'}>Brands</Link> {isLocation && (
+                            <div className={'brands'}>
+                                <BrandsPage/>
+                            </div>
+                        )}
+                        </p>
+                        <p
+                            onMouseOver={() => setIsShown(true)}
+                            onMouseLeave={() => setIsShown(false)}>
+                            <Link className={'menu_navbar_link'} to={'/brands'}>Locations</Link> {isShown && (
+                            <div className={'brands'}>
+                                {/*<BrandsPage/>*/}
+                                {/*'London', 'Birmingham', 'Manchester', 'Leeds', 'Sheffield', 'Liverpool', 'Bristol', 'Wakefield'*/}
+                                {/*<div onClick={() => {searchParams.set('location', 'london'); setLocation('london');}}>London</div>*/}
+                                <div onClick={() => {
+                                    // searchParams.set('location', 'london');
+                                    setLocation('london')
+                                }}>London
+                                </div>
+                                <div onClick={() => {
+                                    // searchParams.set('location', 'birmingham');
+                                    setLocation('birmingham')
+                                }}>Birmingham
+                                </div>
+                                <div onClick={() => {
+                                    // searchParams.set('location', 'manchester');
+                                    setLocation('manchester')
+                                }}>Manchester
+                                </div>
+                                <div onClick={() => {
+                                    // searchParams.set('location', 'manchester');
+                                    setLocation('leeds')
+                                }}>Leeds</div>
+                                <div>Sheffield</div>
+                                <div>Liverpool</div>
+                                <div>Bristol</div>
+                                <div>Wakefield</div>
+                                {JSON.stringify(cars)}
+                            </div>
+                        )}
+                        </p>
+                        <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
+                        <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
+                        <p><Link className={'menu_navbar_link'} to={'/companies'}>Companies</Link></p>
                     </div>
                     <div className={'menu_navbar_form'}>
                         <form onSubmit={handleSubmit(submit)}>
-                            <input type="text" placeholder={'Car rentals in London'} {...register('search')}/>
-                            <button onClick={() => navigate('/cars')}>Search</button>
+                            <input type="text" placeholder={'Car rentals in London'} {...register('description')}/>
+                            <button>Search</button>
                         </form>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ const carService = {
     getAll: () => axiosService.get(urls.cars),
     getFilteredByDate: (data) => axiosService.post('http://localhost:5000/cars/filter/date', data),
     getById: (_id) => axiosService.get(`http://localhost:5000/cars/${_id}`),
-    getByDescription: (search) => axiosService.post(`http://localhost:5000/cars/search/description`, search),
+    getByDescription: (description, params) => axiosService.post(`http://localhost:5000/cars/search/description?page=${params}`, description),
     getByBrand: (brand) => axiosService.get(`http://localhost:5000/cars?brand=${brand}`, {
         headers: {
             access_token: `${authService.getAccessToken()}`

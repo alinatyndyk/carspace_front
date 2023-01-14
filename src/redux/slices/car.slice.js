@@ -39,10 +39,10 @@ const getAllWithParams = createAsyncThunk(
 
 const getByDescription = createAsyncThunk(
     'carSlice/getByDescription',
-    async ({search}, {rejectWithValue}) => {
+    async ({description, params}, {rejectWithValue}) => {
         try {
-            console.log(search, 'searxh in async');
-            const {data} = await carService.getByDescription(search);
+            console.log(description, params,' description in async');
+            const {data} = await carService.getByDescription(description, params);
             return data.cars
 
         } catch (e) {
