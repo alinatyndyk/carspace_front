@@ -15,6 +15,9 @@ import CarFull from "./components/CarFull";
 import CompanyFull from "./components/Companies/CompanyFull";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
+import CheckoutComponent from "./components/CheckoutComponent";
+import CheckoutSuccess from "./pages/CheckoutSuccess";
+import CheckoutCancel from "./pages/CheckoutCancel";
 
 function App() {
     // const [isShown, setIsShown] = useState(false);
@@ -23,6 +26,9 @@ function App() {
             <div className={'content'}>
                 <Routes>
                     <Route path={'/'} element={<LayoutPage/>}>
+                        <Route path={'/payment'} element={<CheckoutComponent/>}/>
+                        <Route path={'/checkout-success'} element={<CheckoutSuccess/>}/>
+                        <Route path={'/checkout-cancel'} element={<CheckoutCancel/>}/>
                         <Route path={'/cars'} element={<CarPage/>}/>
                         <Route path={'/cars/:car_id'} element={<CarFull/>}/>
                         {/*<Route path={'/account'} element={<CompanyFull/>}/>*/}
@@ -42,6 +48,7 @@ function App() {
                         <Route path={'password-forgot/:element'} element={<ForgotPasswordPage/>}/>
                         <Route path={'password-reset'} element={<ResetPasswordPage/>}/>
                         <Route path={'password-reset/:element'} element={<ResetPasswordPage/>}/>
+                        {/*<Route path={'*'} element={<AboutPage/>}/>*/}
                     </Route>
                 </Routes>
             </div>

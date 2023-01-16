@@ -61,7 +61,7 @@ export default function Header() {
         setSearchParams(searchParams);
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if(!errors){
-            navigate(`/cars?${searchParams}`);
+            // navigate(`/cars?${searchParams}`);
         }
     }, [location])
 

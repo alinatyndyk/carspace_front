@@ -18,9 +18,7 @@ export default function CarParamsForm() {
     const {brands} = useSelector(state => state.brands);
 
     useEffect(() => {
-        if (isBrand === true) {
-            const {errors} = dispatch(brandActions.getAll());
-        }
+        dispatch(brandActions.getAll());
     }, [])
 
 
