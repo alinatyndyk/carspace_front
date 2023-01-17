@@ -6,7 +6,7 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions, carActions} from "../../redux";
 import React from "react";
-import {useNavigate} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
 import {createBrowserHistory} from "history";
@@ -23,6 +23,7 @@ export default function Header() {
     const [Id, setId] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const {desc} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     // const {errors} = useSelector(state => state.cars)
     const {register, handleSubmit} = useForm();
@@ -57,21 +58,31 @@ export default function Header() {
     }, [])
 
     useEffect(() => {
-        searchParams.set('location', location)
-        setSearchParams(searchParams);
+        if (location !== false) {
+            searchParams.set('location', location)
+            setSearchParams(searchParams);
+
+        }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
-        if(!errors){
+        if (!errors) {
             // navigate(`/cars?${searchParams}`);
         }
     }, [location])
 
     const submit = async (data) => {
+        const str = data?.description.replaceAll(" ", '_').toLowerCase();
         console.log(data, "DATA**************************");
+        console.log(str, 'str');
+        console.log(data.description, "DATA**************************");
         const {errors} = dispatch(carActions.getByDescription({description: data}));
         if (!errors) {
-            navigate(`/cars`, {state: {description: data}})
+            // history.push(`/cars?desc=${str}`);
+            navigate(`/cars?description=${str}`, {state: data});
         }
     }
+    // let str1 = 'ds ds ds ds ds';
+    // str1 = str1.replaceAll(" ","_");
+    // console.log(str1);
     // const isAuth = authService.getAccessToken();
 
     const logout = () => {
@@ -174,17 +185,19 @@ export default function Header() {
                                 <div onClick={() => {
                                     // searchParams.set('location', 'manchester');
                                     setLocation('leeds')
-                                }}>Leeds</div>
+                                }}>Leeds
+                                </div>
                                 <div>Sheffield</div>
                                 <div>Liverpool</div>
                                 <div>Bristol</div>
                                 <div>Wakefield</div>
-                                {JSON.stringify(cars)}
+                                {/*{JSON.stringify(cars)}*/}
                             </div>
                         )}
                         </p>
                         <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
-                        <p><Link className={'menu_navbar_link'} to={'/cars'}>Cars</Link></p>
+                        <p><Link onDoubleClick={() => window.location.reload()} className={'menu_navbar_link'}
+                                 to={'/cars'}>Cars</Link></p>
                         <p><Link className={'menu_navbar_link'} to={'/companies'}>Companies</Link></p>
                     </div>
                     <div className={'menu_navbar_form'}>

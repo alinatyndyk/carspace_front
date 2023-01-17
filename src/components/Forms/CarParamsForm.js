@@ -4,9 +4,6 @@ import {useForm} from "react-hook-form";
 import {useSearchParams} from "react-router-dom";
 import {brandActions, carActions} from "../../redux";
 import {useNavigate, useParams} from "react-router";
-import {createBrowserHistory} from "history";
-
-const history = createBrowserHistory();
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
@@ -46,24 +43,24 @@ export default function CarParamsForm() {
     const [carFeatures, setCarFeatures] = useState(false);
 
     useEffect(() => {
-        setSearchParams(searchParams);
-    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay])
+        // setSearchParams(searchParams);
+        if (getBrand === null) {
+            searchParams.delete('brand');
+        }
+        if(window.location.search.includes('description')){
+            searchParams.delete('description')
+        }
+        setValue('brand', getBrand);
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, brand])
 
 
     const submit = async () => {
         const searchString = window.location.search;
-        console.log(searchString, 'search string');
-        if (brand) {
-            setValue('brand', brand)
-
-        }
-        // console.log(data, 'data in submit **************************');
+        console.log(searchString, 'search string ***********************************');
         searchParams.set('page', 1)
-        dispatch(carActions.getAllWithParams({params: searchParams}))
-        if (brand) {
-            // searchParams.set('page', 1)
-            // history.push(`/cars?${searchParams}`)
-            navigate(`/cars?${searchParams}`)
+        const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+        if (!errors) {
+            setSearchParams(searchParams);
         }
     }
     const [isBrand, setIsBrand] = useState(false);
@@ -81,17 +78,16 @@ export default function CarParamsForm() {
                     }
                 }}>
                     <input type="text" disabled={true} placeholder={'brand'} {...register('brand')}/>
-                    {isBrand === true ?
+                    {isBrand && !brand === true ?
                         <div>{brands.map(item => <div
                             onClick={() => {
-                                setValue('brand', item.brand);
+                                // setValue('brand', item.brand);
                                 setBrand(item.brand);
                                 searchParams.set('brand', item.brand);
                             }}>{item.brand}</div>)}
                             <div onClick={() => {
-                                setValue('brand', '');
+                                // setValue('brand', '');
                                 setBrand(null);
-                                searchParams.delete('brand');
                             }}>None
                             </div>
                         </div>

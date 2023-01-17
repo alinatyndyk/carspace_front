@@ -7,6 +7,7 @@ import {authService} from "../services";
 import jwt_decode from "jwt-decode";
 import CarOrderForm from "./Forms/CarOrderForm";
 import CheckoutComponent from "./CheckoutComponent";
+import './Car.css'
 
 export default function CarFull() {
     const dispatch = useDispatch();
@@ -81,26 +82,40 @@ export default function CarFull() {
     return (
         <div>
             <h2>Car Full</h2>
-            {equal === true ?
-                <form onSubmit={handleSubmit(submit)}>
-                    <input type="text" placeholder={'model'} {...register('model')}/>
-                    <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                    <input type="text" placeholder={'description'} {...register('description')}/>
-                    <button>Update car</button>
-                </form> : null}
-            <div>id:{_id}</div>
-            <div>brand:{brand}</div>
-            <div>model:{model}</div>
-            <div>model_year:{model_year}</div>
-            <div>location:{location}</div>
-            <div>description:{description}</div>
-            <img src={`${image?.link}`} alt=''/>
-            <button onClick={() => dispatch(carActions.setCarForUpdate(car))}>set for update</button>
-            <button onClick={() => setBook(true)}>Book this car</button>
-            {/*{book === true ? <div><CarOrderForm/></div> : null}*/}
-            {book === true ? <div><CheckoutComponent car={car} carErrors={errors}/></div> : null}
-            <h4>Car features</h4>
-            {JSON.stringify(car_features)}
+            <div className={'car-full'}>
+                <div className={'car-full-top'}>
+                    <img src={`${image?.link}`} alt=''/>
+                    <div className={'car-full-data'}>
+                        <div>id:{_id}</div>
+                        <div>brand:{brand}</div>
+                        <div>model:{model}</div>
+                        <div>model_year:{model_year}</div>
+                        <div>location:{location}</div>
+                        <div>description:{description}</div>
+                    </div>
+                </div>
+                <div className={'car-full-bottom'}>
+                    <h4>Car features</h4>
+                    {JSON.stringify(car_features)}
+                    <button onClick={() => {
+                        dispatch(carActions.setCarForUpdate(car));
+                        // setEqual(true)
+                    }}>set for update
+                    </button>
+                    <button onClick={() => {if(book === false){setBook(true)}else{setBook(false)}}}>Book this car</button>
+                    {book === true ? <div><CheckoutComponent car={car} carErrors={errors}/></div> : null}
+                    {/*{equal === true ?*/}
+                    {/*    <div>*/}
+                    {/*    </div> : null}*/}
+                            <form onSubmit={handleSubmit(submit)}>
+                                <input type="text" placeholder={'model'} {...register('model')}/>
+                                <input type="number" placeholder={'model_year'} {...register('model_year')}/>
+                                <input type="text" placeholder={'description'} {...register('description')}/>
+                                <button>Update car</button>
+                            </form>
+                </div>
+                {/*{book === true ? <div><CarOrderForm/></div> : null}*/}
+            </div>
         </div>
     )
 }

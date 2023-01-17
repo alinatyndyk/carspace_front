@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
 .menu {
-    background-color: black;
+    background-color: darkblue;
     color: white;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: darkgrey solid 1px;
+    border-bottom: darkgrey solid 0.5px;
     padding: 0 20px 0 20px;
 }
 
@@ -28,7 +28,7 @@
 .menu_navbar {
     display: flex;
     justify-content: space-between;
-    background-color: black;
+    background-color: darkblue;
     column-gap: 30px;
     font-size: 13px;
 }

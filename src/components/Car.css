@@ -4,3 +4,11 @@
     object-fit: cover;
     border: orange 1px solid;
 }
+
+.car-full-top{
+    display: flex;
+}
+
+.car-full img{
+    height: 300px;
+}

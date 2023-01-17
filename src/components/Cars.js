@@ -4,32 +4,41 @@ import CarCard from "./CarCard";
 import {carActions} from "../redux";
 import {useLocation, useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory();
 
 const Cars = ({id}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
-    const {brand, description: desc} = useParams();
+    const {brand, desc} = useParams();
     const {state} = useLocation();
-    console.log(state?.description, 'STATE DESC');
+    console.log(state, 'STATE DESC');
     const [searchParams, setSearchParams] = useSearchParams({page: 1});
-    const [getPage, setPage] = useState({page:1});
-    const [getDesc, setDesc] = useState();
+    const [getPage, setPage] = useState(1);
+    const [getDesc, setDesc] = useState(state);
     console.log(getDesc, 'getDesc');
-    console.log(id, 'ID IN CARS');
+    // console.log(id, 'ID IN CARS');
 
+    const searchString = window.location.search;
+    console.log(searchString, 'search string');
 
     useEffect(() => {
         if (brand) {
             console.log('else if brand');
             console.log(searchParams, "SEARCH PARAMS BRAND***********");
-            // const res = dispatch(carActions.getByBrand({brand}))
-            const res = dispatch(carActions.getByBrand({brand}))
+            // const res = dispatch(carActions.getByBrand({brand}));
+            const res = dispatch(carActions.getByBrand({brand}));
             console.log(res);
         } else if (id) {
             console.log(id, 'if id cars');
             dispatch(carActions.getById({_id: id}))
             // console.log(car);
-        } else {
+        }else if (searchString.includes('description') === true){
+            const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('desc')}, params: searchParams}));
+            console.log(errors, 'errors');
+            searchParams.set('if_id', "true");
+        }else {
             console.log(id, 'if all cars');
             const {errors} = dispatch(carActions.getAll())
             console.log(errors, 'if all cars');
@@ -37,34 +46,34 @@ const Cars = ({id}) => {
         setSearchParams(searchParams);
     }, [id]);
 
-    const searchString = window.location.search;
-    console.log(searchString, 'search string');
 
-            console.log(state?.location, 'LOCATION STATE 1');
+            // console.log(state?.location, 'LOCATION STATE 1');
 
     useEffect(() => {
+        // console.log('GET PAGE ***************/*/*/*/*//**********');
         setSearchParams(searchParams);
-        console.log(searchString, 'IMP');
+        // console.log(searchString, 'IMP');
+        // console.log(searchString.includes('desc'));
         if (brand) {
             searchParams.set('brand', brand)
         }
-        if (state?.description) {
-            setDesc(state?.description);
-            console.log(getDesc, 'get desc if');
-            console.log(state?.description, 'in if ***********************');
-            dispatch(carActions.getByDescription({description: state.description, params: getPage}))
-        }else if (state?.location){
-            console.log(state?.location, 'LOCATION STATE');
-            searchParams.set('location', `${state?.location}`)
-            // dispatch(carActions.getAllWithParams({params: }))
-
-        }else if(getDesc?.description){
-            dispatch(carActions.getByDescription({description: getDesc, params: getPage}))
+        if (searchString.includes('description') === true) {
+            searchParams.set('page', getPage);
+            setSearchParams(searchParams);
+            console.log(searchParams, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            // const {errors} = dispatch(carActions.getByDescription({description: {description: "Bentley"}, params: searchParams}));
+            const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}, params: searchParams}));
+            // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+            console.log(errors);
+            searchParams.set('change_page', "true");
+            // history.push(`/cars/${searchParams.toString()}/xxx`)
         }else {
             console.log('INALL***************');
             dispatch(carActions.getAllWithParams({params: searchParams}))
         }
+            setSearchParams(searchParams);
     }, [getPage])
+    console.log(searchParams.toString(), '****-*---------*-*-***********');
 
 
     const prevPage = () => {
@@ -78,13 +87,12 @@ const Cars = ({id}) => {
 
     const nextPage = () => {
         let page = searchParams.get('page');
-        console.log(page, "GET PAGE NEXT");
+        console.log(page, "PAGE");
+        if(isNaN(page)) page = 1
+        // let page = getPage.page;
         page = +page + 1
-        console.log(page, "GET PAGE NEXT AFTER +");
-        // console.log(page, "next PAGE");
         searchParams.set('page', page)
         setPage(page);
-        // searchParams.set('page', getPage);
     }
 
 

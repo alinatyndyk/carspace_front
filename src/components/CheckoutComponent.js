@@ -21,6 +21,10 @@ export default function CheckoutComponent({car, carErrors}) {
     const [toDate, setToDate] = useState();
     console.log(fromDate, toDate, 'state date');
 
+    const Difference_In_Time = new Date(toDate).getTime() - new Date(fromDate).getTime();
+    const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    console.log(fromDate, toDate, Difference_In_Days);
+
     const payNow = async token => {
         try {
             // const response = await axios(
@@ -36,7 +40,7 @@ export default function CheckoutComponent({car, carErrors}) {
             //     }
             // });
             const response = await axiosService.post(`http://localhost:5000/cars/${car_id}/order`, {
-                amount: car.price_day_basis * 100,
+                amount: car.price_day_basis * 100 * Difference_In_Days,
                 token,
                 from_date: fromDate,
                 to_date: toDate,
@@ -57,7 +61,7 @@ export default function CheckoutComponent({car, carErrors}) {
         console.log(fromDate, toDate, 'state date done');
     }
 
-    const priceForStripe = car.price_day_basis * 100;
+    const priceForStripe = car.price_day_basis * 100 * Difference_In_Days;
     const stripeKeyPublish = 'pk_test_51MIX9gIAfGNWX8HhBIwUrgdZnEdnQ3Rji9C5k11GZk0tIpdGxewspLxOhGoIEAB53kAwJ2xDRTRt3ctswqph2JoF00AnaMMfdG'
     return (
         <div>
@@ -78,7 +82,7 @@ export default function CheckoutComponent({car, carErrors}) {
                 billingAddress
                 shippingAddress
                 amount={priceForStripe}
-                description={`Your total is $${priceForStripe}`}
+                description={`Your total is $${car.price_day_basis * Difference_In_Days}`}
                 token={payNow}
             />
         </div>

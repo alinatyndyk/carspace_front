@@ -41,8 +41,9 @@ const getByDescription = createAsyncThunk(
     'carSlice/getByDescription',
     async ({description, params}, {rejectWithValue}) => {
         try {
-            console.log(description, params,' description in async');
+            console.log(description, params,' description in async /*/**/*/*/*/*/*//**/*//*//**/');
             const {data} = await carService.getByDescription(description, params);
+            console.log(data, 'get by desc data return');
             return data.cars
 
         } catch (e) {

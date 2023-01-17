@@ -6,9 +6,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import CarCard from "../components/CarCard";
-import {history} from "../services";
+// import {history} from "../services";
 import CarParamsForm from "../components/Forms/CarParamsForm";
 import CarPage from "./CarPage";
+import {createBrowserHistory} from "history";
+
+const history = createBrowserHistory();
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -52,8 +55,9 @@ export default function HomePage() {
     const submit = (data) => {
         console.log(data);
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
+            history.push('/cars');
         if (!errors) {
-            history.push('/cars')
+            // navigate('/cars');
         }
 
         console.log(errors);
@@ -76,6 +80,7 @@ export default function HomePage() {
                 </form>
 
             </div>
+            {cars.map(car => <CarCard car={car}/>)}
             <Modal active={modalActive} setActive={setModalActive}>
                 <LoginForm/>
             </Modal>
