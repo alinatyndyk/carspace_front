@@ -3,6 +3,7 @@ import {carActions} from "../../redux";
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
 import {useForm} from "react-hook-form";
+import {axiosService} from "../../services";
 
 export default function CarForm() {
     const dispatch = useDispatch();
@@ -15,11 +16,34 @@ export default function CarForm() {
 
     const submit = async (data) => {
         console.log(data, 'data in submit **************************');
+        console.log(data.files);
+        const fileList = data.files;
+        let files = [];
+        for (let index = 0; index < fileList.length; index++) {
+            console.log('xxx *******');
+            const file = fileList[index];
+            files.push(file);
+            // formData.append("files", file);
+            console.log('xxx *******');
+        }
+        console.log(files, 'files');
 
-        console.log(data.testImage[0], 'data in picture');
+        // try {
+        //     const result = axiosService.post('http://localhost:5000/cars', files, {
+        //         headers: {
+        //             // access_token: `${authService.getAccessToken()}`,
+        //             'Content-Type': 'multipart/form-data'
+        //         }
+        //     });
+        //     console.log(result);
+        // } catch (e) {
+        //     console.log(e);
+        // }
         const {error} = await dispatch(carActions.postCar({
             car: {
-                ...data, testImage: data.testImage[0],
+                ...data,
+                files,
+                // testImage: data.testImage[0],
                 car_features: {
                     digital_hud: data.digital_hud,
                     cruise_control: data.cruise_control,
@@ -44,19 +68,20 @@ export default function CarForm() {
                 }
             }
         }))
-        console.log(error, 'error from submit');
-        setImg({filePreview: URL.createObjectURL(data.testImage[0])});
+        // console.log(error, 'error from submit');
+        setImg({filePreview: URL.createObjectURL(data.files[0])});
     }
 
     return (
         <div>
-            <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
+            <form className={'car-form'} onSubmit={handleSubmit(submit)} encType='multipart/form-data'>
                 <div>Create a car</div>
                 <input type="text" placeholder={'brand'} {...register('brand')}/>
                 <input type="text" placeholder={'model'} {...register('model')}/>
                 <input type="number" placeholder={'model_year'} {...register('model_year')}/>
                 <input type="text" placeholder={'description'} {...register('description')}/>
-                <input type="file" placeholder={'testImage'} {...register('testImage')}/>
+                {/*<input type="file" placeholder={'testImage'} {...register('testImage')}/>*/}
+                <input type="file" multiple='multiple' placeholder={'files'} {...register('files')}/>
                 <input type="text" placeholder={'location'} {...register('location')}/>
                 <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}/>
                 <input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>

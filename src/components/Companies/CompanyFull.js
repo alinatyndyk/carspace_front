@@ -22,49 +22,39 @@ const CompanyFull = () => {
         if (!company_id && location.state === null) {
             navigate('/login');
         } else if (!company_id) {
-            console.log('no id from params');
-            console.log(location.state.Id._id, 'state use location');
             const {errors} = dispatch(companyActions.getById({_id: location.state.Id}));
             console.log(errors);
         } else {
-            console.log('in params id');
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
             console.log(errors);
 
         }
     }, [company_id, location.state]);
     const {company} = useSelector(state => state.companies);
-    console.log(company);
     const {_id, name, email, contact_number, image, description, cars} = company;
 
     const [equal, setEqual] = useState(false);
     const [getDecoded, setDecoded] = useState(false);
 
-    console.log(getDecoded, 'get decoded');
     useEffect(() => {
         const token = authService.getAccessToken();
         console.log(token, token);
         if (token) {
             const decoded = jwt_decode(token);
-            console.log(decoded, decoded._id, 'decoded');
-            console.log(decoded._id, company_id, 'decoded token in company');
             setDecoded(decoded);
         } else if (!token) {
             console.log('no token');
         }
-        console.log(token, 'token in company');
     }, [])
 
     useEffect(() => {
         if (company_id === getDecoded._id) {
-            console.log('equals', company_id, getDecoded._id);
             setEqual(true);
         } else {
             console.log('not equals', company_id, 'company id', getDecoded._id);
         }
 
     })
-    console.log(company, 'xxx*******************');
 
     return (
         <div>

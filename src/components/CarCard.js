@@ -5,7 +5,7 @@ import './Car.css'
 
 const CarCard = ({car, auth}) => {
 
-    const {_id, model, brand, model_year, image} = car;
+    const {_id, model, brand, model_year, image, images} = car;
     const navigate = useNavigate();
     const location = useLocation();
     // console.log(location, 'location');
@@ -28,7 +28,9 @@ const CarCard = ({car, auth}) => {
             <div>brand:{brand}</div>
             <div>model:{model}</div>
             <div>model_year:{model_year}</div>
-            <img src={`${image?.link}`} alt="Red dot"/>
+            <div>Instead of image</div>
+            {JSON.stringify(images)}
+            {/*<img src={`${image?.link}`} alt="Red dot"/>*/}
             <button>Get cars with this brand</button>
             <hr/>
             <br/>

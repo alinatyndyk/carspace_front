@@ -10,6 +10,8 @@ import CarCard from "../components/CarCard";
 import CarParamsForm from "../components/Forms/CarParamsForm";
 import CarPage from "./CarPage";
 import {createBrowserHistory} from "history";
+import axios from "axios";
+import {axiosService} from "../services";
 
 const history = createBrowserHistory();
 
@@ -55,12 +57,44 @@ export default function HomePage() {
     const submit = (data) => {
         console.log(data);
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
-            history.push('/cars');
+        history.push('/cars');
         if (!errors) {
             // navigate('/cars');
         }
 
         console.log(errors);
+    }
+    // const [files, setFiles] = useState();
+
+    const uploadAlbum = async (fileList) => {
+        console.log(fileList, 'AlbumData');
+        // const formData = new FormData;
+        let files = [];
+        // let files = fileList;
+        // console.log(formData, 'formData');
+        // console.log(fileList.files, 'op');
+
+        for (let index = 0; index < fileList.files.length; index++) {
+            console.log('xxx *******');
+            const file = fileList.files[index];
+            files.push(file);
+            // formData.append("files", file);
+            console.log('xxx *******');
+        }
+        console.log(files, 'files');
+        // console.log(formData, 'form data');
+        // console.log(fileList.files, 'file index');
+        try {
+            const result = axiosService.post('http://localhost:5000/users/album', files, {
+                headers: {
+                    // access_token: `${authService.getAccessToken()}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log(result);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -71,19 +105,23 @@ export default function HomePage() {
             <div className={'login_page_insides'}>
                 <h2>RENT A CAR IN DUBAI</h2>
                 <div>Book directly from local suppliers. No commission, no mark-ups.</div>
-                <form className={'find_by_date_form'} onSubmit={handleSubmit(submit)}>
-                    <input type="date" placeholder={'from_date'} {...register('from_date')}/>
-                    <input type="date" placeholder={'to_date'} {...register('to_date')}/>
-                    <input type="text" placeholder={'Car search'} {...register('description')}/>
-                    <button>Find</button>
-                    {/*<CarParamsForm/>*/}
-                </form>
+                {/*<form className={'find_by_date_form'} onSubmit={handleSubmit(submit)}>*/}
+                {/*    <input type="date" placeholder={'from_date'} {...register('from_date')}/>*/}
+                {/*    <input type="date" placeholder={'to_date'} {...register('to_date')}/>*/}
+                {/*    <input type="text" placeholder={'Car search'} {...register('description')}/>*/}
+                {/*    <button>Find</button>*/}
+                {/*    /!*<CarParamsForm/>*!/*/}
+                {/*</form>*/}
 
             </div>
             {cars.map(car => <CarCard car={car}/>)}
             <Modal active={modalActive} setActive={setModalActive}>
                 <LoginForm/>
             </Modal>
+            <form onSubmit={handleSubmit(uploadAlbum)} encType={'multipart/form-data'}>
+                <input type="file" multiple="multiple" {...register('files')}/>
+                <button>upload album</button>
+            </form>
             {/*{cars.map(car => <CarCard car={car}/>)}*/}
         </div>
     )

@@ -29,6 +29,7 @@ export default function CarFull() {
         brand,
         model_year,
         image,
+        images,
         company,
         location,
         description,
@@ -85,6 +86,7 @@ export default function CarFull() {
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
                     <img src={`${image?.link}`} alt=''/>
+                    {images.map(image => <div><img src={`${image?.link}`} alt=''/></div>)}
                     <div className={'car-full-data'}>
                         <div>id:{_id}</div>
                         <div>brand:{brand}</div>
