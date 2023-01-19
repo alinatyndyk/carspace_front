@@ -29,6 +29,7 @@ function App() {
                         <Route path={'/payment'} element={<CheckoutComponent/>}/>
                         <Route path={'/checkout-success'} element={<CheckoutSuccess/>}/>
                         <Route path={'/checkout-cancel'} element={<CheckoutCancel/>}/>
+                        <Route path={'/about'} element={<AboutPage/>}/>
                         <Route path={'/cars'} element={<CarPage/>}/>
                         <Route path={'/cars/:car_id'} element={<CarFull/>}/>
                         {/*<Route path={'/account'} element={<CompanyFull/>}/>*/}

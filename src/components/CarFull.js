@@ -8,6 +8,11 @@ import jwt_decode from "jwt-decode";
 import CarOrderForm from "./Forms/CarOrderForm";
 import CheckoutComponent from "./CheckoutComponent";
 import './Car.css'
+import {Carousel} from "react-responsive-carousel";
+// import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {A11y, Keyboard, Navigation, Pagination, Scrollbar} from "swiper";
 
 export default function CarFull() {
     const dispatch = useDispatch();
@@ -33,7 +38,10 @@ export default function CarFull() {
         company,
         location,
         description,
-        car_features
+        car_features,
+        min_rent_time,
+        security_deposit,
+        price_day_basis
     } = car;
     console.log(car);
 
@@ -73,50 +81,97 @@ export default function CarFull() {
     }, [])
 
     useEffect(() => {
-        if (company === getDecoded._id) {
+        if (company === getDecoded._id?._id) {
             setEqual(true);
         } else {
             setEqual(false)
         }
     })
 
+    let features = [];
+    for (const feature in car_features) {
+        if (car_features[feature]) {
+            features.push(feature);
+        }
+    }
+
     return (
-        <div>
-            <h2>Car Full</h2>
+        <div className={'car-full-wrap'}>
+            <h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>
+            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null}--{security_deposit}USD</div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
-                    <img src={`${image?.link}`} alt=''/>
-                    {images.map(image => <div><img src={`${image?.link}`} alt=''/></div>)}
+                    {/*<img src={`${image?.link}`} alt=''/>*/}
+                    {/*{images.map(image => <div><img src={`${image?.link}`} alt=''/></div>)}*/}
+                    <Swiper
+                        className={'swiper_wrapper_car'}
+                        // install Swiper modules
+                        modules={[Navigation, Pagination, Scrollbar, A11y]}
+                        slidesPerView={1}
+                        navigation={true}
+                        grabCursor={true}
+                        pagination={{clickable: true}}
+                        scrollbar={{draggable: true}}
+                    >
+                        {
+                            images?.map(image => <SwiperSlide><img src={`${image?.link}`} alt=''/></SwiperSlide>)
+                        }
+                    </Swiper>
                     <div className={'car-full-data'}>
-                        <div>id:{_id}</div>
-                        <div>brand:{brand}</div>
-                        <div>model:{model}</div>
-                        <div>model_year:{model_year}</div>
-                        <div>location:{location}</div>
-                        <div>description:{description}</div>
+                        <div className={'car-pricing'}>
+                            <p className={'car-full-data-property-name'}>Pricing</p>
+                            <p>{price_day_basis}USD</p>
+                        </div>
+                        {/*<div>id:{_id}</div>*/}
+                        <div>
+                            <p className={'car-full-data-property-name'}>Brand</p>
+                            <p>{brand}</p>
+                        </div>
+                        <div>
+                            <p className={'car-full-data-property-name'}>Model</p>
+                            <p>{model}</p>
+                        </div>
+                        <div>
+                            <p className={'car-full-data-property-name'}>Model Year</p>
+                            <p>{model_year}</p>
+                        </div>
+                        <div>
+                            <p className={'car-full-data-property-name'}>Location</p>
+                            <p>{location.charAt(0).toUpperCase() + location.slice(1)}</p>
+                        </div>
+                        <button className={'book-car_button'} onClick={() => {
+                            if (book === false) {
+                                setBook(true)
+                            } else {
+                                setBook(false)
+                            }
+                        }}>Book this car
+                        </button>
                     </div>
+                        {book === true ? <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/></div> : null}
                 </div>
                 <div className={'car-full-bottom'}>
+                    <div>description:{description}</div>
                     <h4>Car features</h4>
-                    {JSON.stringify(car_features)}
+                    {/*{JSON.stringify(car_features)}*/}
+                    {/*{JSON.stringify(features)}*/}
+                    {features.map(item => <div>{item}</div>)}
                     <button onClick={() => {
                         dispatch(carActions.setCarForUpdate(car));
                         // setEqual(true)
                     }}>set for update
                     </button>
-                    <button onClick={() => {if(book === false){setBook(true)}else{setBook(false)}}}>Book this car</button>
-                    {book === true ? <div><CheckoutComponent car={car} carErrors={errors}/></div> : null}
-                    {/*{equal === true ?*/}
-                    {/*    <div>*/}
-                    {/*    </div> : null}*/}
+
+                    {equal === true ?
+                        <div>
                             <form onSubmit={handleSubmit(submit)}>
                                 <input type="text" placeholder={'model'} {...register('model')}/>
                                 <input type="number" placeholder={'model_year'} {...register('model_year')}/>
                                 <input type="text" placeholder={'description'} {...register('description')}/>
                                 <button>Update car</button>
                             </form>
+                        </div> : null}
                 </div>
-                {/*{book === true ? <div><CarOrderForm/></div> : null}*/}
             </div>
         </div>
     )

@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
+
+
 .car img{
     height: 150px;
     width: 250px;
@@ -7,8 +10,99 @@
 
 .car-full-top{
     display: flex;
+    justify-content: left;
+    /*padding-right: 300px;*/
 }
 
 .car-full img{
     height: 300px;
+}
+
+.carousel-carfull{
+    width: 600px;
+}
+
+.swiper_wrapper_car{
+    width: 500px;
+    margin: 0 35px;
+    background-color: red;
+}
+
+.car-full-data{
+    background-color: #3b383d;
+    color: white;
+    /*font-family: 'Montserrat', sans-serif;*/
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.car-full-data div {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: solid 0.5px white;
+    box-sizing: border-box;
+    padding: 10px;
+
+}
+
+.car-full-data button {
+    height: 30px;
+    width: 180px;
+    margin-top: 20px;
+    margin-left: 60px;
+    background-color: orange;
+    border: none;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 3px;
+}
+.car-pricing{
+    /*background-color: orange;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    box-sizing: border-box;
+    border-bottom: solid 0.5px white;
+}
+
+.car-full-wrap h2{
+    font-family: 'Montserrat', sans-serif;
+
+}
+
+.checkout-form{
+    border: 2px solid grey;
+    border-radius: 6px;
+    width: 300px;
+    margin-left: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.checkout-form input{
+    height: 30px;
+    width: 200px;
+    margin-top: 10px;
+    padding: 7px;
+    font-size: 18px;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-style: solid;
+    border-radius: 0px;
+    box-shadow: 4px 0px 5px rgba(66,66,66,.75);
+}
+
+.checkout-form button{
+    margin-top: 15px;
+    border: none;
+    background-color: orange;
+    width: 100px;
+    height: 30px;
 }
