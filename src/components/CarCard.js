@@ -30,7 +30,11 @@ const CarCard = ({car, auth}) => {
             <div>model_year:{model_year}</div>
             <div>Instead of image</div>
             {/*{JSON.stringify(images)}*/}
-            <img src={`${images[0]?.link}`} alt="Red dot"/>
+            {image ?
+            <div>
+            <img src={`${image?.link}`} alt="Red dot"/>
+            </div> :
+            <img src={`${images[0]?.link}`} alt="Red dot"/>}
             <button>Get cars with this brand</button>
             <hr/>
             <br/>

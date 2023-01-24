@@ -97,7 +97,7 @@ export default function CarFull() {
 
     return (
         <div className={'car-full-wrap'}>
-            <h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>
+            {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
             <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null}--{security_deposit}USD</div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
@@ -137,7 +137,7 @@ export default function CarFull() {
                         </div>
                         <div>
                             <p className={'car-full-data-property-name'}>Location</p>
-                            <p>{location.charAt(0).toUpperCase() + location.slice(1)}</p>
+                            {/*<p>{location.charAt(0).toUpperCase() + location.slice(1)}</p>*/}
                         </div>
                         <button className={'book-car_button'} onClick={() => {
                             if (book === false) {

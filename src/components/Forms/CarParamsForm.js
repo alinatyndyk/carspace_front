@@ -15,6 +15,7 @@ export default function CarParamsForm() {
     const {brands} = useSelector(state => state.brands);
 
     useEffect(() => {
+        setSearchParams('')
         dispatch(brandActions.getAll());
     }, [])
 
@@ -44,20 +45,26 @@ export default function CarParamsForm() {
 
     useEffect(() => {
         // setSearchParams(searchParams);
+        setValue('brand', brand);
         if (getBrand === null) {
             searchParams.delete('brand');
+        } else {
+        setValue('brand', getBrand);
         }
         if(window.location.search.includes('description')){
             searchParams.delete('description')
         }
-        setValue('brand', getBrand);
     }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, brand])
 
 
-    const submit = async () => {
+    const submit = async (data) => {
         const searchString = window.location.search;
         console.log(searchString, 'search string ***********************************');
         searchParams.set('page', 1)
+        console.log(searchParams, 'LOOK');
+        console.log(data, 'LOOK');
+        setSearchParams(data);
+        searchParams.keys((key) => console.log(key));
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
             setSearchParams(searchParams);

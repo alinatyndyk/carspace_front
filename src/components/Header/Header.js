@@ -59,13 +59,14 @@ export default function Header() {
 
     useEffect(() => {
         if (location !== false) {
-            searchParams.set('location', location)
+            searchParams.set('location', location);
+            // setSearchParams(null);
             setSearchParams(searchParams);
 
         }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
-            // navigate(`/cars?${searchParams}`);
+            navigate(`/cars?${searchParams}`);
         }
     }, [location])
 
@@ -74,10 +75,12 @@ export default function Header() {
         console.log(data, "DATA**************************");
         console.log(str, 'str');
         console.log(data.description, "DATA**************************");
-        const {errors} = dispatch(carActions.getByDescription({description: data}));
+        console.log(searchParams.get('description'), 'WATCH');
+        const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}}));
+        // const {errors} = dispatch(carActions.getByDescription({description: str}));
         if (!errors) {
-            // history.push(`/cars?desc=${str}`);
-            navigate(`/cars?description=${str}`, {state: data});
+            navigate(`/cars?description=${str}`);
+            // navigate(`/cars?description=${searchParams.get('description')}`, {state: data});
         }
     }
     // let str1 = 'ds ds ds ds ds';

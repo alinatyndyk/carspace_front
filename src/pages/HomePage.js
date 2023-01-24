@@ -102,7 +102,7 @@ export default function HomePage() {
         setSearchParams(searchParams);
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
-            history.push(`/cars/${window.location.search}/search`);
+            // history.push(`/cars/${window.location.search}/search`);
             dispatch(push('/cars/search/done'))
         }
     },[getType])
@@ -154,54 +154,54 @@ export default function HomePage() {
                     searchParams.set('vehicle_type', 'suv')
                 }}>SUV
                 </div>
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Sedan');*/}
-                {/*    setType('sedan');*/}
-                {/*    searchParams.set('vehicle_type', 'sedan')*/}
-                {/*}}>Sedan*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Sports');*/}
-                {/*    setType('sports');*/}
-                {/*    searchParams.set('vehicle_type', 'sports')*/}
-                {/*}}>Sports*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Crossover');*/}
-                {/*    setType('crossover');*/}
-                {/*    searchParams.set('vehicle_type', 'crossover');*/}
-                {/*}}>Crossover*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Convertible');*/}
-                {/*    setType('convertible');*/}
-                {/*    searchParams.set('vehicle_type', 'convertible');*/}
-                {/*}}>Convertible*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Electric');*/}
-                {/*    setType('electric');*/}
-                {/*    searchParams.set('vehicle_type', 'electric');*/}
-                {/*}}>Electric*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Truck');*/}
-                {/*    setType('truck');*/}
-                {/*    searchParams.set('vehicle_type', 'truck');*/}
-                {/*}}>Truck*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Minivan');*/}
-                {/*    setType('minivan');*/}
-                {/*    searchParams.set('vehicle_type', 'minivan');*/}
-                {/*}}>Minivan*/}
-                {/*</div>*/}
-                {/*<div onClick={() => {*/}
-                {/*    setValue('vehicle_type', 'Coupe');*/}
-                {/*    setType('coupe');*/}
-                {/*    searchParams.set('vehicle_type', 'coupe');*/}
-                {/*}}>Coupe*/}
-                {/*</div>*/}
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Sedan');
+                    setType('sedan');
+                    searchParams.set('vehicle_type', 'sedan')
+                }}>Sedan
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Sports');
+                    setType('sports');
+                    searchParams.set('vehicle_type', 'sports')
+                }}>Sports
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Crossover');
+                    setType('crossover');
+                    searchParams.set('vehicle_type', 'crossover');
+                }}>Crossover
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Convertible');
+                    setType('convertible');
+                    searchParams.set('vehicle_type', 'convertible');
+                }}>Convertible
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Electric');
+                    setType('electric');
+                    searchParams.set('vehicle_type', 'electric');
+                }}>Electric
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Truck');
+                    setType('truck');
+                    searchParams.set('vehicle_type', 'truck');
+                }}>Truck
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Minivan');
+                    setType('minivan');
+                    searchParams.set('vehicle_type', 'minivan');
+                }}>Minivan
+                </div>
+                <div onClick={() => {
+                    // setValue('vehicle_type', 'Coupe');
+                    setType('coupe');
+                    searchParams.set('vehicle_type', 'coupe');
+                }}>Coupe
+                </div>
             </div>
             <div>
             {cars.map(car => <CarCard car={car}/>)}
