@@ -54,7 +54,7 @@ export default function CheckoutComponent({car, carErrors}) {
             }
         } catch (e) {
             console.log(e, 'error');
-            setErrors(e);
+            setErrors(e.response.data);
         }
     }
 

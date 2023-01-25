@@ -59,6 +59,7 @@ export default function Header() {
 
     useEffect(() => {
         if (location !== false) {
+            setSearchParams('');
             searchParams.set('location', location);
             // setSearchParams(null);
             setSearchParams(searchParams);
@@ -72,12 +73,8 @@ export default function Header() {
 
     const submit = async (data) => {
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
-        console.log(data, "DATA**************************");
-        console.log(str, 'str');
-        console.log(data.description, "DATA**************************");
-        console.log(searchParams.get('description'), 'WATCH');
-        const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}}));
-        // const {errors} = dispatch(carActions.getByDescription({description: str}));
+        // const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}}));
+        const {errors} = dispatch(carActions.getByDescription({description: {description: str.toLowerCase()}}));
         if (!errors) {
             navigate(`/cars?description=${str}`);
             // navigate(`/cars?description=${searchParams.get('description')}`, {state: data});
@@ -186,6 +183,7 @@ export default function Header() {
                                 }}>Manchester
                                 </div>
                                 <div onClick={() => {
+                                    // searchParams.set('location', 'manchester');
                                     // searchParams.set('location', 'manchester');
                                     setLocation('leeds')
                                 }}>Leeds

@@ -29,29 +29,40 @@ const Cars = ({id}) => {
             // console.log('else if brand');
             // console.log(searchParams, "SEARCH PARAMS BRAND***********");
             // const res = dispatch(carActions.getByBrand({brand}));
-            const res = dispatch(carActions.getByBrand({brand}));
+            const res = dispatch(carActions.getAllWithParams({params: searchParams}));
+            // const res = dispatch(carActions.getByBrand({brand}));
             console.log(res);
         } else if (id) {
             console.log(id, 'if id cars');
             dispatch(carActions.getById({_id: id}));
             // console.log(car);
-        }else if (searchString.includes('description') === true){
-            const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}, params: searchParams}));
+        } else if (searchString.includes('description') === true) {
+            const {errors} = dispatch(carActions.getByDescription({
+                description: {description: searchParams.get('description')},
+                params: searchParams
+            }));
             console.log(errors, 'errors');
-            if(errors.response.status === 404){
+            if (errors?.response?.status === 404) {
                 setNavigationButtons(true);
             }
             // searchParams.set('if_id', "true");
-        }else {
+        // } else if (searchParams) {
+        //     const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+        //     console.log(errors);
+        } else {
             console.log(id, 'if all cars');
             const {errors} = dispatch(carActions.getAll())
+            // setSearchParams(searchParams);
+            // console.log('OOOOOOOOOOOOOOOOOOOO');
+            // // window.location.reload();
+            // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             console.log(errors, 'if all cars');
         }
         setSearchParams(searchParams);
     }, [id]);
 
 
-            // console.log(state?.location, 'LOCATION STATE 1');
+    // console.log(state?.location, 'LOCATION STATE 1');
 
     useEffect(() => {
         // console.log('GET PAGE ***************/*/*/*/*//**********');
@@ -66,17 +77,20 @@ const Cars = ({id}) => {
             setSearchParams(searchParams);
             console.log(searchParams, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             // const {errors} = dispatch(carActions.getByDescription({description: {description: "Bentley"}, params: searchParams}));
-            const {errors} = dispatch(carActions.getByDescription({description: {description: searchParams.get('description')}, params: searchParams}));
+            const {errors} = dispatch(carActions.getByDescription({
+                description: {description: searchParams.get('description')},
+                params: searchParams
+            }));
             // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             console.log(errors);
 
             // searchParams.set('change_page', "true");
             // history.push(`/cars/${searchParams.toString()}/xxx`)
-        }else {
+        } else {
             console.log('INALL***************');
             dispatch(carActions.getAllWithParams({params: searchParams}))
         }
-            setSearchParams(searchParams);
+        setSearchParams(searchParams);
     }, [getPage])
     console.log(searchParams.toString(), '****-*---------*-*-***********');
 
@@ -93,7 +107,7 @@ const Cars = ({id}) => {
     const nextPage = () => {
         let page = searchParams.get('page');
         console.log(page, "PAGE");
-        if(isNaN(page)) page = 1
+        if (isNaN(page)) page = 1
         // let page = getPage.page;
         page = +page + 1
         searchParams.set('page', page)

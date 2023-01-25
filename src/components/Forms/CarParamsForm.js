@@ -45,6 +45,9 @@ export default function CarParamsForm() {
 
     useEffect(() => {
         // setSearchParams(searchParams);
+        // for (const [key, value] of searchParams.entries()){
+        //     console.log(key, value);
+        // }
         setValue('brand', brand);
         if (getBrand === null) {
             searchParams.delete('brand');
@@ -65,6 +68,9 @@ export default function CarParamsForm() {
         console.log(data, 'LOOK');
         setSearchParams(data);
         searchParams.keys((key) => console.log(key));
+        if(brand){
+            searchParams.set('brand', brand);
+        }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
             setSearchParams(searchParams);
@@ -77,6 +83,7 @@ export default function CarParamsForm() {
             {errors}
             <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
+                <div onClick={()=> setSearchParams('')}>Reset search params</div>
                 <span onClick={() => {
                     if (isBrand === false) {
                         setIsBrand(true)

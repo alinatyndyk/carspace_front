@@ -18,8 +18,13 @@ export default function OrderCard({order}) {
                 <div>Car brand: {car.brand}</div>
                 <div>Car model: {car.model}</div>
                 <div>Car model_year: {car.model_year}</div>
-            <div><img src={car.image?.link} alt=""/></div>
+            {/*<div><img src={car.image?.link} alt=""/></div>*/}
             </div>
+            {car.image ?
+                <div>
+                    <img className={'order-card-img'} src={`${car.image?.link}`} alt="Red dot"/>
+                </div> :
+                <img className={'order-card-img'} src={`${car.images[0]?.link}`} alt="Red dot"/>}
             <div>Order starting date: {from_date}</div>
             <div>Order finishing date: {to_date}</div>
             <div>Order duration: {Difference_In_Days}</div>
