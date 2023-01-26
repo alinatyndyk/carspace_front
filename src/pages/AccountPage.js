@@ -7,7 +7,6 @@ import {useEffect} from "react";
 
 export default function AccountPage() {
     const {state} = useLocation();
-    console.log(state, 'state account page');
     const dispatch = useDispatch();
 
     const {user, errors} = useSelector(state => state.users);
@@ -18,25 +17,18 @@ export default function AccountPage() {
         console.log(errors, 'errors');
     }, [])
 
-    console.log(user, 'userBody');
-
     if (state.type === 'company') {
-        console.log('type company');
         return (
-            <div><CompanyFull/></div>
+            <div><CompanyFull/> {errors}</div>
+
         )
     } else if (state.type === 'user') {
         return (
             <div>
                 <div>User account full page</div>
                 <User user={user}/>
+                {errors}
             </div>
         )
     }
-
-    // return (
-    //     <div>
-    //         Account page
-    //     </div>
-    // )
 }

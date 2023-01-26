@@ -29,7 +29,7 @@ const brandSlice = createSlice({
 const {reducer: brandReducer, actions: {}} = brandSlice;
 
 const brandActions = {
-    getAll,
+    getAll
 }
 
 export {

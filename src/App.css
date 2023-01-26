@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -43,4 +45,26 @@
 
 .order-card-img{
   height: 200px;
+}
+
+.car_types{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.car_types div{
+  height: 100px;
+  width: 250px;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  background-color: orange;
+  color: white;
+  font-size: 23px;
 }

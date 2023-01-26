@@ -16,26 +16,20 @@ import CompanyFull from "./components/Companies/CompanyFull";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
 import CheckoutComponent from "./components/CheckoutComponent";
-import CheckoutSuccess from "./pages/CheckoutSuccess";
-import CheckoutCancel from "./pages/CheckoutCancel";
 
 function App() {
-    // const [isShown, setIsShown] = useState(false);
     return (
         <div>
             <div className={'content'}>
                 <Routes>
                     <Route path={'/'} element={<LayoutPage/>}>
-                        <Route path={'/payment'} element={<CheckoutComponent/>}/>
-                        <Route path={'/checkout-success'} element={<CheckoutSuccess/>}/>
-                        <Route path={'/checkout-cancel'} element={<CheckoutCancel/>}/>
+                        <Route path={'home'} element={<HomePage/>}/>
                         <Route path={'/about'} element={<AboutPage/>}/>
                         <Route path={'/cars'} element={<CarPage/>}/>
                         <Route path={'/cars/:car_id'} element={<CarFull/>}/>
-                        {/*<Route path={'/account'} element={<CompanyFull/>}/>*/}
-                        <Route path={'/account/orders'} element={<OrdersPage/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>
-                        <Route path={'home'} element={<HomePage/>}/>
+                        <Route path={'/account/orders'} element={<OrdersPage/>}/>
+                        <Route path={'/payment'} element={<CheckoutComponent/>}/>
                         <Route path={'users'} element={<Users/>}/>
                         <Route path={'users/:user_id'} element={<Users/>}/>
                         <Route path={'/companies'} element={<CompanyPage/>}/>

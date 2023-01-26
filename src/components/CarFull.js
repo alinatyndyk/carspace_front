@@ -54,11 +54,10 @@ export default function CarFull() {
     }, [carForUpdate])
 
     const submit = async (data) => {
-        console.log(carForUpdate, 'car for upate submit');
-        console.log(carForUpdate._id, 'car for upate id submit');
-        console.log(data, 'data submit');
+        // console.log(carForUpdate, 'car for upate submit');
+        // console.log(carForUpdate._id, 'car for upate id submit');
+        // console.log(data, 'data submit');
         dispatch(carActions.updateCar({_id: carForUpdate._id, car: data}));
-        reset();
     }
 
     const [equal, setEqual] = useState(false);
@@ -74,6 +73,7 @@ export default function CarFull() {
             console.log(decoded, decoded, 'decoded');
             console.log(decoded, company, 'decoded token in company');
             setDecoded(decoded);
+            console.log('AAAAAAAAAAAA');
         } else if (!token) {
             console.log('no token');
         }
@@ -81,10 +81,10 @@ export default function CarFull() {
     }, [])
 
     useEffect(() => {
-        if (company === getDecoded._id?._id) {
+        if (company === getDecoded._id?._id || company === getDecoded._id) {
             setEqual(true);
         } else {
-            setEqual(false)
+            setEqual(false);
         }
     })
 

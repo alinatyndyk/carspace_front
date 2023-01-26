@@ -26,25 +26,17 @@ axiosService.interceptors.response.use((config) => {
         console.log(refresh_token, 'refresh token interceptor');
         console.log('ERROR RESPONSE', error);
         if (error.response?.status === 403) {
-            console.log('status 403');
             throw error
         } else if (error.response?.status === 401 && refresh_token && !isRefreshing) {
-            console.log('status 401 + token');
             isRefreshing = true;
             try {
                 const first = refresh_token.split(' ')[0];
                 console.log(first);
                 if (first === 'User') {
-                    console.log('in user refresh');
                     const {data} = await authService.refreshUser(refresh_token);
-                    console.log(data, 'tokens');
                     authService.setTokens(data);
                 } else if (first === 'Company') {
-                    console.log(first, 'first in company');
-                    console.log('in company refresh');
-                    console.log(refresh_token, 'refresh first company');
                     const {data} = await authService.refreshCompany(refresh_token);
-                    console.log(data, 'new token pair');
                     authService.setTokens(data);
                 } else {
                     throw new Error('Not valid first');
@@ -57,7 +49,6 @@ axiosService.interceptors.response.use((config) => {
             isRefreshing = false;
             return axiosService(error.config);
         } else if (error.response?.status === 401 && !refresh_token) {
-            console.log('status 401 no token');
             throw error
         }
         return Promise.reject(error);

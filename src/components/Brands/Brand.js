@@ -1,12 +1,11 @@
-import {Link} from "react-router-dom";
 import './Brands.css'
+import {useNavigate} from "react-router";
 
 const Brand = ({item}) => {
-    const {_id, brand, cars} = item;
+    const navigate = useNavigate();
+    const {brand, cars} = item;
     return (
-        <div>
-            <div><Link className={'brand_link'} to={`/brands/${brand}`}>{brand}</Link></div>
-        </div>
+        <div className={'brand_link'} onClick={() => navigate(`${brand}`)}>{brand} ({cars.length})</div>
     );
 };
 
