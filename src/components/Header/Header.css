@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
 .menu {
-    background-color: darkblue;
-    color: white;
+    /*background-color: #080050;*/
+    background-color: white;
+    /*color: white;*/
+    color: darkslategray;
     height: 40px;
     display: flex;
     align-items: center;
@@ -17,10 +19,11 @@
 .auth_links {
     display: flex;
     column-gap: 15px;
+    font-size: 15px;
 }
 
 .auth_link {
-    color: white;
+    color: darkslategray;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
 }
@@ -28,13 +31,13 @@
 .menu_navbar {
     display: flex;
     justify-content: space-between;
-    background-color: darkblue;
     column-gap: 30px;
     font-size: 13px;
+    border-bottom: 1px solid darkslategray;
 }
 
 .menu_navbar_link {
-    color: white;
+    color: darkslategray;
     text-decoration: none;
     margin-left: 15px;
     font-size: 13px;
@@ -49,6 +52,19 @@
 
 .auth_links :hover {
     color: darkgrey;
+}
+
+.menu_navbar_form button{
+    height: 20px;
+    width: 50px;
+    background-color: orange;
+    color: white;
+    border-radius: 3px;
+    border: none;
+}
+
+.menu_navbar_form input{
+    height: 20px; margin-right: 10px;
 }
 
 /*input[type=text] {*/

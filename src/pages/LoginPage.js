@@ -9,15 +9,12 @@ export default function LoginPage() {
     if(element){
         return (
             <div>
-                company login form
                 <CompanyLoginForm/>
             </div>
         )
     }
     return (
         <div>
-            login page
-            {JSON.stringify(element)}
             <LoginForm/>
         </div>
     )

@@ -6,7 +6,7 @@
 }
 
 .menu{
-  background-color: darkblue;
+  background-color: #080050;
   color: silver;
   display: flex;
   align-items: center;
@@ -19,16 +19,16 @@
 }
 
 .brands{
-  background-color: darkblue;
+  background-color: white;
   padding: 10px;
-  box-sizing: border-box;
+  width: 150px;
+  font-weight: bold;
+  border-radius: 8px;
   border: darkgrey 1px solid;
-  border-top: none;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
-  /*position: absolute;*/
-  color: white;
+  color: darkslategray;
   position: absolute;
 }
 
@@ -47,12 +47,27 @@
   height: 200px;
 }
 
+.car_types_wrap{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: dimgrey;
+}
+
 .car_types{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
   box-sizing: border-box;
+}
+
+.car_types_wrap h2{
+  margin-top: 30px;
+  font-family: 'Montserrat', sans-serif;
+
 }
 
 .car_types div{
@@ -64,7 +79,10 @@
   justify-content: center;
   align-items: center;
   margin: 20px;
-  background-color: orange;
-  color: white;
+  background-color: white;
+  color: dimgrey;
   font-size: 23px;
+  border-radius: 6px;
+  -webkit-box-shadow: 6px 1px 9px -6px #000000;
+  box-shadow: 6px 1px 9px -6px #000000;
 }

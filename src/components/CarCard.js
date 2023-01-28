@@ -5,11 +5,20 @@ import './Car.css'
 
 const CarCard = ({car, auth}) => {
 
-    const {_id, model, brand, model_year, image, images} = car;
+    const {
+        _id,
+        model,
+        brand,
+        model_year,
+        image,
+        images,
+        price_day_basis,
+        location,
+        transmission,
+        vehicle_type,
+        engine_capacity
+    } = car;
     const navigate = useNavigate();
-    const location = useLocation();
-    // console.log(location, 'location');
-    // console.log(auth, 'auth car card');
     const [equal, setEqual] = useState(false);
 
     useEffect(() => {
@@ -21,23 +30,29 @@ const CarCard = ({car, auth}) => {
 
     return (
         <div className={'car'} onClick={() => navigate(`/cars/${_id}`)}>
-            <h2>Car card</h2>
-            {equal === true ? <button>Update car form</button> : null}
-            <Link to={`${_id}`} state={{...car}}>details</Link>
-            <div>id:{_id}</div>
-            <div>brand:{brand}</div>
-            <div>model:{model}</div>
-            <div>model_year:{model_year}</div>
-            <div>Instead of image</div>
-            {/*{JSON.stringify(images)}*/}
             {image ?
-            <div>
-            <img src={`${image?.link}`} alt="Red dot"/>
-            </div> :
-            <img src={`${images[0]?.link}`} alt="Red dot"/>}
-            <button>Get cars with this brand</button>
+                <div>
+                    <img src={`${image?.link}`} alt="Red dot"/>
+                </div> :
+                <img src={`${images[0]?.link}`} alt="Red dot"/>}
+
+            {/*{equal === true ? <button>Update car form</button> : null}*/}
+            <div className={'car_card-top-info'}>
+                <h5>{brand} {model} {model_year}</h5>
+                <h4>{price_day_basis}$</h4>
+            </div>
+            {/*<button onClick={() => navigate(`/brands/${brand}`)}>Get cars with this brand</button>*/}
             <hr/>
-            <br/>
+            <div className={'car_card_details'}>
+                <div>
+                    <div>location: {location}</div>
+                    <div>transmission: {transmission}</div>
+                </div>
+                <div>
+                    <div>type: {vehicle_type}</div>
+                    <div>engine: {engine_capacity}-litre</div>
+                </div>
+            </div>
         </div>
     );
 };

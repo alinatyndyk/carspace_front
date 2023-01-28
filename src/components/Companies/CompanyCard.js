@@ -10,13 +10,8 @@ const CompanyCard = ({company}) => {
 
     return (
         <div className={'company-full'} onClick={() => navigate(`/companies/${_id.toString()}`)}>
-            <h2>Company card</h2>
-            <div>id:{_id}</div>
-            <div>name:{name}</div>
             <img src={`${image.link}`} alt="Red dot"/>
-            <button onClick={() => dispatch(companyActions.setCompanyForUpdate(company))}>Set company for update</button>
-            <hr/>
-            <br/>
+            <h3>{name}</h3>
         </div>
     );
 };

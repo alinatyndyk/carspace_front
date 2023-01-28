@@ -26,7 +26,6 @@ const getAllWithParams = createAsyncThunk(
     'carSlice/getAllWithParams',
     async ({params}, {rejectWithValue}) => {
         try {
-            console.log(params, "PARAMS GET ALL ASYNC");
             const {data} = await carService.getAllWithParams(params);
             console.log('get all cars asunc', data);
             return data.cars
@@ -105,9 +104,7 @@ const updateCar = createAsyncThunk(
     'carSlice/updateCar',
     async ({_id, car}, {rejectWithValue}) => {
         try {
-            console.log(_id, car, 'update in async');
             const {data} = await carService.updateCar(_id, car);
-            console.log(data, 'data updateCar from async');
             return data
         } catch (e) {
             console.log(e.response.data, 'err in async');
@@ -174,8 +171,10 @@ const carSlice = createSlice({
             })
             .addCase(updateCar.fulfilled, (state, action) => {
                 console.log(action.payload, 'ap addcase postcar');
-                // const currentCar = state.cars.find(value => value === action.payload._id);
-                // Object.assign(currentCar, action.payload);
+                console.log(action.payload, 'a/p');
+                const currentCar = state.cars.find(value => value === action.payload._id);
+                console.log(currentCar, 'current car');
+                Object.assign(currentCar, action.payload);
                 state.carForUpdate = null;
             })
             .addCase(postCar.fulfilled, (state, action) => {

@@ -11,31 +11,20 @@ const history = createBrowserHistory();
 const Cars = ({id}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
-    const {brand, desc} = useParams();
+    const {brand} = useParams();
     const {state} = useLocation();
-    console.log(state, 'STATE DESC');
     const [searchParams, setSearchParams] = useSearchParams({page: 1});
     const [getPage, setPage] = useState(1);
     const [getNavigationButtons, setNavigationButtons] = useState(false);
-    const [getDesc, setDesc] = useState(state);
-    console.log(getDesc, 'getDesc');
-    // console.log(id, 'ID IN CARS');
 
     const searchString = window.location.search;
-    console.log(searchString, 'search string');
 
     useEffect(() => {
         if (brand) {
-            // console.log('else if brand');
-            // console.log(searchParams, "SEARCH PARAMS BRAND***********");
-            // const res = dispatch(carActions.getByBrand({brand}));
             const res = dispatch(carActions.getAllWithParams({params: searchParams}));
-            // const res = dispatch(carActions.getByBrand({brand}));
             console.log(res);
         } else if (id) {
-            console.log(id, 'if id cars');
             dispatch(carActions.getById({_id: id}));
-            // console.log(car);
         } else if (searchString.includes('description') === true) {
             const {errors} = dispatch(carActions.getByDescription({
                 description: {description: searchParams.get('description')},
@@ -45,54 +34,34 @@ const Cars = ({id}) => {
             if (errors?.response?.status === 404) {
                 setNavigationButtons(true);
             }
-            // searchParams.set('if_id', "true");
-        // } else if (searchParams) {
-        //     const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
-        //     console.log(errors);
         } else {
-            console.log(id, 'if all cars');
             const {errors} = dispatch(carActions.getAll())
-            // setSearchParams(searchParams);
-            // console.log('OOOOOOOOOOOOOOOOOOOO');
-            // // window.location.reload();
-            // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             console.log(errors, 'if all cars');
         }
         setSearchParams(searchParams);
     }, [id]);
 
-
-    // console.log(state?.location, 'LOCATION STATE 1');
-
     useEffect(() => {
-        // console.log('GET PAGE ***************/*/*/*/*//**********');
         setSearchParams(searchParams);
-        // console.log(searchString, 'IMP');
-        // console.log(searchString.includes('desc'));
         if (brand) {
             searchParams.set('brand', brand)
         }
         if (searchString.includes('description') === true) {
             searchParams.set('page', getPage);
             setSearchParams(searchParams);
-            console.log(searchParams, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-            // const {errors} = dispatch(carActions.getByDescription({description: {description: "Bentley"}, params: searchParams}));
             const {errors} = dispatch(carActions.getByDescription({
                 description: {description: searchParams.get('description')},
                 params: searchParams
             }));
-            // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             console.log(errors);
-
-            // searchParams.set('change_page', "true");
-            // history.push(`/cars/${searchParams.toString()}/xxx`)
         } else {
             console.log('INALL***************');
-            dispatch(carActions.getAllWithParams({params: searchParams}))
+            const cars = dispatch(carActions.getAllWithParams({params: searchParams}));
+            // const cars = dispatch(carActions.getAll());
+            console.log(cars);
         }
         setSearchParams(searchParams);
     }, [getPage])
-    console.log(searchParams.toString(), '****-*---------*-*-***********');
 
 
     const prevPage = () => {

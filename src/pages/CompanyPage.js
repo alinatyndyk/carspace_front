@@ -7,7 +7,6 @@ export default function CompanyPage(){
 
     return(
         <div>
-            Company page....
             <Companies id={company_id}/>
         </div>
     )

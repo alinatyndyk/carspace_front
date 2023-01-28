@@ -21,7 +21,6 @@ export default function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    // const {errors} = useSelector(state => state.cars)
     const {register, handleSubmit} = useForm();
     const {brands} = useSelector(state => state.brands);
 
@@ -42,7 +41,7 @@ export default function Header() {
                 setIsAuthUser(true);
             }
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         dispatch(carActions.getByBrand({brand: getBrand}))
@@ -51,7 +50,6 @@ export default function Header() {
     useEffect(() => {
         if (location !== false) {
             setSearchParams('');
-            searchParams.set('location', location);
             setSearchParams(searchParams);
         }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
@@ -86,7 +84,6 @@ export default function Header() {
         <div className={'header'}>
             <div className={'menu'}>
                 <h3>Carspace.</h3>
-                <button onClick={() => window.location.reload()}>Reload page</button>
                 {isAuth === true ?
                     <span
                         onMouseOver={() => setIsAccount(true)}
@@ -136,7 +133,6 @@ export default function Header() {
                             onMouseLeave={() => setIsLocation(false)}>
                             <Link className={'menu_navbar_link'} to={'/brands'}>Brands</Link> {isLocation && (
                             <div className={'brands'}>
-                                {/*<Link to={`/brands/${brand.brand}`}>{brand.brand}</Link>*/}
                                 {brands.map(brand => <div onClick={() => {
                                     navigate(`brands/${brand.brand}`);
                                     setBrand(brand.brand)
@@ -147,42 +143,75 @@ export default function Header() {
                         <p
                             onMouseOver={() => setIsShown(true)}
                             onMouseLeave={() => setIsShown(false)}>
-                            <div className={'menu_navbar_link'}>Locations</div> {isShown && (
-                            <div className={'brands'}>
-                                <div onClick={() => {
-                                    setLocation('london');
-                                }}>London
+                            <div className={'menu_navbar_link'}>Locations</div>
+                            {isShown && (
+                                <div className={'brands'}>
+                                    <div onClick={() => {
+                                        setLocation('london');
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=london');
+                                             window.location.reload()
+                                         }}>London
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('birmingham')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=birmingham');
+                                             window.location.reload()
+                                         }}>Birmingham
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('manchester')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=manchester');
+                                             window.location.reload()
+                                         }}>Manchester
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('leeds')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=leeds');
+                                             window.location.reload()
+                                         }}>Leeds
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('sheffield')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=sheffield');
+                                             window.location.reload()
+                                         }}>Sheffield
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('liverpool')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=liverpool');
+                                             window.location.reload()
+                                         }}>Liverpool
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('bristol')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=bristol');
+                                             window.location.reload()
+                                         }}>Bristol
+                                    </div>
+                                    <div onClick={() => {
+                                        setLocation('wakefield')
+                                    }}
+                                         onDoubleClick={() => {
+                                             navigate('/cars?location=wakefield');
+                                             window.location.reload()
+                                         }}>Wakefield
+                                    </div>
                                 </div>
-                                <div onClick={() => {
-                                    setLocation('birmingham')
-                                }}>Birmingham
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('manchester')
-                                }}>Manchester
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('leeds')
-                                }}>Leeds
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('sheffield')
-                                }}>Sheffield
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('liverpool')
-                                }}>Liverpool
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('bristol')
-                                }}>Bristol
-                                </div>
-                                <div onClick={() => {
-                                    setLocation('wakefield')
-                                }}>Wakefield
-                                </div>
-                            </div>
-                        )}
+                            )}
                         </p>
                         <p><Link className={'menu_navbar_link'} to={'/about'}>About us</Link></p>
                         <p><Link onDoubleClick={() => window.location.reload()} className={'menu_navbar_link'}
@@ -192,7 +221,7 @@ export default function Header() {
                     <div className={'menu_navbar_form'}>
                         <form onSubmit={handleSubmit(submit)}>
                             <input type="text" placeholder={'Car rentals in London'} {...register('description')}/>
-                            <button>Search</button>
+                            <button>Go!</button>
                         </form>
                     </div>
                 </div>

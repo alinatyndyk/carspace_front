@@ -4,7 +4,6 @@ import {authActions} from "../../redux";
 import {useNavigate} from "react-router";
 import "./Forms.css"
 import {Link} from "react-router-dom";
-
 export default function LoginForm() {
     const {register, handleSubmit, reset} = useForm();
     const dispatch = useDispatch();
@@ -34,7 +33,6 @@ export default function LoginForm() {
                 <Link to={'/login/company'}>You are an employer?</Link>
             </span>
             </form>
-
         </div>
     )
 }

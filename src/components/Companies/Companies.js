@@ -32,8 +32,9 @@ const Companies = ({id}) => {
     }
 
     return (
+
         <div>
-            companies.................
+            <h2>Companies our website provides</h2>
             {companies?.map(company => <CompanyCard key={company._id} company={company}/>)}
         </div>
     );

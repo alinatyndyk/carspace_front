@@ -5,12 +5,8 @@ import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {authService} from "../services";
 import jwt_decode from "jwt-decode";
-import CarOrderForm from "./Forms/CarOrderForm";
 import CheckoutComponent from "./CheckoutComponent";
 import './Car.css'
-import {Carousel} from "react-responsive-carousel";
-// import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Slider from "react-slick";
 import {Swiper, SwiperSlide} from "swiper/react";
 import {A11y, Keyboard, Navigation, Pagination, Scrollbar} from "swiper";
 
@@ -54,9 +50,6 @@ export default function CarFull() {
     }, [carForUpdate])
 
     const submit = async (data) => {
-        // console.log(carForUpdate, 'car for upate submit');
-        // console.log(carForUpdate._id, 'car for upate id submit');
-        // console.log(data, 'data submit');
         dispatch(carActions.updateCar({_id: carForUpdate._id, car: data}));
     }
 
@@ -67,13 +60,10 @@ export default function CarFull() {
     console.log(getDecoded, 'get decoded');
     useEffect(() => {
         const token = authService.getAccessToken();
-        console.log(token, token);
         if (token) {
             const decoded = jwt_decode(token);
-            console.log(decoded, decoded, 'decoded');
             console.log(decoded, company, 'decoded token in company');
             setDecoded(decoded);
-            console.log('AAAAAAAAAAAA');
         } else if (!token) {
             console.log('no token');
         }
@@ -81,7 +71,7 @@ export default function CarFull() {
     }, [])
 
     useEffect(() => {
-        if (company === getDecoded._id?._id || company === getDecoded._id) {
+        if (company === getDecoded._id) {
             setEqual(true);
         } else {
             setEqual(false);
@@ -98,11 +88,9 @@ export default function CarFull() {
     return (
         <div className={'car-full-wrap'}>
             {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
-            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null}--{security_deposit}USD</div>
+            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD</div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
-                    {/*<img src={`${image?.link}`} alt=''/>*/}
-                    {/*{images.map(image => <div><img src={`${image?.link}`} alt=''/></div>)}*/}
                     <Swiper
                         className={'swiper_wrapper_car'}
                         // install Swiper modules
@@ -122,7 +110,6 @@ export default function CarFull() {
                             <p className={'car-full-data-property-name'}>Pricing</p>
                             <p>{price_day_basis}USD</p>
                         </div>
-                        {/*<div>id:{_id}</div>*/}
                         <div>
                             <p className={'car-full-data-property-name'}>Brand</p>
                             <p>{brand}</p>
@@ -137,6 +124,7 @@ export default function CarFull() {
                         </div>
                         <div>
                             <p className={'car-full-data-property-name'}>Location</p>
+                            <p>{location}</p>
                             {/*<p>{location.charAt(0).toUpperCase() + location.slice(1)}</p>*/}
                         </div>
                         <button className={'book-car_button'} onClick={() => {
@@ -151,23 +139,20 @@ export default function CarFull() {
                         {book === true ? <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/></div> : null}
                 </div>
                 <div className={'car-full-bottom'}>
-                    <div>description:{description}</div>
                     <h4>Car features</h4>
-                    {/*{JSON.stringify(car_features)}*/}
-                    {/*{JSON.stringify(features)}*/}
                     {features.map(item => <div>{item}</div>)}
                     <button onClick={() => {
                         dispatch(carActions.setCarForUpdate(car));
-                        // setEqual(true)
                     }}>set for update
                     </button>
+                    <div>description:{description}</div>
 
                     {equal === true ?
                         <div>
                             <form onSubmit={handleSubmit(submit)}>
                                 <input type="text" placeholder={'model'} {...register('model')}/>
                                 <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                                <input type="text" placeholder={'description'} {...register('description')}/>
+                                <textarea placeholder={'description'} {...register('description')} rows="5" cols="80" id="TITLE"/>
                                 <button>Update car</button>
                             </form>
                         </div> : null}

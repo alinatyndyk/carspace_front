@@ -41,12 +41,6 @@ const CompanyFull = () => {
         } else if (!token) {
             console.log('no token');
         }
-
-        // if (company_id === getDecoded._id) {
-        //     setEqual(true);
-        // } else {
-        //     console.log('not equals', company_id, getDecoded._id);
-        // }
     }, [])
 
     useEffect(() => {
@@ -58,22 +52,22 @@ const CompanyFull = () => {
     })
 
     return (
-        <div>
-            {equal === true ? <div><CompanyForm company={company}/></div> : null}
+        <div className={'company-full-wrap'}>
             <div className={'company-full-company'}>
-                <div>id:{_id}</div>
-                <div>name:{name}</div>
+                <img src={`${image?.link}`} alt="Red dot"/>
+                <h2>{name}</h2>
+                <h3>Contact information</h3>
                 <div>number:{contact_number}</div>
                 <div>email:{email}</div>
-                <div>Read more about us:{description}</div>
-                <img src={`${image?.link}`} alt="Red dot"/>
-            </div>
-            <div className={'company-full'}>
-                {equal === true ? <div><CarForm/></div> : null}
+                <h3>Read more about us:</h3><div>{description}</div>
+            {equal === true ? <div><CompanyForm company={company}/></div> : null}
             </div>
             <div className={'company-full-cars'}>
-                <h3>COMPANY CARS</h3>
+                <h3>Comapny cars</h3>
                 {cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}
+            </div>
+            <div className={''}>
+                {equal === true ? <div><CarForm/></div> : null}
             </div>
         </div>
     );

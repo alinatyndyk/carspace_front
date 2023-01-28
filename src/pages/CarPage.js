@@ -4,8 +4,6 @@ import CarParamsForm from "../components/Forms/CarParamsForm";
 
 export default function CarPage() {
     const {car_id} = useParams();
-    console.log(car_id, 'crapage id');
-
     return (
         <div>
             <div className={'car-page'}>

@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
 
 .login_page {
-    /*background-image: url(../photo_2022-12-29_13-08-50.jpg);*/
-    background-image: url(../black_cars.jpg);
+    background-image: url(../pexels-mike-b-116675.jpg);
     background-size: cover;
+    padding: 100px 200px 0 200px;
     height: 400px;
-    padding: 0 200px 0 200px;
+    box-sizing: border-box;
+}
+
+.find_by_date_form button{
+    background-color: orange;
+    border: none;
+    color: white;
+    border-radius: 5px;
 }
 
 .car-page {
@@ -13,7 +20,6 @@
 }
 
 .login_page_insides {
-    margin-top: 100px;
     margin-left: 150px;
     display: flex;
     flex-direction: column;
@@ -35,6 +41,8 @@
 
 .login_page_insides input {
     border: none;
+    border-radius: 6px;
+    padding: 3px;
     height: 30px;
     margin-right: 10px;
     border-bottom: 1px solid white;
@@ -45,6 +53,6 @@
 }
 
 .login_page_insides button {
-    width: 100px;
+    width: 80px;
     height: 30px;
 }

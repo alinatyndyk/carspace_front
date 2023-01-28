@@ -1,34 +1,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
 
-
-.car img{
-    height: 150px;
-    width: 250px;
-    object-fit: cover;
-    border: orange 1px solid;
+.car {
+    height: 300px;
+    width: 300px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
-.car-full-top{
+.car_card-top-info{
+    padding: 10px;
+}
+
+.car img {
+    height: 150px;
+    width: 300px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.car-full-top {
     display: flex;
     justify-content: left;
     /*padding-right: 300px;*/
 }
 
-.car-full img{
+.car-full img {
     height: 300px;
 }
 
-.carousel-carfull{
+.car_card_details{
+    display: flex;
+    height: 90px;
+    font-size: 13px;
+    column-gap: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-carfull {
     width: 600px;
 }
 
-.swiper_wrapper_car{
+.swiper_wrapper_car {
     width: 500px;
     margin: 0 35px;
     background-color: red;
 }
 
-.car-full-data{
+.car-full-data {
     background-color: #3b383d;
     color: white;
     /*font-family: 'Montserrat', sans-serif;*/
@@ -56,7 +77,8 @@
     font-family: 'Montserrat', sans-serif;
     border-radius: 3px;
 }
-.car-pricing{
+
+.car-pricing {
     /*background-color: orange;*/
     display: flex;
     justify-content: space-between;
@@ -70,12 +92,12 @@
     border-bottom: solid 0.5px white;
 }
 
-.car-full-wrap h2{
+.car-full-wrap h2 {
     font-family: 'Montserrat', sans-serif;
 
 }
 
-.checkout-form{
+.checkout-form {
     border: 2px solid grey;
     border-radius: 6px;
     width: 300px;
@@ -84,7 +106,7 @@
     padding: 20px;
 }
 
-.checkout-form input{
+.checkout-form input {
     height: 30px;
     width: 200px;
     margin-top: 10px;
@@ -96,13 +118,18 @@
     color: #000000;
     border-style: solid;
     border-radius: 0px;
-    box-shadow: 4px 0px 5px rgba(66,66,66,.75);
+    box-shadow: 4px 0px 5px rgba(66, 66, 66, .75);
 }
 
-.checkout-form button{
+.checkout-form button {
     margin-top: 15px;
     border: none;
     background-color: orange;
     width: 100px;
     height: 30px;
+}
+
+.car_description{
+    height: 100px;
+    width: 300px;
 }

@@ -1,6 +1,29 @@
-.company-full img{
-    height: 150px;
-    width: 250px;
+.company-full-company img{
+    height: 200px;
+    width: 200px;
     object-fit: cover;
-    border: orange 1px solid;
+    border-radius: 50%;
+}
+
+.company-full{
+    height: 300px;
+    width: 300px;
+    border: 1px solid grey;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.company-full-cars{
+   margin-right: 50px;
+}
+
+.company-full-wrap{
+    display: flex;
+}
+
+.company-full img {
+    height: 200px;
+    width: 300px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }

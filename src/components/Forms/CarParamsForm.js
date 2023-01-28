@@ -41,34 +41,29 @@ export default function CarParamsForm() {
     const [getIsType, setIsType] = useState(false);
     const [getSeats, setSeats] = useState(false);
     const [getPriceDay, setPriceDay] = useState(false);
+    const [getPriceDayMax, setPriceDayMax] = useState(false);
     const [carFeatures, setCarFeatures] = useState(false);
 
     useEffect(() => {
-        // setSearchParams(searchParams);
-        // for (const [key, value] of searchParams.entries()){
-        //     console.log(key, value);
-        // }
         setValue('brand', brand);
         if (getBrand === null) {
             searchParams.delete('brand');
         } else {
-        setValue('brand', getBrand);
+            setValue('brand', getBrand);
         }
-        if(window.location.search.includes('description')){
+        if (window.location.search.includes('description')) {
             searchParams.delete('description')
         }
-    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, brand])
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, getPriceDayMax,brand])
 
 
     const submit = async (data) => {
-        const searchString = window.location.search;
-        console.log(searchString, 'search string ***********************************');
         searchParams.set('page', 1)
         console.log(searchParams, 'LOOK');
         console.log(data, 'LOOK');
         setSearchParams(data);
         searchParams.keys((key) => console.log(key));
-        if(brand){
+        if (brand) {
             searchParams.set('brand', brand);
         }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
@@ -81,9 +76,9 @@ export default function CarParamsForm() {
     return (
         <div>
             {errors}
-            <form className={'car-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
+            <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
-                <div onClick={()=> setSearchParams('')}>Reset search params</div>
+                <div onClick={() => setSearchParams('')}>Reset search params</div>
                 <span onClick={() => {
                     if (isBrand === false) {
                         setIsBrand(true)
@@ -91,16 +86,14 @@ export default function CarParamsForm() {
                         setIsBrand(false)
                     }
                 }}>
-                    <input type="text" disabled={true} placeholder={'brand'} {...register('brand')}/>
+                    <input type="text" placeholder={'brand'} {...register('brand')}/>↓
                     {isBrand && !brand === true ?
                         <div>{brands.map(item => <div
                             onClick={() => {
-                                // setValue('brand', item.brand);
-                                setBrand(item.brand);
+                                setBrand(item.brand.charAt(0).toUpperCase() + item.brand.slice(1));
                                 searchParams.set('brand', item.brand);
                             }}>{item.brand}</div>)}
                             <div onClick={() => {
-                                // setValue('brand', '');
                                 setBrand(null);
                             }}>None
                             </div>
@@ -122,7 +115,7 @@ export default function CarParamsForm() {
                 <span
                     onMouseOver={() => setIsLocation(true)}
                     onMouseLeave={() => setIsLocation(false)}>
-                <input type="text" placeholder={'location'} {...register('location')}/>{isLocation === true ?
+                <input type="text" placeholder={'location'} {...register('location')}/>↓{isLocation === true ?
                     <div>
                         <div onClick={() => {
                             setValue('location', 'london');
@@ -215,7 +208,6 @@ export default function CarParamsForm() {
                 <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
                     {getIsType === true ?
                         <div>
-                            CAR TYPES
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Luxury');
                                 setType('luxury');
@@ -288,19 +280,27 @@ export default function CarParamsForm() {
                            searchParams.set('no_of_seats', e.target.value);
                            setSeats(e.target.value);
                        }}/>
-                {/*<input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>*/}
-                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}
+                <span>
+                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis_max')}
                        onChange={(e) => {
-                           searchParams.set('price_day_basis', e.target.value);
+                           searchParams.set('price_day_basis_max', e.target.value);
+                           setPriceDayMax(e.target.value);
+                       }}/>(Enter your minimum budget in USD...)
+                </span>
+                <span>
+                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis_min')}
+                       onChange={(e) => {
+                           searchParams.set('price_day_basis_min', e.target.value);
                            setPriceDay(e.target.value);
-                       }}/>
+                       }}/>(Enter your maximum budget in USD...)
+                </span>
                 <div onClick={() => {
                     if (carFeatures === false) {
                         setCarFeatures(true)
                     } else {
                         setCarFeatures(false)
                     }
-                }}>Car features
+                }}>Car features ↓
                 </div>
                 {carFeatures === true ? <div className={'car_features_params'}>
                         <span>
