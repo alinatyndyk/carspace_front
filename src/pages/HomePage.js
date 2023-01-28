@@ -16,7 +16,6 @@ export default function HomePage() {
     const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
     const navigate = useNavigate();
-    const {cars} = useSelector(state => state.cars)
 
     const submit = (data) => {
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
@@ -29,12 +28,10 @@ export default function HomePage() {
     const [searchParams, setSearchParams] = useSearchParams();
     const [getType, setType] = useState();
     useEffect(() => {
-        // setSearchParams(searchParams);
         if (getType !== undefined) {
             const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             if (!errors) {
                 history.push(`/cars${window.location.search}`);
-                // navigate(`/cars${window.location.search}`);
                 navigate(`/cars?vehicle_type=${getType}`);
             }
         }
@@ -63,67 +60,56 @@ export default function HomePage() {
                 <h2>Car types</h2>
                 <div className={'car_types'}>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Luxury');
                         setType('luxury');
                         searchParams.set('vehicle_type', 'luxury')
                     }}>Luxury
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Economy');
                         setType('economy');
                         searchParams.set('vehicle_type', 'economy')
                     }}>Economy
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'SUV');
                         setType('suv');
                         searchParams.set('vehicle_type', 'suv')
                     }}>SUV
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Sedan');
                         setType('sedan');
                         searchParams.set('vehicle_type', 'sedan')
                     }}>Sedan
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Sports');
                         setType('sports');
                         searchParams.set('vehicle_type', 'sports')
                     }}>Sports
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Crossover');
                         setType('crossover');
                         searchParams.set('vehicle_type', 'crossover');
                     }}>Crossover
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Convertible');
                         setType('convertible');
                         searchParams.set('vehicle_type', 'convertible');
                     }}>Convertible
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Electric');
                         setType('electric');
                         searchParams.set('vehicle_type', 'electric');
                     }}>Electric
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Truck');
                         setType('truck');
                         searchParams.set('vehicle_type', 'truck');
                     }}>Truck
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Minivan');
                         setType('minivan');
                         searchParams.set('vehicle_type', 'minivan');
                     }}>Minivan
                     </div>
                     <div onClick={() => {
-                        // setValue('vehicle_type', 'Coupe');
                         setType('coupe');
                         searchParams.set('vehicle_type', 'coupe');
                     }}>Coupe

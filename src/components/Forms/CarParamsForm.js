@@ -59,10 +59,7 @@ export default function CarParamsForm() {
 
     const submit = async (data) => {
         searchParams.set('page', 1)
-        console.log(searchParams, 'LOOK');
-        console.log(data, 'LOOK');
         setSearchParams(data);
-        searchParams.keys((key) => console.log(key));
         if (brand) {
             searchParams.set('brand', brand);
         }
