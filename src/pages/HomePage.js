@@ -20,7 +20,7 @@ export default function HomePage() {
     const submit = (data) => {
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
         if (!errors) {
-            history.push('/cars')
+            history.push('/cars');
         }
         console.log(errors);
     }

@@ -1,12 +1,19 @@
 import {useNavigate} from "react-router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import UserForm from "../Forms/UserForm";
+import {useDispatch, useSelector} from "react-redux";
+import {userActions} from "../../redux";
 
-const User = ({user}) => {
+const User = ({accountUserId}) => {
     const navigate = useNavigate();
-    console.log(user, 'in user.js');
-
+    const dispatch = useDispatch();
     const [update, setUpdate] = useState(false);
+
+    const {user} = useSelector(state => state.users);
+
+    useEffect(() => {
+        dispatch(userActions.getById({_id: accountUserId}))
+    },[accountUserId])
 
     return (
         <div>
@@ -18,7 +25,8 @@ const User = ({user}) => {
             <div>
                 <button onClick={() => setUpdate(true)}>update user</button>
                 <button>create order</button>
-                <button  onClick={() => navigate(`/account/orders`, {state: {type: 'user-orders'}})}>manage orders</button>
+                <button  onClick={() =>
+                    navigate(`/account/orders`, {state: {type: 'user-orders'}})}>manage orders</button>
             </div>
             <hr/>
             <br/>

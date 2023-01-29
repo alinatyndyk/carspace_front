@@ -92,7 +92,7 @@ const postCar = createAsyncThunk(
             console.log(car, 'car in async');
             const {data} = await carService.postCar(car);
             console.log(data, 'data car from async');
-            return data
+            return data //todo data car with pages
         } catch (e) {
             console.log(e.response.data, 'err in async');
             return rejectWithValue(e.response.data);
@@ -178,7 +178,6 @@ const carSlice = createSlice({
                 state.carForUpdate = null;
             })
             .addCase(postCar.fulfilled, (state, action) => {
-                console.log(action.payload, 'ap addcase postcar');
                 state.cars.push(action.payload)
                 window.location.reload();
             })

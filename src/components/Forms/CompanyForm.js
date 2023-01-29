@@ -22,7 +22,6 @@ export default function CompanyForm({company}) {
     const {register, handleSubmit, reset, setValue} = useForm();
     return (
         <div>
-            <h3>COMPANY FORM</h3>
             <form onSubmit={handleSubmit(submit)}>
                 <input type="text" placeholder={'name'} {...register('name')}/>
                 <input type="text" placeholder={'contact_number'} {...register('contact_number')}/>

@@ -9,17 +9,19 @@ import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
 import CompanyForm from "../Forms/CompanyForm";
 
-const CompanyFull = () => {
+const CompanyFull = ({accountCompanyId}) => {
+    console.log(accountCompanyId, 'ACCOUNT COMPANY ID');
     const location = useLocation();
     const navigate = useNavigate();
     const {company_id} = useParams();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!company_id && !location.state) {
+        if (!company_id && !accountCompanyId) { //todo
             navigate('/login');
         } else if (!company_id) {
-            const {errors} = dispatch(companyActions.getById({_id: location.state.Id}));
+            // const {errors} = dispatch(companyActions.getById({_id: location.state.Id}));
+            const {errors} = dispatch(companyActions.getById({_id: accountCompanyId}));
             console.log(errors);
         } else {
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
@@ -54,13 +56,18 @@ const CompanyFull = () => {
     return (
         <div className={'company-full-wrap'}>
             <div className={'company-full-company'}>
-                <img src={`${image?.link}`} alt="Red dot"/>
-                <h2>{name}</h2>
-                <h3>Contact information</h3>
-                <div>number:{contact_number}</div>
-                <div>email:{email}</div>
-                <h3>Read more about us:</h3><div>{description}</div>
-            {equal === true ? <div><CompanyForm company={company}/></div> : null}
+                <div>
+                    <img src={`${image?.link}`} alt="Red dot"/>
+                </div>
+                <div>
+                    <h2>{name}</h2>
+                    <h3>Contact information</h3>
+                    <div>number:{contact_number}</div>
+                    <div>email:{email}</div>
+                    <h3>Read more about us:</h3>
+                    <div>{description}</div>
+                    {equal === true ? <div><CompanyForm company={company}/></div> : null}
+                </div>
             </div>
             <div className={'company-full-cars'}>
                 <h3>Comapny cars</h3>

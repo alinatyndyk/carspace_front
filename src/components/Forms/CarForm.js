@@ -51,9 +51,6 @@ export default function CarForm() {
             }
         }))
         setImg({filePreview: URL.createObjectURL(data.files[0])});
-        if(!error){
-            navigate('/account');
-        }
     }
 
     const {brands} = useSelector(state => state.brands);

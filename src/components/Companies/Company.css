@@ -5,6 +5,17 @@
     border-radius: 50%;
 }
 
+.company-full-company{
+    display: flex;
+    column-gap: 30px;
+    height: 300px;
+    width: 500px;
+    border: 1px solid darkslategray;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
 .company-full{
     height: 300px;
     width: 300px;
@@ -19,6 +30,7 @@
 
 .company-full-wrap{
     display: flex;
+    justify-content: space-between;
 }
 
 .company-full img {

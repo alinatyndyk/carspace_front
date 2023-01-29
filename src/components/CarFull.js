@@ -9,6 +9,7 @@ import CheckoutComponent from "./CheckoutComponent";
 import './Car.css'
 import {Swiper, SwiperSlide} from "swiper/react";
 import {A11y, Keyboard, Navigation, Pagination, Scrollbar} from "swiper";
+import {Link} from "react-router-dom";
 
 export default function CarFull() {
     const dispatch = useDispatch();
@@ -146,7 +147,8 @@ export default function CarFull() {
                     }}>set for update
                     </button>
                     <div>description:{description}</div>
-
+                    {JSON.stringify(company)}
+                    <Link to={`/companies/${company}`}>Company</Link>
                     {equal === true ?
                         <div>
                             <form onSubmit={handleSubmit(submit)}>

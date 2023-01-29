@@ -84,9 +84,8 @@ const loginCompany = createAsyncThunk(
     'authSlice/loginCompany',
     async ({company}, {rejectWithValue}) => {
         try {
-            console.log(company, 'IN ASYNC');
             const {data} = await authService.loginCompany(company);
-            console.log(data, 'res in async');
+            console.log(data, 'RES /*******//////////////////////');
             return data
         } catch (e) {
             console.log(e.response.data);

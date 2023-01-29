@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import './Header.css'
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
-import {authActions, carActions} from "../../redux";
+import {authActions, brandActions, carActions} from "../../redux";
 import React from "react";
 import {useNavigate} from "react-router";
 import {authService} from "../../services";
@@ -26,6 +26,8 @@ export default function Header() {
 
     const access = authService.getAccessToken();
     useEffect(() => {
+        dispatch(brandActions.getAll());
+        setSearchParams(undefined);
         if (!access) {
             console.log('no access');
         } else if (access) {
@@ -46,17 +48,6 @@ export default function Header() {
     useEffect(() => {
         dispatch(carActions.getByBrand({brand: getBrand}))
     }, [getBrand])
-
-    useEffect(() => {
-        if (location !== false) {
-            setSearchParams('');
-            setSearchParams(searchParams);
-        }
-        const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
-        if (!errors) {
-            navigate(`/cars?${searchParams}`);
-        }
-    }, [location])
 
     const submit = async (data) => {
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
@@ -89,7 +80,7 @@ export default function Header() {
                         onMouseOver={() => setIsAccount(true)}
                         onMouseLeave={() => setIsAccount(false)}>
                         <span
-                            onClick={() => navigate(`/account`, {state: {Id, type: 'company'}})}
+                            onClick={() => navigate(`/account`)}
                             className={'menu_link'}>Account</span> {isAccount && (
                         <div className={'brands'}>
                             <div onClick={() => navigate(`/account/orders`, {state: {type: 'company-orders'}})}>Company

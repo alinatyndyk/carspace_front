@@ -27,7 +27,6 @@ export default function CarParamsForm() {
         } else if (e.target.checked === false) {
             searchParams.delete(e.target.name, e.target.checked);
         }
-        setSearchParams(searchParams);
     }
 
     const [getBrand, setBrand] = useState(null);

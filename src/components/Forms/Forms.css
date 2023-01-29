@@ -77,6 +77,16 @@
     font-size: 13px;
 }
 
+.car-params-form button{
+    height: 30px;
+    background-color: orange;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 100px;
+    color: white;
+
+}
+
 .car-params-form input[type=text]{
     height: 30px;
     border-radius: 5px;
