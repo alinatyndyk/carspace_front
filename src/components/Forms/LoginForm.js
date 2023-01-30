@@ -14,7 +14,7 @@ export default function LoginForm() {
         console.log(data, 'in submit');
         const {error} = await dispatch(authActions.login({user: data}))
         if (!error) {
-            navigate('/')
+            navigate('/account')
         }
         console.log(error, 'error');
     }

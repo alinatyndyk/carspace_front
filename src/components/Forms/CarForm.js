@@ -87,11 +87,11 @@ export default function CarForm() {
                 {isLocation === true ?
                     <div>
                         <div onClick={() => {
-                            setValue('location', 'london');
+                            setValue('location', 'London');
                         }}>London
                         </div>
                         <div onClick={() => {
-                            setValue('location', 'birmingham');
+                            setValue('location', 'Birmingham');
                         }}>Birmingham
                         </div>
                         <div onClick={() => {

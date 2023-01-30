@@ -10,7 +10,6 @@ import jwt_decode from "jwt-decode";
 import CompanyForm from "../Forms/CompanyForm";
 
 const CompanyFull = ({accountCompanyId}) => {
-    console.log(accountCompanyId, 'ACCOUNT COMPANY ID');
     const location = useLocation();
     const navigate = useNavigate();
     const {company_id} = useParams();
@@ -20,14 +19,13 @@ const CompanyFull = ({accountCompanyId}) => {
         if (!company_id && !accountCompanyId) { //todo
             navigate('/login');
         } else if (!company_id) {
-            // const {errors} = dispatch(companyActions.getById({_id: location.state.Id}));
             const {errors} = dispatch(companyActions.getById({_id: accountCompanyId}));
             console.log(errors);
         } else {
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
             console.log(errors);
         }
-    }, [company_id, location.state]);
+    }, [company_id]);
 
     const {company} = useSelector(state => state.companies);
     const {_id, name, email, contact_number, image, description, cars} = company;

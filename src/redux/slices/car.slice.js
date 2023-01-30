@@ -89,9 +89,7 @@ const postCar = createAsyncThunk(
             delete car['bluetooth']
             delete car['usb']
             delete car['chiller_freezer']
-            console.log(car, 'car in async');
             const {data} = await carService.postCar(car);
-            console.log(data, 'data car from async');
             return data //todo data car with pages
         } catch (e) {
             console.log(e.response.data, 'err in async');
@@ -170,12 +168,8 @@ const carSlice = createSlice({
                 state.cars = action.payload;
             })
             .addCase(updateCar.fulfilled, (state, action) => {
-                console.log(action.payload, 'ap addcase postcar');
-                console.log(action.payload, 'a/p');
-                const currentCar = state.cars.find(value => value === action.payload._id);
-                console.log(currentCar, 'current car');
-                Object.assign(currentCar, action.payload);
                 state.carForUpdate = null;
+                window.location.reload();
             })
             .addCase(postCar.fulfilled, (state, action) => {
                 state.cars.push(action.payload)

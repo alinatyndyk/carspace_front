@@ -12,10 +12,9 @@ export default function CompanyLoginForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        console.log(data, 'data from form');
         const {error} = await dispatch(authActions.loginCompany({company: data}))
         if (!error) {
-            navigate('/')
+            navigate('/account')
         }
         console.log(error, 'error');
     }

@@ -15,7 +15,12 @@ export default function CarParamsForm() {
     const {brands} = useSelector(state => state.brands);
 
     useEffect(() => {
-        setSearchParams('')
+        // setSearchParams('');
+        for(const [key, value] of searchParams){
+            console.log('****************************************');
+            console.log(key, 'key');
+            setValue(key, value);
+        }
         dispatch(brandActions.getAll());
     }, [])
 

@@ -59,7 +59,6 @@ export default function Orders() {
             </form>
             {errors}
             {JSON.stringify(order)}
-            {/*{<OrderCard key={order._id} order={order}/>}*/}
             <hr/>
             {orders?.map(order => <OrderCard key={order._id} order={order}/>)}
         </div>
