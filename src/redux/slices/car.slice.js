@@ -173,7 +173,6 @@ const carSlice = createSlice({
             })
             .addCase(postCar.fulfilled, (state, action) => {
                 state.cars.push(action.payload)
-                window.location.reload();
             })
             .addCase(getById.fulfilled, (state, action) => {
                 console.log(action.payload, 'car in add case');
