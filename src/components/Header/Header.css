@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Montserrat:wght@500&family=Oswald:wght@400;500&display=swap');
 .menu {
-    /*background-color: #080050;*/
     background-color: white;
-    /*color: white;*/
     color: darkslategray;
     height: 40px;
     display: flex;
@@ -66,9 +64,3 @@
 .menu_navbar_form input{
     height: 20px; margin-right: 10px;
 }
-
-/*input[type=text] {*/
-/*    background: transparent;*/
-/*    border: none;*/
-/*    border-bottom: 1px solid white;*/
-/*}*/

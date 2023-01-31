@@ -2,14 +2,12 @@ import Modal from "../components/Modal/Modal";
 import LoginForm from "../components/Forms/LoginForm";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
-import {createBrowserHistory} from "history";
 import {useSearchParams} from "react-router-dom";
 import CarPage from "./CarPage";
-
-const history = createBrowserHistory();
+import {history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -20,7 +18,7 @@ export default function HomePage() {
     const submit = (data) => {
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
         if (!errors) {
-            history.push('/cars');
+            navigate('/cars')
         }
         console.log(errors);
     }

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router";
 import {companyActions} from "../../redux";
 import CompanyCard from "./CompanyCard";
 import CompanyFull from "./CompanyFull";
@@ -26,7 +25,6 @@ const Companies = ({id}) => {
             <div>
                 Single company page
                 <CompanyFull key={company._id} id={id} company={company}/>
-                {/*<CompanyCard key={company._id} company={company}/>*/}
             </div>
         )
     }

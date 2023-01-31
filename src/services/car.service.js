@@ -13,12 +13,7 @@ const carService = {
             access_token: `${authService.getAccessToken()}`
         }
     }),
-    postCar: (car) => axiosService.post('http://localhost:5000/cars', car, {
-        headers: {
-            // access_token: `${authService.getAccessToken()}`,
-            'Content-Type': 'multipart/form-data'
-        }
-    }),
+    postCar: (car) => axiosService.post('http://localhost:5000/cars', car),
     postCarOrder: (_id, dates) => axiosService.post(`http://localhost:5000/cars/${_id}/order`, dates),
     updateCar: (_id, car) => axiosService.patch(`http://localhost:5000/cars/${_id}`, car)
 }

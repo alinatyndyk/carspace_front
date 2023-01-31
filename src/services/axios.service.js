@@ -9,7 +9,6 @@ const axiosService = axios.create({baseURL});
 
 axiosService.interceptors.request.use((config) => {
     const access_token = authService.getAccessToken();
-    console.log(access_token, 'access in interseptor');
     if (access_token) {
         config.headers.access_token = `${access_token}`
         return config
@@ -23,7 +22,6 @@ axiosService.interceptors.response.use((config) => {
         return config
     }, async (error) => {
         const refresh_token = authService.getRefreshToken();
-        console.log(refresh_token, 'refresh token interceptor');
         console.log('ERROR RESPONSE', error);
         if (error.response?.status === 403) {
             throw error
@@ -42,7 +40,6 @@ axiosService.interceptors.response.use((config) => {
                     throw new Error('Not valid first');
                 }
             } catch (e) {
-                console.log(e.response.data, 'e in catch');
                 authService.deleteTokens();
                 return history.replace('/account?ExpSession=true');
             }

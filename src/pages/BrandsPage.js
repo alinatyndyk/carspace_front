@@ -1,20 +1,18 @@
 import Brands from "../components/Brands/Brands";
-import Modal from "../components/Modal/Modal";
-import LoginForm from "../components/Forms/LoginForm";
 import {carActions} from "../redux";
 import {useDispatch} from "react-redux";
-import CarPage from "./CarPage";
 import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router";
 
 export default function BrandsPage() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
     const submit = (data) => {
         console.log(data);
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
         if (!errors) {
-            // navigate('/cars');
-            // history.push('/cars')
+            navigate('/cars');
         }
         console.log(errors);
     }

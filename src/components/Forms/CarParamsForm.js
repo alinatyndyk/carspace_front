@@ -3,30 +3,30 @@ import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {useSearchParams} from "react-router-dom";
 import {brandActions, carActions} from "../../redux";
-import {useNavigate, useParams} from "react-router";
+import {useParams} from "react-router";
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
     const {brand} = useParams();
-    const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit, setValue} = useForm();
     const {errors} = useSelector(state => state.cars);
     const {brands} = useSelector(state => state.brands);
 
     useEffect(() => {
-        // setSearchParams('');
-        for(const [key, value] of searchParams){
-            console.log('****************************************');
-            console.log(key, 'key');
+        for (const [key, value] of searchParams) {
             setValue(key, value);
+            console.log(key, value, 'input');
+
+            if (value === 'true' || 'false') {
+                setValue(key, value);
+            } //todo checkbox read window.location.search
         }
         dispatch(brandActions.getAll());
-    }, [])
+    }, [window.location.search])
 
 
     const handleParams = (e) => {
-        console.log(e.target.checked);
         if (e.target.checked === true) {
             searchParams.set(e.target.name, e.target.checked);
         } else if (e.target.checked === false) {
@@ -58,7 +58,7 @@ export default function CarParamsForm() {
         if (window.location.search.includes('description')) {
             searchParams.delete('description')
         }
-    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, getPriceDayMax,brand])
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, getPriceDayMax, brand])
 
 
     const submit = async (data) => {
@@ -121,7 +121,7 @@ export default function CarParamsForm() {
                         <div onClick={() => {
                             setValue('location', 'london');
                             setLocation('london');
-                            searchParams.set('location', 'london')
+                            searchParams.set('location', 'london');
                         }}>London
                         </div>
                         <div onClick={() => {
@@ -179,9 +179,8 @@ export default function CarParamsForm() {
                            searchParams.set('min_drivers_age', e.target.value);
                            setAge(e.target.value)
                        }}/>
-                {/*<input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>*/}
                 <span>
-                <input type="checkbox" name={'driver_included'} onClick={handleParams}
+                <input type="checkbox" name={'driver_included'} defaultChecked={false} onClick={handleParams}
                        placeholder={'driver_included'} {...register('driver_included')}/>driver
                 </span>
                 <span
@@ -213,7 +212,8 @@ export default function CarParamsForm() {
                                 setValue('vehicle_type', 'Luxury');
                                 setType('luxury');
                                 searchParams.set('vehicle_type', 'luxury')
-                            }}>Luxury</div>
+                            }}>Luxury
+                            </div>
                             <div onClick={() => {
                                 setValue('vehicle_type', 'Economy');
                                 setType('economy');

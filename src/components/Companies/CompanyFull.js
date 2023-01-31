@@ -1,4 +1,4 @@
-import {useLocation, useNavigate, useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 import {companyActions} from "../../redux";
 import './Company.css'
@@ -10,7 +10,6 @@ import jwt_decode from "jwt-decode";
 import CompanyForm from "../Forms/CompanyForm";
 
 const CompanyFull = ({accountCompanyId}) => {
-    const location = useLocation();
     const navigate = useNavigate();
     const {company_id} = useParams();
     const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const CompanyFull = ({accountCompanyId}) => {
     }, [company_id]);
 
     const {company} = useSelector(state => state.companies);
-    const {_id, name, email, contact_number, image, description, cars} = company;
+    const {name, email, contact_number, image, description, cars} = company;
 
     const [equal, setEqual] = useState(false);
     const [getDecoded, setDecoded] = useState(false);
@@ -38,16 +37,12 @@ const CompanyFull = ({accountCompanyId}) => {
         if (token) {
             const decoded = jwt_decode(token);
             setDecoded(decoded);
-        } else if (!token) {
-            console.log('no token');
         }
     }, [])
 
     useEffect(() => {
         if (company_id === getDecoded._id) {
             setEqual(true);
-        } else {
-            console.log('not equals', company_id, getDecoded._id);
         }
     })
 

@@ -9,7 +9,6 @@ const getAll = createAsyncThunk(
     'brandSlice/getAllUsers',
     async () =>{
         const {data} = await brandsService.getAll();
-        console.log(data, 'async thunk');
         return data
     }
 )
@@ -21,7 +20,6 @@ const brandSlice = createSlice({
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                console.log(action.payload, 'action payload');
                 state.brands = action.payload;
             })
 });

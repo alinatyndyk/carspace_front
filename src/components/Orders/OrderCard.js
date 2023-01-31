@@ -2,15 +2,13 @@ import {useLocation} from "react-router";
 
 export default function OrderCard({order}) {
     const {state} = useLocation();
-    console.log(state, 'state order cars');
-
     const {_id, user, from_date, to_date, car, Difference_In_Days} = order;
 
     return (
         <div>
             <h3>Order Card</h3>
             <div>Order id: {_id}</div>
-            {state.type === 'company-orders' ? <div className={'user'}>
+            {state?.type === 'company-orders' ? <div className={'user'}>
                 <div>User: {user?.name} {user?.last_name}</div>
                 <div>User-email/phone: {user?.email}/{user?.contact_number}</div>
             </div> : null }

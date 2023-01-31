@@ -22,7 +22,7 @@ export default function CarForm() {
             const file = fileList[index];
             files.push(file);
         }
-        const {error} = await dispatch(carActions.postCar({
+        await dispatch(carActions.postCar({
             car: {
                 ...data,
                 files,
@@ -257,7 +257,6 @@ export default function CarForm() {
                 <span>
                 <input type="checkbox" placeholder={'chiller_freezer'} {...register('chiller_freezer')}/>chiller/freezer
                 </span>
-                {/*<input type="checkbox" placeholder={'cruise_control'} {...register('cruise_control')}/>cruise control*/}
                 <button>Create car</button>
                 {img.filePreview !== null ?
                     <img src={img.filePreview} alt=""/> : null}

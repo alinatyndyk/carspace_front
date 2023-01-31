@@ -4,19 +4,18 @@ import {authActions} from "../../redux";
 import {useNavigate} from "react-router";
 import "./Forms.css"
 import {Link} from "react-router-dom";
+
 export default function LoginForm() {
-    const {register, handleSubmit, reset} = useForm();
+    const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        console.log(data, 'in submit');
         const {error} = await dispatch(authActions.login({user: data}))
         if (!error) {
             navigate('/account')
         }
-        console.log(error, 'error');
     }
 
     return (

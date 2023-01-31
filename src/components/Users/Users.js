@@ -11,8 +11,8 @@ const Users = () => {
 
     useEffect(() => {
         if(user_id){
-            const res = dispatch(userActions.getById({_id: user_id}))
-            console.log(res);
+            const {errors} = dispatch(userActions.getById({_id: user_id}))
+            console.log(errors);
         }
         const res = dispatch(userActions.getAll())
         console.log(res);

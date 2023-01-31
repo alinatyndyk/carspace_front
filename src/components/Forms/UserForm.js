@@ -1,4 +1,4 @@
-import {carActions, userActions} from "../../redux";
+import {userActions} from "../../redux";
 
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "react-hook-form";
@@ -10,10 +10,7 @@ export default function UserForm({user}) {
     const {errors} = useSelector(state => state.users);
 
     const submit = async (data) => {
-        console.log(data, 'data in submit **************************');
-        console.log(user._id, 'user');
         const {error} = await dispatch(userActions.updateUser({_id: user._id, user: data}))
-        console.log(error, 'error from submit');
     }
 
     useEffect(() => {

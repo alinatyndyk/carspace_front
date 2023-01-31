@@ -20,9 +20,7 @@ const getAll = createAsyncThunk(
 const getById = createAsyncThunk(
     'brandSlice/getById',
     async ({_id}) => {
-        console.log(_id, 'user i din async');
         const {data} = await userService.getUserById(_id);
-        console.log(data, 'async thunk get user by id');
         return data
     }
 )
@@ -43,9 +41,7 @@ const updateUser = createAsyncThunk(
     'carSlice/updateUser',
     async ({_id, user}, {rejectWithValue}) => {
         try {
-            console.log(_id, user, 'update in async');
             const {data} = await userService.updateUser(_id, user);
-            console.log(data, 'data updateCar from async');
             return data
         } catch (e) {
             console.log(e.response.data, 'err in async');
@@ -61,21 +57,16 @@ const userSlice = createSlice({
     extraReducers: (builder) =>
         builder
             .addCase(getAll.fulfilled, (state, action) => {
-                console.log(action.payload, 'action payload');
                 state.users = action.payload;
             })
             .addCase(getById.fulfilled, (state, action) => {
-                console.log(action.payload, 'action payload get user by id');
                 state.user = action.payload;
             })
             .addCase(getUserOrders.fulfilled, (state, action) => {
                 state.orders = action.payload;
             })
             .addCase(updateUser.fulfilled, (state, action) => {
-                console.log(action.payload, 'ap addcase postcar');
                 window.location.reload();
-                // state.users.find(value => value === action.payload._id);
-                // Object.assign(currentCar, action.payload);
             })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);

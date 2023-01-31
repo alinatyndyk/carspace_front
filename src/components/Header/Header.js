@@ -28,16 +28,12 @@ export default function Header() {
     useEffect(() => {
         dispatch(brandActions.getAll());
         setSearchParams(undefined);
-        if (!access) {
-            console.log('no access');
-        } else if (access) {
+        if (access) {
             const first = access.split(' ')[0];
-            console.log(first, 'first');
             const {_id} = jwt_decode(access);
             if (first === 'Company') {
                 setId(_id);
                 setIsAuth(true);
-                console.log(access, _id);
             } else if (first === 'User') {
                 setId(_id);
                 setIsAuthUser(true);
@@ -48,6 +44,18 @@ export default function Header() {
     useEffect(() => {
         dispatch(carActions.getByBrand({brand: getBrand}))
     }, [getBrand])
+
+    useEffect(() => {
+        if (location !== false) {
+            for (const [key, value] of searchParams) {
+                searchParams.delete(key);
+            }
+            searchParams.set('location', location);
+            setSearchParams(searchParams);
+            dispatch(carActions.getAllWithParams({params: searchParams}));
+            navigate(`/cars?${searchParams}`);
+        }
+    }, [location])
 
     const submit = async (data) => {
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
@@ -139,67 +147,35 @@ export default function Header() {
                                 <div className={'brands'}>
                                     <div onClick={() => {
                                         setLocation('london');
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=london');
-                                             window.location.reload()
-                                         }}>London
+                                    }}>London
                                     </div>
                                     <div onClick={() => {
                                         setLocation('birmingham')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=birmingham');
-                                             window.location.reload()
-                                         }}>Birmingham
+                                    }}>Birmingham
                                     </div>
                                     <div onClick={() => {
                                         setLocation('manchester')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=manchester');
-                                             window.location.reload()
-                                         }}>Manchester
+                                    }}>Manchester
                                     </div>
                                     <div onClick={() => {
                                         setLocation('leeds')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=leeds');
-                                             window.location.reload()
-                                         }}>Leeds
+                                    }}>Leeds
                                     </div>
                                     <div onClick={() => {
                                         setLocation('sheffield')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=sheffield');
-                                             window.location.reload()
-                                         }}>Sheffield
+                                    }}>Sheffield
                                     </div>
                                     <div onClick={() => {
                                         setLocation('liverpool')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=liverpool');
-                                             window.location.reload()
-                                         }}>Liverpool
+                                    }}>Liverpool
                                     </div>
                                     <div onClick={() => {
                                         setLocation('bristol')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=bristol');
-                                             window.location.reload()
-                                         }}>Bristol
+                                    }}>Bristol
                                     </div>
                                     <div onClick={() => {
                                         setLocation('wakefield')
-                                    }}
-                                         onDoubleClick={() => {
-                                             navigate('/cars?location=wakefield');
-                                             window.location.reload()
-                                         }}>Wakefield
+                                    }}>Wakefield
                                     </div>
                                 </div>
                             )}

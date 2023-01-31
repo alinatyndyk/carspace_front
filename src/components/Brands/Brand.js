@@ -5,7 +5,8 @@ const Brand = ({item}) => {
     const navigate = useNavigate();
     const {brand, cars} = item;
     return (
-        <div className={'brand_link'} onClick={() => navigate(`${brand}`)}>{brand} ({cars.length})</div>
+        <div className={'brand_link'} onClick={() =>
+            navigate(`${brand}`)}>{brand} ({cars.length})</div>
     );
 };
 

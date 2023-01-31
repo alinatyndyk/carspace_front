@@ -8,8 +8,7 @@ export default function ResetPasswordCompanyForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        const {errors} = await dispatch(authActions.resetPasswordCompany({password: data}))
-        console.log(errors, 'res-----------------------------');
+        await dispatch(authActions.resetPasswordCompany({password: data}))
         reset();
     }
     return (

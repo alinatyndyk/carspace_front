@@ -15,23 +15,10 @@ const authService = {
             'Content-type': 'multipart/form-data'
         }
     }),
-    // uploadUser: (data) => axiosService.post('http://localhost:5000/upload', data, {
-    //     headers: {
-    //         'Content-type': 'multipart/form-data'
-    //     }
-    // }),
     forgotPasswordUser: (email) => axiosService.post('http://localhost:5000/auth/password_forgot/user', email),
     forgotPasswordCompany: (contact_number) => axiosService.post('http://localhost:5000/auth/password_forgot/company', contact_number),
-    resetPasswordUser: (password) => axiosService.put('http://localhost:5000/auth/password_reset/user', password, {
-        // headers: {
-        //     Authorization: `${authService.getActionToken()}`
-        // }
-    }),
-    resetPasswordCompany: (password) => axiosService.put('http://localhost:5000/auth/password_reset/company', password, {
-        // headers: {
-        //     Authorization: `${authService.getActionToken()}`
-        // }
-    }),
+    resetPasswordUser: (password) => axiosService.put('http://localhost:5000/auth/password_reset/user', password),
+    resetPasswordCompany: (password) => axiosService.put('http://localhost:5000/auth/password_reset/company', password),
     refreshUser: (refresh_token) => axiosService.post(`${urls.auth}/user/refresh`, refresh_token, {
         headers: {
             refresh_token: `${authService.getRefreshToken()}`

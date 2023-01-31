@@ -13,7 +13,6 @@ const getAll = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await carService.getAll();
-            console.log('get all cars asunc', data.cars);
             return data.cars
         } catch (e) {
             console.log(e.response.status);
@@ -27,7 +26,6 @@ const getAllWithParams = createAsyncThunk(
     async ({params}, {rejectWithValue}) => {
         try {
             const {data} = await carService.getAllWithParams(params);
-            console.log('get all cars asunc', data);
             return data.cars
         } catch (e) {
             console.log(e.response.status);
@@ -40,9 +38,7 @@ const getByDescription = createAsyncThunk(
     'carSlice/getByDescription',
     async ({description, params}, {rejectWithValue}) => {
         try {
-            console.log(description, params,' description in async /*/**/*/*/*/*/*//**/*//*//**/');
             const {data} = await carService.getByDescription(description, params);
-            console.log(data, 'get by desc data return');
             return data.cars
 
         } catch (e) {
@@ -55,7 +51,6 @@ const getFilteredByDate = createAsyncThunk(
     'carSlice/getFilteredByDate',
     async ({info}, {rejectWithValue}) => {
         try {
-            console.log(info, 'info in async');
             const {data} = await carService.getFilteredByDate(info);
             return data
 
@@ -115,9 +110,7 @@ const postCarOrder = createAsyncThunk(
     'carSlice/postCarOrder',
     async ({_id, dates}, {rejectWithValue}) => {
         try {
-            console.log(dates, _id, 'dates in async');
             const {data} = await carService.postCarOrder(_id, dates);
-            console.log(data, 'data car from async');
             return data
         } catch (e) {
             console.log(e.response.data, 'err in async');
@@ -129,9 +122,7 @@ const postCarOrder = createAsyncThunk(
 const getById = createAsyncThunk(
     'carSlice/getById',
     async ({_id}) => {
-        console.log(_id, 'id in async');
         const {data} = await carService.getById(_id);
-        console.log(data, 'data in async');
         return data
     }
 )
@@ -139,7 +130,6 @@ const getById = createAsyncThunk(
 const getByBrand = createAsyncThunk(
     'carSlice/getByBrand',
     async ({brand}) => {
-        console.log(brand, 'in async');
         const {data} = await carService.getByBrand(brand);
         return data.cars
     }
@@ -175,7 +165,6 @@ const carSlice = createSlice({
                 state.cars.push(action.payload)
             })
             .addCase(getById.fulfilled, (state, action) => {
-                console.log(action.payload, 'car in add case');
                 state.car = action.payload;
             })
             .addCase(getByBrand.fulfilled, (state, action) => {

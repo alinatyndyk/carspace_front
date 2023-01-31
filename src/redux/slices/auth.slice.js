@@ -10,7 +10,6 @@ const forgotPasswordUser = createAsyncThunk(
     'authSlice/forgotPasswordUser',
     async ({info}, {rejectWithValue}) => {
         try {
-            console.log(info, 'email in async');
             const {data} = await authService.forgotPasswordUser(info);
             return data
         } catch (e) {
@@ -23,7 +22,6 @@ const forgotPasswordCompany = createAsyncThunk(
     'authSlice/forgotPasswordCompany',
     async ({contact_number}, {rejectWithValue}) => {
         try {
-            console.log(contact_number, 'number in async');
             const {data} = await authService.forgotPasswordCompany(contact_number);
             return data
         } catch (e) {
@@ -58,7 +56,6 @@ const register = createAsyncThunk(
     'authSlice/register',
     async ({user}, {rejectWithValue}) => {
         try {
-            console.log(user, 'user in async');
             await authService.registerUser(user)
         } catch (e) {
             return rejectWithValue(e.response.data);
@@ -70,7 +67,6 @@ const login = createAsyncThunk(
     'authSlice/login',
     async ({user}, {rejectWithValue}) => {
         try {
-            console.log(user, 'in async');
             const {data} = await authService.loginUser(user);
             return data
         } catch (e) {
@@ -85,7 +81,6 @@ const loginCompany = createAsyncThunk(
     async ({company}, {rejectWithValue}) => {
         try {
             const {data} = await authService.loginCompany(company);
-            console.log(data, 'RES /*******//////////////////////');
             return data
         } catch (e) {
             console.log(e.response.data);
@@ -99,7 +94,6 @@ const logoutCompany = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await authService.logoutCompany();
-            console.log(data, 'res in async');
             return data
         } catch (e) {
             console.log(e.response.data);
@@ -113,7 +107,6 @@ const logoutUser = createAsyncThunk(
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await authService.logoutUser();
-            console.log(data, 'res in async');
             return data
         } catch (e) {
             console.log(e.response.data);
@@ -130,34 +123,28 @@ const authSlice = createSlice({
         builder
             .addCase(login.fulfilled, (state, action) => {
                 state.isAuth = true;
-                console.log(action.payload);
                 authService.setTokens({...action.payload});
                 window.location.reload();
             })
             .addCase(logoutUser.fulfilled, (state, action) => {
                 state.isAuth = false;
-                console.log(action.payload);
                 authService.deleteTokens();
                 window.location.reload();
             })
             .addCase(loginCompany.fulfilled, (state, action) => {
                 state.isAuth = true;
-                console.log(action.payload);
                 authService.setTokens({...action.payload});
                 window.location.reload();
             })
             .addCase(logoutCompany.fulfilled, (state, action) => {
                 state.isAuth = false;
-                console.log(action.payload);
                 authService.deleteTokens();
                 window.location.reload();
             })
             .addCase(forgotPasswordUser.fulfilled, (state, action) => {
-                console.log(action.payload, 'action token');
                 authService.setActionToken(action.payload);
             })
             .addCase(forgotPasswordCompany.fulfilled, (state, action) => {
-                console.log(action.payload, 'action token');
                 authService.setActionToken(action.payload);
             })
             .addDefaultCase((state, action) => {

@@ -1,10 +1,10 @@
-import {useLocation, useNavigate} from "react-router";
+import {useNavigate} from "react-router";
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import './Car.css'
 
-const CarCard = ({car, auth}) => {
+const CarCard = ({car}) => {
 
+    const navigate = useNavigate();
     const {
         _id,
         model,
@@ -14,19 +14,11 @@ const CarCard = ({car, auth}) => {
         images,
         price_day_basis,
         location,
+        driver_included,
         transmission,
         vehicle_type,
         engine_capacity
     } = car;
-    const navigate = useNavigate();
-    const [equal, setEqual] = useState(false);
-
-    useEffect(() => {
-        if (auth === true) {
-            setEqual(true);
-        }
-    });
-
 
     return (
         <div className={'car'} onClick={() => navigate(`/cars/${_id}`)}>
@@ -35,13 +27,10 @@ const CarCard = ({car, auth}) => {
                     <img src={`${image?.link}`} alt="Red dot"/>
                 </div> :
                 <img src={`${images[0]?.link}`} alt="Red dot"/>}
-
-            {/*{equal === true ? <button>Update car form</button> : null}*/}
             <div className={'car_card-top-info'}>
                 <h5>{brand} {model} {model_year}</h5>
                 <h4>{price_day_basis}$</h4>
             </div>
-            {/*<button onClick={() => navigate(`/brands/${brand}`)}>Get cars with this brand</button>*/}
             <hr/>
             <div className={'car_card_details'}>
                 <div>
@@ -51,6 +40,7 @@ const CarCard = ({car, auth}) => {
                 <div>
                     <div>type: {vehicle_type}</div>
                     <div>engine: {engine_capacity}-litre</div>
+                    <div>driver: {driver_included.toString()}</div>
                 </div>
             </div>
         </div>

@@ -1,54 +1,28 @@
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../redux";
-import {useNavigate} from "react-router";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useNavigate} from "react-router";
 
 export default function RegisterForm() {
     const {register, handleSubmit} = useForm();
+    const {errors} = useSelector(state => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {errors} = useSelector(state => state.auth)
 
     const [img, setImg] = useState({
         filePreview: null
     });
 
     const submit = async (data) => {
-        console.log(data);
         setImg({filePreview: URL.createObjectURL(data.testImage[0])});
-        console.log('--------------------------------------------------')
-        console.log(data.testImage[0]);
-        console.log('--------------------------------------------------')
-        // const formData = new FormData();
-        // for(const field in data){
-        //     field === 'testImage' ? formData.append('testImage')
-        // }
         const {error} = await dispatch(authActions.register({user: {...data, testImage: data.testImage[0]}}))
-        // if(!error){
-        //     navigate('/login');
-        // }
+        if (!error) {
+            navigate('/account');
+        }
         console.log(error);
     }
-    console.log(img, 'img from usestate');
-
-
-    // const submit = async (data) => {
-    //     const formData = new FormData();
-    //
-    //     for (const field in data) {
-    //         field === 'testImage'
-    //             ? formData.append('testImage', data.testImage[0])
-    //             : formData.append(field, data[field]);
-    //     }
-    //     // TODO  тут свій код додай
-    //     const {error} = await dispatch(authActions.register({user: {...data, testImage: data.testImage[0]}}))
-    //     if (!error) {
-    //         navigate('/login');
-    //     }
-    //     console.log(error);
-    // }
 
     return (
         <form onSubmit={handleSubmit(submit)} encType="multipart/form-data">

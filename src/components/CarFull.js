@@ -7,16 +7,17 @@ import {authService} from "../services";
 import jwt_decode from "jwt-decode";
 import CheckoutComponent from "./CheckoutComponent";
 import './Car.css'
-import {Swiper, SwiperSlide} from "swiper/react";
-import {A11y, Keyboard, Navigation, Pagination, Scrollbar} from "swiper";
 import {Link} from "react-router-dom";
+import {Swiper, SwiperSlide} from "swiper/react";
+import {A11y, Navigation, Pagination, Scrollbar} from "swiper";
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 export default function CarFull() {
     const dispatch = useDispatch();
-    const {register, handleSubmit, reset, setValue} = useForm();
-
     const {car_id} = useParams();
-    console.log(car_id, 'useparams');
+    const {register, handleSubmit, reset, setValue} = useForm();
 
     useEffect(() => {
         const {errors} = dispatch(carActions.getById({_id: car_id}));
@@ -24,9 +25,7 @@ export default function CarFull() {
     }, [car_id])
 
     const {car, carForUpdate, errors} = useSelector(state => state.cars);
-    console.log(car);
     const {
-        _id,
         model,
         brand,
         model_year,
@@ -40,7 +39,6 @@ export default function CarFull() {
         security_deposit,
         price_day_basis
     } = car;
-    console.log(car);
 
     useEffect(() => {
         if (carForUpdate) {
@@ -58,17 +56,12 @@ export default function CarFull() {
     const [getDecoded, setDecoded] = useState(false);
     const [book, setBook] = useState(false);
 
-    console.log(getDecoded, 'get decoded');
     useEffect(() => {
         const token = authService.getAccessToken();
         if (token) {
             const decoded = jwt_decode(token);
-            console.log(decoded, company, 'decoded token in company');
             setDecoded(decoded);
-        } else if (!token) {
-            console.log('no token');
         }
-        console.log(token, 'token in company');
     }, [])
 
     useEffect(() => {
@@ -89,12 +82,12 @@ export default function CarFull() {
     return (
         <div className={'car-full-wrap'}>
             {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
-            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD</div>
+            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD
+            </div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
                     <Swiper
                         className={'swiper_wrapper_car'}
-                        // install Swiper modules
                         modules={[Navigation, Pagination, Scrollbar, A11y]}
                         slidesPerView={1}
                         navigation={true}
@@ -137,7 +130,8 @@ export default function CarFull() {
                         }}>Book this car
                         </button>
                     </div>
-                        {book === true ? <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/></div> : null}
+                    {book === true ?
+                        <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/></div> : null}
                 </div>
                 <div className={'car-full-bottom'}>
                     <h4>Car features</h4>
@@ -147,14 +141,14 @@ export default function CarFull() {
                     }}>set for update
                     </button>
                     <div>description:{description}</div>
-                    {JSON.stringify(company)}
                     <Link to={`/companies/${company}`}>Company</Link>
                     {equal === true ?
                         <div>
                             <form onSubmit={handleSubmit(submit)}>
                                 <input type="text" placeholder={'model'} {...register('model')}/>
                                 <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                                <textarea placeholder={'description'} {...register('description')} rows="5" cols="80" id="TITLE"/>
+                                <textarea placeholder={'description'} {...register('description')} rows="5" cols="80"
+                                          id="TITLE"/>
                                 <button>Update car</button>
                             </form>
                         </div> : null}
