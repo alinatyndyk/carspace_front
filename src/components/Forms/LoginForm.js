@@ -13,9 +13,9 @@ export default function LoginForm() {
 
     const submit = async (data) => {
         const {error} = await dispatch(authActions.login({user: data}))
-        if (!error) {
-            navigate('/account')
-        }
+        // if (!error) {
+        //     navigate('/home');
+        // }
     }
 
     return (

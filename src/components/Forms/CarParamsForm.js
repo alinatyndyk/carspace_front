@@ -10,7 +10,6 @@ export default function CarParamsForm() {
     const {brand} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit, setValue} = useForm();
-    const {errors} = useSelector(state => state.cars);
     const {brands} = useSelector(state => state.brands);
 
     useEffect(() => {
@@ -76,7 +75,6 @@ export default function CarParamsForm() {
 
     return (
         <div>
-            {errors}
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
                 <div onClick={() => setSearchParams('')}>Reset search params</div>

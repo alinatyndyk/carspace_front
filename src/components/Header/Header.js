@@ -51,6 +51,7 @@ export default function Header() {
                 searchParams.delete(key);
             }
             searchParams.set('location', location);
+            searchParams.set('page', 1);
             setSearchParams(searchParams);
             dispatch(carActions.getAllWithParams({params: searchParams}));
             navigate(`/cars?${searchParams}`);
