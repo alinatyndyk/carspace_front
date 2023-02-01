@@ -13,7 +13,6 @@ export default function CheckoutComponent({car, carErrors}) {
     const [toDate, setToDate] = useState('');
     const [getCheckout, setCheckout] = useState(false);
     const [getErrors, setErrors] = useState(false);
-    console.log(fromDate, toDate, 'state date');
 
     const Difference_In_Time = new Date(toDate).getTime() - new Date(fromDate).getTime();
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
@@ -44,7 +43,7 @@ export default function CheckoutComponent({car, carErrors}) {
     const priceForStripe = car.price_day_basis * 100 * Difference_In_Days;
     const stripeKeyPublish = 'pk_test_51MIX9gIAfGNWX8HhBIwUrgdZnEdnQ3Rji9C5k11GZk0tIpdGxewspLxOhGoIEAB53kAwJ2xDRTRt3ctswqph2JoF00AnaMMfdG'
     return (
-        <div>
+        <div className={'checkout-form-insides'}>
             <h2>Checkout Form</h2>
             <form onSubmit={handleSubmit(submit)}>
                 <div>

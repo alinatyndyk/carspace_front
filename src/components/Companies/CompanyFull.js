@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {companyActions} from "../../redux";
+import {carActions, companyActions} from "../../redux";
 import './Company.css'
 import {useEffect, useState} from "react";
 import CarCard from "../CarCard";
@@ -8,26 +8,39 @@ import CarForm from "../Forms/CarForm";
 import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
 import CompanyForm from "../Forms/CompanyForm";
+import CarPage from "../../pages/CarPage";
 
 const CompanyFull = ({accountCompanyId}) => {
     const navigate = useNavigate();
     const {company_id} = useParams();
     const dispatch = useDispatch();
+    // const {cars} = useSelector(state => state.cars)
 
     useEffect(() => {
         if (!company_id && !accountCompanyId) { //todo
             navigate('/login');
         } else if (!company_id) {
             const {errors} = dispatch(companyActions.getById({_id: accountCompanyId}));
+            // dispatch(carActions.getAllWithParams({params: {company: accountCompanyId}}));
             console.log(errors);
         } else {
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
+            // dispatch(carActions.getAllWithParams({params: {company: company_id}}));
             console.log(errors);
         }
     }, [company_id]);
 
+    useEffect(() => {
+        if (!company_id) {
+            dispatch(carActions.getAllWithParams({params: `company=${accountCompanyId}`}));
+        } else {
+            dispatch(carActions.getAllWithParams({params: `company=${company_id}`}));
+        }
+    }, [company_id, accountCompanyId])
+
+
     const {company} = useSelector(state => state.companies);
-    const {name, email, contact_number, image, description, cars} = company;
+    const {name, email, contact_number, image, description, cars} = company; //cars
 
     const [equal, setEqual] = useState(false);
     const [getDecoded, setDecoded] = useState(false);
@@ -64,7 +77,8 @@ const CompanyFull = ({accountCompanyId}) => {
             </div>
             <div className={'company-full-cars'}>
                 <h3>Comapny cars</h3>
-                {cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}
+                <CarPage/>
+                {/*{cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}*/}
             </div>
             <div className={''}>
                 {equal === true ? <div><CarForm/></div> : null}

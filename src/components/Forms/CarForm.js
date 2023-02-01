@@ -17,15 +17,16 @@ export default function CarForm() {
 
     const submit = async (data) => {
         const fileList = data.files;
-        let files = [];
+        let filesArr = [];
         for (let index = 0; index < fileList.length; index++) {
             const file = fileList[index];
-            files.push(file);
+            filesArr.push(file);
         }
+
         await dispatch(carActions.postCar({
             car: {
                 ...data,
-                files,
+                files: filesArr,
                 car_features: {
                     digital_hud: data.digital_hud,
                     cruise_control: data.cruise_control,

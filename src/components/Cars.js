@@ -8,7 +8,7 @@ import {useSearchParams} from "react-router-dom";
 const Cars = ({id}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
-    const {brand} = useParams();
+    const {brand, company_id} = useParams();
     const [searchParams, setSearchParams] = useSearchParams({page: 1});
     const [getPage, setPage] = useState(1);
     const [getButtons, setButtons] = useState(false);
@@ -32,7 +32,7 @@ const Cars = ({id}) => {
             console.log(errors);
         }
         setSearchParams(searchParams);
-    }, [id]);
+    }, [id, company_id]);
 
     useEffect(() => {
         setSearchParams(searchParams);

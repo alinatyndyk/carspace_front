@@ -94,6 +94,7 @@ export default function CarFull() {
                         grabCursor={true}
                         pagination={{clickable: true}}
                         scrollbar={{draggable: true}}
+
                     >
                         {
                             images?.map(image => <SwiperSlide><img src={`${image?.link}`} alt=''/></SwiperSlide>)

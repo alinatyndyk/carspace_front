@@ -40,13 +40,11 @@
 }
 
 .carousel-carfull {
-    width: 600px;
+    width: 500px;
 }
 
 .swiper_wrapper_car {
-    width: 500px;
-    margin: 0 35px;
-    background-color: red;
+    width: 600px;
 }
 
 .car-full-data {
@@ -79,7 +77,6 @@
 }
 
 .car-pricing {
-    /*background-color: orange;*/
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,7 +95,7 @@
 }
 
 .checkout-form {
-    border: 2px solid grey;
+    border: 1px solid darkslategray;
     border-radius: 6px;
     width: 300px;
     margin-left: 20px;
@@ -106,24 +103,26 @@
     padding: 20px;
 }
 
+.checkout-form-insides {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .checkout-form input {
     height: 30px;
     width: 200px;
-    margin-top: 10px;
-    padding: 7px;
-    font-size: 18px;
-    border-width: 1px;
-    border-color: #CCCCCC;
-    background-color: #FFFFFF;
-    color: #000000;
-    border-style: solid;
-    border-radius: 0px;
-    box-shadow: 4px 0px 5px rgba(66, 66, 66, .75);
+    border-radius: 5px;
+    border: 1px solid darkslategray;
+    margin-top: 15px;
 }
 
 .checkout-form button {
     margin-top: 15px;
     border: none;
+    border-radius: 5px;
+    color: white;
     background-color: orange;
     width: 100px;
     height: 30px;
