@@ -132,3 +132,16 @@
     height: 100px;
     width: 300px;
 }
+
+.car_features {
+    border: 1px solid darkslategray;
+    border-radius: 5px;
+    width: 500px;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+}
+
+.car_feature{
+    margin: 15px;
+}

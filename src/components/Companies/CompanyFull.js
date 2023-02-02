@@ -76,7 +76,7 @@ const CompanyFull = ({accountCompanyId}) => {
                     <h3>Company cars</h3>
                     <CarPage/>
                 </div>
-                <div className={''}>
+                <div>
                     {equal === true ? <div><CarForm/></div> : null}
                 </div>
             </div>

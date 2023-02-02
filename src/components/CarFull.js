@@ -135,20 +135,19 @@ export default function CarFull() {
                 </div>
                 <div className={'car-full-bottom'}>
                     <h4>Car features</h4>
-                    {features.map(item => <div>{item}</div>)}
+                    <div className={'car_features'}>{features.map(item => <div className={'car_feature'}>{item}</div>)}</div>
+                    <div>description:{description}</div>
+                    <div><Link to={`/companies/${company}`}>More cars from this company</Link></div>
                     <button onClick={() => {
                         dispatch(carActions.setCarForUpdate(car));
                     }}>set for update
                     </button>
-                    <div>description:{description}</div>
-                    <Link to={`/companies/${company}`}>Company</Link>
                     {equal === true ?
                         <div>
                             <form onSubmit={handleSubmit(submit)}>
-                                <input type="text" placeholder={'model'} {...register('model')}/>
-                                <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                                <textarea placeholder={'description'} {...register('description')} rows="5" cols="80"
-                                          id="TITLE"/>
+                                <div><input type="text" placeholder={'model'} {...register('model')}/></div>
+                                <div><input type="number" placeholder={'model_year'} {...register('model_year')}/></div>
+                                <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="80" id="TITLE"/></div>
                                 <button>Update car</button>
                             </form>
                         </div> : null}
