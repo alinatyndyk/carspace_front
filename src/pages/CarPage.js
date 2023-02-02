@@ -3,7 +3,7 @@ import {useParams} from "react-router";
 import CarParamsForm from "../components/Forms/CarParamsForm";
 import {useSelector} from "react-redux";
 
-export default function CarPage() {
+export default function CarPage({accountCompanyId}) {
     const {car_id} = useParams();
     const {errors} = useSelector(state => state.cars);
 
@@ -11,7 +11,7 @@ export default function CarPage() {
         <div>
             <div className={'car-page'}>
                 <div><CarParamsForm/></div>
-                <div><Cars id={car_id}/></div>
+                <div><Cars id={car_id} accountCompanyId={accountCompanyId}/></div>
             </div>
         </div>
     )

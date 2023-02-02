@@ -5,7 +5,7 @@ import {carActions} from "../redux";
 import {useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
 
-const Cars = ({id}) => {
+const Cars = ({id, accountCompanyId}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, company_id} = useParams();
@@ -28,9 +28,11 @@ const Cars = ({id}) => {
             }));
             console.log(errors, 'errors');
         } else if (company_id) {
-            console.log('COMPANYID');
             searchParams.set('company', company_id);
-            dispatch(carActions.getAllWithParams({params: {searchParams}}))
+            dispatch(carActions.getAllWithParams({params: {...searchParams}}));
+        } else if (accountCompanyId) {
+            searchParams.set('company', accountCompanyId);
+            dispatch(carActions.getAllWithParams({params: {...searchParams}}));
         } else {
             const {errors} = dispatch(carActions.getAll());
             console.log(errors);
