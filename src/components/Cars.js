@@ -27,8 +27,12 @@ const Cars = ({id}) => {
                 params: searchParams
             }));
             console.log(errors, 'errors');
+        } else if (company_id) {
+            console.log('COMPANYID');
+            searchParams.set('company', company_id);
+            dispatch(carActions.getAllWithParams({params: {searchParams}}))
         } else {
-            const {errors} = dispatch(carActions.getAll())
+            const {errors} = dispatch(carActions.getAll());
             console.log(errors);
         }
         setSearchParams(searchParams);

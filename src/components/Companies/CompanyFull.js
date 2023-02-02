@@ -60,29 +60,32 @@ const CompanyFull = ({accountCompanyId}) => {
     })
 
     return (
-        <div className={'company-full-wrap'}>
-            <div className={'company-full-company'}>
-                <div>
-                    <img src={`${image?.link}`} alt="Red dot"/>
+        <div>
+                <div className={'company-full-company'}>
+                    <div>
+                        <img src={`${image?.link}`} alt="Red dot"/>
+                    </div>
+                    <div>
+                        <h2>{name}</h2>
+                        <h3>Contact information</h3>
+                        <div>number:{contact_number}</div>
+                        <div>email:{email}</div>
+                        <h3>Read more about us:</h3>
+                        <div>{description}</div>
+                        {equal === true ? <div><CompanyForm company={company}/></div> : null}
+                    </div>
                 </div>
-                <div>
-                    <h2>{name}</h2>
-                    <h3>Contact information</h3>
-                    <div>number:{contact_number}</div>
-                    <div>email:{email}</div>
-                    <h3>Read more about us:</h3>
-                    <div>{description}</div>
-                    {equal === true ? <div><CompanyForm company={company}/></div> : null}
+            <div className={'company-full-wrap'}>
+                <div className={'company-full-cars'}>
+                    <h3>Comapny cars</h3>
+                    <CarPage/>
+                    {/*{cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}*/}
+                </div>
+                <div className={''}>
+                    {equal === true ? <div><CarForm/></div> : null}
                 </div>
             </div>
-            <div className={'company-full-cars'}>
-                <h3>Comapny cars</h3>
-                <CarPage/>
-                {/*{cars?.map(car => <CarCard key={car._id} car={car} auth={equal}/>)}*/}
-            </div>
-            <div className={''}>
-                {equal === true ? <div><CarForm/></div> : null}
-            </div>
+
         </div>
     );
 };
