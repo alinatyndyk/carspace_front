@@ -16,7 +16,8 @@ const CarCard = ({car}) => {
         driver_included,
         transmission,
         vehicle_type,
-        engine_capacity
+        engine_capacity,
+        min_rent_time
     } = car;
 
     return (
@@ -29,6 +30,7 @@ const CarCard = ({car}) => {
             <div className={'car_card-top-info'}>
                 <h5>{brand} {model} {model_year}</h5>
                 <h4>{price_day_basis}$</h4>
+                <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null}</div>
             </div>
             <hr/>
             <div className={'car_card_details'}>

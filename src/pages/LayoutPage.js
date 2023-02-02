@@ -8,7 +8,6 @@ export default function LayoutPage() {
         <div className={'layout'}>
             <Header/>
             <Outlet/>
-            {errors&&<h3>{JSON.stringify(errors)}</h3>}
         </div>
     )
 }

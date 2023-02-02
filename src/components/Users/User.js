@@ -24,7 +24,6 @@ const User = ({accountUserId}) => {
             {update === true ? <UserForm user={user}/> : null}
             <div>
                 <button onClick={() => setUpdate(true)}>update user</button>
-                <button>create order</button>
                 <button  onClick={() =>
                     navigate(`/account/orders`, {state: {type: 'user-orders'}})}>manage orders</button>
             </div>
