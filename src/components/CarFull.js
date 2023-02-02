@@ -29,7 +29,6 @@ export default function CarFull() {
         model,
         brand,
         model_year,
-        image,
         images,
         company,
         location,

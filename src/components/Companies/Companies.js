@@ -6,16 +6,13 @@ import CompanyFull from "./CompanyFull";
 
 const Companies = ({id}) => {
     const {companies, company} = useSelector(state => state.companies);
-    console.log(company, 'comp from use selector');
     const dispatch = useDispatch();
-    console.log(id, 'id props');
+
     useEffect(() => {
         if (id) {
-            console.log('else if id');
             const res = dispatch(companyActions.getById({_id: id}))
-            console.log(res, 'res from dispatch');
+            console.log(res);
         } else {
-            console.log('else if all');
             const res = dispatch(companyActions.getAll())
             console.log(res);
         }

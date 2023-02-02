@@ -8,7 +8,7 @@ export default function ResetPasswordForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        const {errors} = await dispatch(authActions.resetPasswordUser({password: data}))
+        await dispatch(authActions.resetPasswordUser({password: data}))
         reset();
     }
     return (

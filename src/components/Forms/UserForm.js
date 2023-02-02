@@ -10,7 +10,7 @@ export default function UserForm({user}) {
     const {errors} = useSelector(state => state.users);
 
     const submit = async (data) => {
-        const {error} = await dispatch(userActions.updateUser({_id: user._id, user: data}))
+        await dispatch(userActions.updateUser({_id: user._id, user: data}))
     }
 
     useEffect(() => {

@@ -2,25 +2,24 @@ import Modal from "../components/Modal/Modal";
 import LoginForm from "../components/Forms/LoginForm";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
-import CarPage from "./CarPage";
-import {history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
-    const navigate = useNavigate();
+    const {errors: carErrors} = useSelector(state => state.cars);
 
+    const navigate = useNavigate();
     const submit = (data) => {
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
-        if (!errors) {
-            navigate('/cars')
+        if (!carErrors) {
+            navigate('/cars');
         }
-        console.log(errors);
+        console.log(errors, 'errors');
     }
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -29,7 +28,6 @@ export default function HomePage() {
         if (getType !== undefined) {
             const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             if (!errors) {
-                history.push(`/cars${window.location.search}`);
                 navigate(`/cars?vehicle_type=${getType}`);
             }
         }
@@ -37,7 +35,6 @@ export default function HomePage() {
 
     return (
         <div>
-
             <div className={'login_page'}>
                 <div className={'login_page_insides'}>
                     <h2>RENT A CAR IN LONDON</h2>
@@ -47,6 +44,7 @@ export default function HomePage() {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                         <input type="text" placeholder={'Car search'} {...register('description')}/>
                         <button>Find</button>
+                        {carErrors}
                     </form>
 
                 </div>

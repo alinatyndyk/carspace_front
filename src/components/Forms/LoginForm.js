@@ -8,14 +8,10 @@ import {Link} from "react-router-dom";
 export default function LoginForm() {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        const {error} = await dispatch(authActions.login({user: data}))
-        // if (!error) {
-        //     navigate('/home');
-        // }
+        await dispatch(authActions.login({user: data}))
     }
 
     return (

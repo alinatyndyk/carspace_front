@@ -55,6 +55,7 @@ const getFilteredByDate = createAsyncThunk(
             return data
 
         } catch (e) {
+            console.log(e.response.data);
             return rejectWithValue(e.response.data);
         }
     }
@@ -174,7 +175,7 @@ const carSlice = createSlice({
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
                     console.log('ERROR', action.payload);
-                    state.errors = action.payload
+                    state.errors = action.payload;
                 } else {
                     state.errors = null;
                 }

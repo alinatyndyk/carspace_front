@@ -6,8 +6,6 @@ import "./Forms.css"
 
 export default function ForgotPasswordCompanyForm() {
     const {register, handleSubmit} = useForm();
-    const {element} = useParams();
-    console.log(element);
     const dispatch = useDispatch();
 
     const submit = async (data) => {

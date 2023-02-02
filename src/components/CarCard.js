@@ -1,5 +1,4 @@
 import {useNavigate} from "react-router";
-import {useEffect, useState} from "react";
 import './Car.css'
 
 const CarCard = ({car}) => {
