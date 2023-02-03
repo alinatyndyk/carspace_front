@@ -272,6 +272,12 @@ export default function CarParamsForm() {
                                 searchParams.set('vehicle_type', 'coupe');
                             }}>Coupe
                             </div>
+                            <div onClick={() => {
+                                    setType('');
+                                    searchParams.delete('vehicle_type');
+                                    setValue('vehicle_type', '');
+                                }}>No type
+                            </div>
                         </div> : null}
                 </span>
                 <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}

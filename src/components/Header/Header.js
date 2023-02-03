@@ -46,7 +46,6 @@ export default function Header() {
     }, [getBrand])
 
     useEffect(() => {
-        if (location !== false) {
             for (const [key, value] of searchParams) {
                 searchParams.delete(key);
             }
@@ -55,7 +54,6 @@ export default function Header() {
             setSearchParams(searchParams);
             dispatch(carActions.getAllWithParams({params: searchParams}));
             navigate(`/cars?${searchParams}`);
-        }
     }, [location])
 
     const submit = async (data) => {

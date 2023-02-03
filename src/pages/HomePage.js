@@ -14,9 +14,11 @@ export default function HomePage() {
     const navigate = useNavigate();
 
     const {errors} = useSelector(state => state.cars);
+
     const submit = (data) => {
-        const {errors: dateErrors} = dispatch(carActions.getFilteredByDate({info: data}));
-        if (!dateErrors) {
+        console.log(data);
+        const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
+        if (!errors) {
             navigate('/cars');
         }
         console.log(errors, 'errors');
@@ -44,7 +46,6 @@ export default function HomePage() {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                         <input type="text" placeholder={'Car search'} {...register('description')}/>
                         <button>Find</button>
-                        {/*{carErrors}*/}
                         {errors}
                     </form>
 
