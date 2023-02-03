@@ -176,6 +176,7 @@ const carSlice = createSlice({
                 if (type === 'rejected') {
                     console.log('ERROR', action.payload);
                     state.errors = action.payload;
+                    console.log(state.errors, 'STATE ERRORS');
                 } else {
                     state.errors = null;
                 }
