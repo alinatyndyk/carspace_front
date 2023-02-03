@@ -16,7 +16,7 @@ export default function HomePage() {
     const navigate = useNavigate();
     const submit = (data) => {
         const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
-        if (!carErrors) {
+        if (carErrors && !errors) {
             navigate('/cars');
         }
         console.log(errors, 'errors');
