@@ -20,6 +20,10 @@ export default function CarParamsForm() {
             if (value === 'true' || 'false') {
                 setValue(key, value);
             } //todo checkbox read window.location.search
+
+            if(key === 'description'){
+                searchParams.delete('description');
+            }
         }
         dispatch(brandActions.getAll());
     }, [window.location.search])

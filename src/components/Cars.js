@@ -29,7 +29,18 @@ const Cars = ({id, accountCompanyId}) => {
             console.log(errors, 'errors');
         } else if (company_id) {
             searchParams.set('company', company_id);
-            dispatch(carActions.getAllWithParams({params: {...searchParams}}));
+            const res = dispatch(carActions.getAllWithParams({params: {...searchParams}}));
+            console.log(res, 'RESULT');
+            const promise = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
+            promise.then((value) => {
+                if(value.error) {
+                    console.log(value.error, 'value error');
+                    console.log(value.payload, 'value PAYLOAD');
+                }else if (!value.error) {
+                    console.log('Successs, there is no error');
+                    // history.push(`/cars`);
+                }
+            })
         } else if (accountCompanyId) {
             searchParams.set('company', accountCompanyId);
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
@@ -43,6 +54,7 @@ const Cars = ({id, accountCompanyId}) => {
     useEffect(() => {
         setSearchParams(searchParams);
 
+        if(getPage === 1){setButtons(true)}else {setButtons(false)}
         if (brand) {
             searchParams.set('brand', brand);
         }
@@ -90,8 +102,8 @@ const Cars = ({id, accountCompanyId}) => {
         <div>
             {errors}
             {cars?.map(car => <CarCard key={car._id} car={car}/>)}
-            <button onClick={() => prevPage()}>prev</button>
-            <button disabled={getButtons} onClick={() => nextPage()}>next</button>
+            <button disabled={getButtons} onClick={() => prevPage()}>prev</button>
+            <button onClick={() => nextPage()}>next</button>
         </div>
     );
 };

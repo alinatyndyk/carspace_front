@@ -6,22 +6,32 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
+import CarPage from "./CarPage";
+import {history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
     const navigate = useNavigate();
-
+    console.log('*****************************************');
     const {errors} = useSelector(state => state.cars);
-
+    console.log(errors, typeof errors, 'selector errors');
     const submit = (data) => {
         console.log(data);
-        const {errors} = dispatch(carActions.getFilteredByDate({info: data}));
-        if (!errors) {
-            navigate('/cars');
-        }
-        console.log(errors, 'errors');
+        const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
+
+        promise1.then((value) => {
+            console.log(value, 'PROMISE VALUE');
+            if (value.error) {
+                console.log(value?.error, 'value error');
+                console.log(value.payload, 'value PAYLOAD');
+            } else if (!value.error) {
+                console.log('Successs, there is no error');
+                // history.push(`/cars`);
+            }
+            // navigate(`/cars`);
+        });
     }
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -53,6 +63,9 @@ export default function HomePage() {
                 <Modal active={modalActive} setActive={setModalActive}>
                     <LoginForm/>
                 </Modal>
+            </div>
+            <div>
+                <CarPage/>
             </div>
             <div className="car_types_wrap">
                 <h2>Car types</h2>

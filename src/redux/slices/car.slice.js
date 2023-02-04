@@ -174,9 +174,9 @@ const carSlice = createSlice({
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
-                    console.log('ERROR', action.payload);
+                    // console.log('ERROR', action.payload);
                     state.errors = action.payload;
-                    console.log(state.errors, 'STATE ERRORS');
+                    console.log(state.errors, typeof state.errors, 'typeof slice');
                 } else {
                     state.errors = null;
                 }

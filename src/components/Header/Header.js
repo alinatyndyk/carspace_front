@@ -46,14 +46,17 @@ export default function Header() {
     }, [getBrand])
 
     useEffect(() => {
-            for (const [key, value] of searchParams) {
-                searchParams.delete(key);
-            }
+        for (const [key, value] of searchParams) {
+            searchParams.delete(key);
+        }
+        setSearchParams(searchParams);
+        if (location !== false) {
             searchParams.set('location', location);
             searchParams.set('page', 1);
             setSearchParams(searchParams);
             dispatch(carActions.getAllWithParams({params: searchParams}));
             navigate(`/cars?${searchParams}`);
+        }
     }, [location])
 
     const submit = async (data) => {

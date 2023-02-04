@@ -25,7 +25,8 @@ export default function RegisterForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(submit)} encType="multipart/form-data">
+        <div >
+        <form className={'register_form'} onSubmit={handleSubmit(submit)} encType="multipart/form-data">
             <input type="text" placeholder={'name'} {...register('name')}/>
             <input type="text" placeholder={'last_name'} {...register('last_name')}/>
             <input type="text" placeholder={'contact_number'} {...register('contact_number')}/>
@@ -33,11 +34,13 @@ export default function RegisterForm() {
             <input type="text" placeholder={'email'} {...register('email')}/>
             <input type="text" placeholder={'password'} {...register('password')}/>
             <input type="file" name={'testImage'} placeholder={'testImage'} {...register('testImage')}/>
-            <button>}>Register</button>
+            <button>Register</button>
             <Link to={'/login'}>Already have an account?</Link>
             {img.filePreview !== null ?
                 <img src={img.filePreview} alt=""/> : null}
             {errors}
         </form>
+
+        </div>
     )
 }
