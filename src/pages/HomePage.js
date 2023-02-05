@@ -111,11 +111,6 @@ export default function HomePage() {
                     }}>Electric
                     </div>
                     <div onClick={() => {
-                        setType('truck');
-                        searchParams.set('vehicle_type', 'truck');
-                    }}>Truck
-                    </div>
-                    <div onClick={() => {
                         setType('minivan');
                         searchParams.set('vehicle_type', 'minivan');
                     }}>Minivan

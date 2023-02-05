@@ -23,9 +23,9 @@ const getAll = createAsyncThunk(
 
 const getAllWithParams = createAsyncThunk(
     'carSlice/getAllWithParams',
-    async ({params}, {rejectWithValue}) => {
+    async ({params, page}, {rejectWithValue}) => {
         try {
-            const {data} = await carService.getAllWithParams(params);
+            const {data} = await carService.getAllWithParams(params, page);
             return data.cars
         } catch (e) {
             console.log(e.response.status);
