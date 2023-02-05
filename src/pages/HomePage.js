@@ -13,10 +13,16 @@ export default function HomePage() {
     const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
     const navigate = useNavigate();
+    const [getErrors, setErrors] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const {errors} = useSelector(state => state.cars);
     console.log(errors, typeof errors, 'selector errors');
+
+    useEffect(() => {
+        setErrors(null);
+    }, [window.location.search])
+
     const submit = (data) => {
         console.log(data);
 
@@ -25,19 +31,20 @@ export default function HomePage() {
         searchParams.set('from_date', data.from_date);
         searchParams.set('to_date', data.to_date);
         searchParams.set('description', str);
-        setSearchParams(searchParams);
 
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
 
         promise1.then((value) => {
             console.log(value, 'PROMISE VALUE');
             if (value.error) {
-                throw new Error(value.payload + 'in catch');
+                throw new Error(value.payload);
             }
             //navigate
         }).catch((error) => {
             console.log(error);
+            setErrors(error.message)
         })
+        setSearchParams(searchParams);
     }
 
     const [getType, setType] = useState();
@@ -61,7 +68,8 @@ export default function HomePage() {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                         <input type="text" placeholder={'Car search'} {...register('description')}/>
                         <button>Find</button>
-                        {errors}
+                        {/*{errors}*/}
+                        {getErrors}
                     </form>
 
                 </div>

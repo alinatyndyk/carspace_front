@@ -34,7 +34,6 @@ const Cars = ({id, accountCompanyId}) => {
 
         } else if (accountCompanyId) {
             searchParams.set('company', accountCompanyId);
-            console.log('accout company id');
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
         }
 
@@ -56,7 +55,7 @@ const Cars = ({id, accountCompanyId}) => {
             }
 
             if (searchString.includes('from_date') === true) {
-
+                    searchParams.set('page', getPage);
                 const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
                     info: {
                         page: searchParams.get('page'),
@@ -104,10 +103,7 @@ const Cars = ({id, accountCompanyId}) => {
                 });
             }
             setSearchParams(searchParams);
-        }
-        ,
-        [getPage]
-    )
+        }, [getPage])
 
 
     const prevPage = () => {
