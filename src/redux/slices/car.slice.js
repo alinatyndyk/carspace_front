@@ -49,9 +49,9 @@ const getByDescription = createAsyncThunk(
 
 const getFilteredByDate = createAsyncThunk(
     'carSlice/getFilteredByDate',
-    async ({info}, {rejectWithValue}) => {
+    async ({info, query}, {rejectWithValue}) => {
         try {
-            const {data} = await carService.getFilteredByDate(info);
+            const {data} = await carService.getFilteredByDate(info, query);
             return data
 
         } catch (e) {

@@ -8,7 +8,7 @@
     margin-bottom: 20px;
 }
 
-.car_card-top-info{
+.car_card-top-info {
     padding: 10px;
 }
 
@@ -22,15 +22,18 @@
 
 .car-full-top {
     display: flex;
-    justify-content: left;
-    /*padding-right: 300px;*/
+    width: 800px;
+}
+
+.car-full {
+
 }
 
 .car-full img {
     height: 300px;
 }
 
-.car_card_details{
+.car_card_details {
     display: flex;
     height: 90px;
     font-size: 13px;
@@ -44,13 +47,16 @@
 }
 
 .swiper_wrapper_car {
-    width: 600px;
+    width: 400px;
 }
 
 .car-full-data {
-    background-color: #3b383d;
-    color: white;
-    /*font-family: 'Montserrat', sans-serif;*/
+    background-color: white;
+    color: darkslategray;
+    width: 400px;
+    margin-left: 10px;
+    /*border: 1px solid darkslategray;*/
+    border-radius: 5px;
     box-sizing: border-box;
     padding: 10px;
 }
@@ -61,6 +67,7 @@
     border-bottom: solid 0.5px white;
     box-sizing: border-box;
     padding: 10px;
+    border-bottom: 1px solid darkslategray;
 
 }
 
@@ -68,39 +75,36 @@
     height: 30px;
     width: 180px;
     margin-top: 20px;
-    margin-left: 60px;
-    background-color: orange;
+    background-color: rgba(243, 0, 68, 0.91);
     border: none;
     color: white;
     font-family: 'Montserrat', sans-serif;
-    border-radius: 3px;
+    border-radius: 15px;
 }
 
 .car-pricing {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: darkslategray;
     font-family: 'Montserrat', sans-serif;
     width: 300px;
     height: 40px;
     font-size: 20px;
     box-sizing: border-box;
-    border-bottom: solid 0.5px white;
 }
 
-.car-full-wrap h2 {
-    font-family: 'Montserrat', sans-serif;
-
+.car-full-wrap {
+    background-color: rgba(86, 86, 86, 0.06);
+    display: flex;
 }
 
 .checkout-form {
-    border: 1px solid darkslategray;
-    border-radius: 6px;
     width: 300px;
-    margin-left: 20px;
+    background-color: white;
+    margin-top: 10px;
     box-sizing: border-box;
-    padding: 20px;
+    border-radius: 5px;
 }
 
 .checkout-form-insides {
@@ -108,40 +112,61 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+}
+
+.checkout-form-insides form {
+    /*width: 200px;*/
 }
 
 .checkout-form input {
     height: 30px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid darkslategray;
-    margin-top: 15px;
+    width: 180px;
+    border-radius: 15px;
+    border: 1px solid darkgrey;
 }
 
 .checkout-form button {
-    margin-top: 15px;
     border: none;
-    border-radius: 5px;
     color: white;
-    background-color: orange;
-    width: 100px;
+    background-color: rgba(243, 0, 68, 0.91);
+    width: 180px;
+    font-family: 'Montserrat', sans-serif;
+    border-radius: 15px;
     height: 30px;
 }
 
-.car_description{
+.checkout-form-dates{
+    display: flex;
+}
+
+.car_description {
     height: 100px;
     width: 300px;
 }
 
-.car_features {
-    border: 1px solid darkslategray;
-    border-radius: 5px;
-    width: 500px;
+.car-full-bottom {
+    width: 800px;
     display: flex;
-    flex-wrap: wrap;
-    margin-left: 20px;
 }
 
-.car_feature{
-    margin: 15px;
+.car-full-bottom div {
+    width: 400px;
+}
+
+.car_features {
+    border-radius: 5px;
+    padding: 20px;
+    background-color: white;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: column wrap;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+.cars{
+    margin-left: 30px;
+    margin-top: 30px;
 }

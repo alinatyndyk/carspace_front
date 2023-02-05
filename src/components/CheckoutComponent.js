@@ -12,7 +12,7 @@ export default function CheckoutComponent({car, carErrors}) {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const [getCheckout, setCheckout] = useState(false);
-    const [getErrors, setErrors] = useState(false);
+    const [getErrors, setErrors] = useState(null);
 
     const Difference_In_Time = new Date(toDate).getTime() - new Date(fromDate).getTime();
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
@@ -46,20 +46,26 @@ export default function CheckoutComponent({car, carErrors}) {
         <div className={'checkout-form-insides'}>
             <h2>Checkout Form</h2>
             <form onSubmit={handleSubmit(submit)}>
-                <div>
-                    <input type="date" placeholder={'from_date'} {...register('from_date')}/>
+                <div className={'checkout-form-dates'}>
+                    <div>
+                        <input type="date" placeholder={'from_date'} {...register('from_date')}/>
+                    </div>
+                    <div>
+                        <input type="date" placeholder={'to_date'} {...register('to_date')}/>
+                    </div>
                 </div>
-                <div>
-                    <input type="date" placeholder={'to_date'} {...register('to_date')}/>
-                </div>
-                {carErrors}
-                {getErrors}
+                <div>{carErrors}</div>
+                <div>{getErrors}</div>
                 <button onClick={() => {
-                    setCheckout(true);
                     if (fromDate === '' || toDate === '') {
-                        setErrors('Choose a date')
+                        setErrors('Choose a date');
+                        console.log(getErrors, 'geterrors');
                     } else {
-                        setErrors('')
+                        setErrors(false)
+                    }
+                    if (typeof getErrors === 'boolean') {
+                        console.log(getErrors, 'geterrors');
+                        setCheckout(true);
                     }
                 }}>Set dates
                 </button>

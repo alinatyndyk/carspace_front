@@ -34,6 +34,7 @@ const Cars = ({id, accountCompanyId}) => {
 
         } else if (accountCompanyId) {
             searchParams.set('company', accountCompanyId);
+            console.log('accout company id');
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
         }
 
@@ -50,6 +51,26 @@ const Cars = ({id, accountCompanyId}) => {
         }
         if (brand) {
             searchParams.set('brand', brand);
+        }
+
+        if (searchString.includes('from_date') === true) {
+            const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
+                info: {
+                    page: searchParams.get('page'),
+                    from_date: searchParams.get('from_date'),
+                    to_date: searchParams.get('to_date'),
+                    description: searchParams.get('description'),
+                    kiki: 'koko'
+                }
+            })))
+            promise1.then((value) => {
+                if (value.error) {
+                    throw new Error(value.payload + ' in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                setNextButtons(true);
+            })
         }
 
         if (searchString.includes('description') === true) {
@@ -97,17 +118,8 @@ const Cars = ({id, accountCompanyId}) => {
         setPage(page);
     }
 
-    // if (id !== undefined) {
-    //     return (
-    //         <div>
-    //             <CarCard car={car} id={id}/>
-    //         </div>
-    //     )
-    // }
-
-
     return (
-        <div>
+        <div className={'cars'}>
             <div>{errors}</div>
             <div>{geterror !== null ? geterror : null}</div>
             {cars?.map(car => <CarCard key={car._id} car={car}/>)}

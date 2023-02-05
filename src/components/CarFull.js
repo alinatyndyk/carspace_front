@@ -81,8 +81,7 @@ export default function CarFull() {
     return (
         <div className={'car-full-wrap'}>
             {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
-            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD
-            </div>
+            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD</div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
                     <Swiper
@@ -93,7 +92,6 @@ export default function CarFull() {
                         grabCursor={true}
                         pagination={{clickable: true}}
                         scrollbar={{draggable: true}}
-
                     >
                         {
                             images?.map(image => <SwiperSlide><img src={`${image?.link}`} alt=''/></SwiperSlide>)
@@ -130,28 +128,41 @@ export default function CarFull() {
                         }}>Book this car
                         </button>
                     </div>
-                    {book === true ?
-                        <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/></div> : null}
                 </div>
                 <div className={'car-full-bottom'}>
-                    <h4>Car features</h4>
-                    <div className={'car_features'}>{features.map(item => <div className={'car_feature'}>{item}</div>)}</div>
-                    <div>description:{description}</div>
-                    <div><Link to={`/companies/${company}`}>More cars from this company</Link></div>
-                    <button onClick={() => {
-                        dispatch(carActions.setCarForUpdate(car));
-                    }}>set for update
-                    </button>
-                    {equal === true ?
-                        <div>
-                            <form onSubmit={handleSubmit(submit)}>
-                                <div><input type="text" placeholder={'model'} {...register('model')}/></div>
-                                <div><input type="number" placeholder={'model_year'} {...register('model_year')}/></div>
-                                <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="80" id="TITLE"/></div>
-                                <button>Update car</button>
-                            </form>
-                        </div> : null}
+                    <div>
+                        <h3>Description</h3>
+                        <br/>
+                        <div>{description}</div>
+                        <div><Link to={`/companies/${company}`}>More cars from this company</Link></div>
+                    </div>
+                    <div>
+                        {book === true ?
+                            <div className={'checkout-form'}><CheckoutComponent car={car} carErrors={errors}/>
+                            </div> : null}
+                    </div>
                 </div>
+                <h3>Extra features</h3>
+                <div className={'car_features'}>{features.map(item => <div
+                    className={'car_feature'}>{item}</div>)}</div>
+                {equal === true ?
+                    <div>
+                        <button onClick={() => {
+                            dispatch(carActions.setCarForUpdate(car));
+                        }}>set for update
+                        </button>
+                    </div>
+                    : null}
+                {equal === true ?
+                    <div>
+                        <form onSubmit={handleSubmit(submit)}>
+                            <div><input type="text" placeholder={'model'} {...register('model')}/></div>
+                            <div><input type="number" placeholder={'model_year'} {...register('model_year')}/></div>
+                            <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="80"
+                                           id="TITLE"/></div>
+                            <button>Update car</button>
+                        </form>
+                    </div> : null}
             </div>
         </div>
     )

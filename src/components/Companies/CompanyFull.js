@@ -8,8 +8,10 @@ import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
 import CompanyForm from "../Forms/CompanyForm";
 import CarPage from "../../pages/CarPage";
+import {useSearchParams} from "react-router-dom";
 
 const CompanyFull = ({accountCompanyId}) => {
+    const [searchParams, setSearchParams] = useSearchParams({company: accountCompanyId});
     const navigate = useNavigate();
     const {company_id} = useParams();
     const dispatch = useDispatch();
@@ -28,7 +30,8 @@ const CompanyFull = ({accountCompanyId}) => {
 
     useEffect(() => {
         if (!company_id) {
-            dispatch(carActions.getAllWithParams({params: `company=${accountCompanyId}`}));
+
+            dispatch(carActions.getAllWithParams({params: searchParams}));
         } else {
             dispatch(carActions.getAllWithParams({params: `company=${company_id}`}));
         }

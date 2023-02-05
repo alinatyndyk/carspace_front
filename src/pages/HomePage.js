@@ -7,34 +7,38 @@ import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
 import CarPage from "./CarPage";
-import {history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
     const [modalActive, setModalActive] = useState(true);
     const navigate = useNavigate();
-    console.log('*****************************************');
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const {errors} = useSelector(state => state.cars);
     console.log(errors, typeof errors, 'selector errors');
     const submit = (data) => {
         console.log(data);
+
+        const str = data?.description.replaceAll(" ", '_').toLowerCase();
+
+        searchParams.set('from_date', data.from_date);
+        searchParams.set('to_date', data.to_date);
+        searchParams.set('description', str)
+        setSearchParams(searchParams);
+
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
 
         promise1.then((value) => {
             console.log(value, 'PROMISE VALUE');
             if (value.error) {
-                console.log(value?.error, 'value error');
-                console.log(value.payload, 'value PAYLOAD');
-            } else if (!value.error) {
-                console.log('Successs, there is no error');
-                // history.push(`/cars`);
+                throw new Error(value.payload + 'in catch');
             }
-            // navigate(`/cars`);
-        });
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
-    const [searchParams, setSearchParams] = useSearchParams();
     const [getType, setType] = useState();
     useEffect(() => {
         if (getType !== undefined) {
