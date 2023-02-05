@@ -41,66 +41,73 @@ const Cars = ({id, accountCompanyId}) => {
         setSearchParams(searchParams);
     }, [id, company_id]);
 
+    console.log(getPage, 'GET PAGE OUT');
     useEffect(() => {
-        setSearchParams(searchParams);
-
-        if (getPage === 1) {
-            setButtons(true)
-        } else {
-            setButtons(false)
-        }
-        if (brand) {
-            searchParams.set('brand', brand);
-        }
-
-        if (searchString.includes('from_date') === true) {
-            const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
-                info: {
-                    page: searchParams.get('page'),
-                    from_date: searchParams.get('from_date'),
-                    to_date: searchParams.get('to_date'),
-                    description: searchParams.get('description'),
-                    kiki: 'koko'
-                }
-            })))
-            promise1.then((value) => {
-                if (value.error) {
-                    throw new Error(value.payload + ' in catch');
-                }
-            }).catch((error) => {
-                seterror(error.message);
-                setNextButtons(true);
-            })
-        }
-
-        if (searchString.includes('description') === true) {
-            searchParams.set('page', getPage);
             setSearchParams(searchParams);
-            const promise1 = Promise.resolve(dispatch(carActions.getByDescription({
-                description: {description: searchParams.get('description')},
-                params: searchParams
-            })));
-            promise1.then((value) => {
-                if (value.error) {
-                    throw new Error(value.payload + ' in catch');
-                }
-            }).catch((error) => {
-                seterror(error.message);
-                setNextButtons(true);
-            })
-        } else {
-            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
-            promise1.then((value) => {
-                if (value.error) {
-                    throw new Error(value.payload + 'in catch');
-                }
-            }).catch((error) => {
-                seterror(error.message);
-                setNextButtons(true);
-            });
+            console.log(getPage, 'GET PAGE');
+            if (getPage === 1) {
+                setButtons(true)
+            } else {
+                setButtons(false)
+            }
+
+            if (brand) {
+                searchParams.set('brand', brand);
+            }
+
+            if (searchString.includes('from_date') === true) {
+
+                const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
+                    info: {
+                        page: searchParams.get('page'),
+                        from_date: searchParams.get('from_date'),
+                        to_date: searchParams.get('to_date'),
+                        description: searchParams.get('description'),
+                        kiki: 'koko'
+                    }
+                })))
+                promise1.then((value) => {
+                    if(!value.payload[0]){
+                        throw new Error('No more cars with this parameters');
+                    }
+                    if (value.error) {
+                        throw new Error(value.payload + ' in catch');
+                    }
+                }).catch((error) => {
+                    seterror(error.message);
+                    setNextButtons(true);
+                })
+            } else if (searchString.includes('description') === true) {
+                searchParams.set('page', getPage);
+                setSearchParams(searchParams);
+                const promise1 = Promise.resolve(dispatch(carActions.getByDescription({
+                    description: {description: searchParams.get('description')},
+                    params: searchParams
+                })));
+                promise1.then((value) => {
+                    if (value.error) {
+                        throw new Error(value.payload + ' in catch');
+                    }
+                }).catch((error) => {
+                    seterror(error.message);
+                    setNextButtons(true);
+                })
+            } else {
+                const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
+                promise1.then((value) => {
+                    if (value.error) {
+                        throw new Error(value.payload + 'in catch');
+                    }
+                }).catch((error) => {
+                    seterror(error.message);
+                    setNextButtons(true);
+                });
+            }
+            setSearchParams(searchParams);
         }
-        setSearchParams(searchParams);
-    }, [getPage])
+        ,
+        [getPage]
+    )
 
 
     const prevPage = () => {

@@ -24,7 +24,7 @@ export default function HomePage() {
 
         searchParams.set('from_date', data.from_date);
         searchParams.set('to_date', data.to_date);
-        searchParams.set('description', str)
+        searchParams.set('description', str);
         setSearchParams(searchParams);
 
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
@@ -34,6 +34,7 @@ export default function HomePage() {
             if (value.error) {
                 throw new Error(value.payload + 'in catch');
             }
+            //navigate
         }).catch((error) => {
             console.log(error);
         })
