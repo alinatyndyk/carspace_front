@@ -5,7 +5,6 @@ import {useSelector} from "react-redux";
 
 export default function CarPage({accountCompanyId}) {
     const {car_id} = useParams();
-    const {errors} = useSelector(state => state.cars);
 
     return (
         <div>

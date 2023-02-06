@@ -7,6 +7,7 @@ import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
 import CarPage from "./CarPage";
+import {history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ export default function HomePage() {
         searchParams.set('from_date', data.from_date);
         searchParams.set('to_date', data.to_date);
         searchParams.set('description', str);
+        setSearchParams(searchParams);
 
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
 
@@ -38,12 +40,14 @@ export default function HomePage() {
             console.log(value, 'PROMISE VALUE');
             if (value.error) {
                 throw new Error(value.payload);
+            } else {
+                history.push(`/cars?${searchParams}`);
             }
-            //navigate
         }).catch((error) => {
             console.log(error);
             setErrors(error.message)
         })
+
         setSearchParams(searchParams);
     }
 
@@ -68,17 +72,16 @@ export default function HomePage() {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                         <input type="text" placeholder={'Car search'} {...register('description')}/>
                         <button>Find</button>
-                        {/*{errors}*/}
+                        {errors}
                         {getErrors}
                     </form>
-
                 </div>
                 <Modal active={modalActive} setActive={setModalActive}>
                     <LoginForm/>
                 </Modal>
             </div>
             <div>
-                <CarPage/>
+                {/*<CarPage/>*/}
             </div>
             <div className="car_types_wrap">
                 <h2>Car types</h2>

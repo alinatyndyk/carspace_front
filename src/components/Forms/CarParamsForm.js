@@ -7,7 +7,7 @@ import {useParams} from "react-router";
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
-    const {brand} = useParams();
+    const {brand, location} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit, setValue} = useForm();
     const {brands} = useSelector(state => state.brands);
@@ -21,8 +21,10 @@ export default function CarParamsForm() {
                 setValue(key, value);
             } //todo checkbox read window.location.search
 
-            if(key === 'description'){
+            if (key === 'description') {
                 searchParams.delete('description');
+                searchParams.delete('from_date');
+                searchParams.delete('to_date');
             }
         }
         dispatch(brandActions.getAll());
@@ -58,17 +60,27 @@ export default function CarParamsForm() {
         } else {
             setValue('brand', getBrand);
         }
+        setValue('location', location);
+        if (getLocation === null) {
+            searchParams.delete('location');
+        } else {
+            setValue('location', getLocation);
+        }
         if (window.location.search.includes('description')) {
             searchParams.delete('description')
         }
-    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, getPriceDayMax, brand])
+    }, [getBrand, getYear, getLocation, getAge, getTransmission, getType, getSeats, getPriceDay, getPriceDayMax, brand, location])
 
 
     const submit = async (data) => {
-        searchParams.set('page', 1)
-        setSearchParams(data);
+        searchParams.set('page', 1);
+        setSearchParams(data)
+
         if (brand) {
             searchParams.set('brand', brand);
+        }
+        if (location) {
+            searchParams.set('location', location);
         }
         const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
@@ -116,30 +128,34 @@ export default function CarParamsForm() {
                     }}>Reset year</div>
                 </span>
                 <span
-                    onMouseOver={() => setIsLocation(true)}
+                    onMouseOver={() => {
+                        if (!location) {
+                            setIsLocation(true);
+                        }
+                    }}
                     onMouseLeave={() => setIsLocation(false)}>
                 <input type="text" placeholder={'location'} {...register('location')}/>↓{isLocation === true ?
                     <div>
                         <div onClick={() => {
-                            setValue('location', 'london');
+                            // setValue('location', 'london');
                             setLocation('london');
                             searchParams.set('location', 'london');
                         }}>London
                         </div>
                         <div onClick={() => {
-                            setValue('location', 'birmingham');
+                            // setValue('location', 'birmingham');
                             setLocation('Birmingham');
                             searchParams.set('location', 'birmingham');
                         }}>Birmingham
                         </div>
                         <div onClick={() => {
-                            setValue('location', 'Manchester');
+                            // setValue('location', 'Manchester');
                             setLocation('Manchester');
                             searchParams.set('location', 'Manchester');
                         }}>Manchester
                         </div>
                         <div onClick={() => {
-                            setValue('location', 'Leeds');
+                            // setValue('location', 'Leeds');
                             setLocation('Leeds');
                             searchParams.set('location', 'Leeds');
                         }}>Leeds
@@ -277,10 +293,10 @@ export default function CarParamsForm() {
                             }}>Coupe
                             </div>
                             <div onClick={() => {
-                                    setType('');
-                                    searchParams.delete('vehicle_type');
-                                    setValue('vehicle_type', '');
-                                }}>No type
+                                setType('');
+                                searchParams.delete('vehicle_type');
+                                setValue('vehicle_type', '');
+                            }}>No type
                             </div>
                         </div> : null}
                 </span>

@@ -36,6 +36,7 @@ function App() {
                         <Route path={'/companies/:company_id'} element={<CompanyFull/>}/>
                         <Route path={'/brands'} element={<BrandsPage/>}/>
                         <Route path={'/brands/:brand'} element={<CarPage/>}/>
+                        <Route path={'/locations/:location'} element={<CarPage/>}/>
                         <Route path={'login'} element={<LoginPage/>}/>
                         <Route path={'login/:element'} element={<LoginPage/>}/>
                         <Route path={'register'} element={<RegisterPage/>}/>

@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode";
 export default function Header() {
     const [isShown, setIsShown] = useState(false);
     const [isLocation, setIsLocation] = useState(false);
-    const [location, setLocation] = useState(false);
+    const [location, setLocation] = useState();
     const [isAccount, setIsAccount] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [isAuthUser, setIsAuthUser] = useState(false);
@@ -46,17 +46,8 @@ export default function Header() {
     }, [getBrand])
 
     useEffect(() => {
-        for (const [key, value] of searchParams) {
-            searchParams.delete(key);
-        }
-        setSearchParams(searchParams);
-        if (location !== false) {
-            searchParams.set('location', location);
-            searchParams.set('page', 1);
-            setSearchParams(searchParams);
-            dispatch(carActions.getAllWithParams({params: searchParams}));
-            navigate(`/cars?${searchParams}`);
-        }
+        dispatch(carActions.getByLocation({location}))
+
     }, [location])
 
     const submit = async (data) => {
@@ -148,34 +139,42 @@ export default function Header() {
                             {isShown && (
                                 <div className={'brands'}>
                                     <div onClick={() => {
+                                        navigate(`/locations/london`)
                                         setLocation('london');
                                     }}>London
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/birmingham`)
                                         setLocation('birmingham')
                                     }}>Birmingham
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/manchester`)
                                         setLocation('manchester')
                                     }}>Manchester
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/leeds`)
                                         setLocation('leeds')
                                     }}>Leeds
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/sheffield`)
                                         setLocation('sheffield')
                                     }}>Sheffield
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/liverpool`)
                                         setLocation('liverpool')
                                     }}>Liverpool
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/bristol`)
                                         setLocation('bristol')
                                     }}>Bristol
                                     </div>
                                     <div onClick={() => {
+                                        navigate(`/locations/wakefield`)
                                         setLocation('wakefield')
                                     }}>Wakefield
                                     </div>

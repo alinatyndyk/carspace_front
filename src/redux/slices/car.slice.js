@@ -130,8 +130,16 @@ const getById = createAsyncThunk(
 
 const getByBrand = createAsyncThunk(
     'carSlice/getByBrand',
-    async ({brand}) => {
-        const {data} = await carService.getByBrand(brand);
+    async ({brand, page}) => {
+        const {data} = await carService.getByBrand(brand, page);
+        return data.cars
+    }
+)
+
+const getByLocation = createAsyncThunk(
+    'carSlice/getByLocation',
+    async ({location, page}) => {
+        const {data} = await carService.getByLocation(location, page);
         return data.cars
     }
 )
@@ -171,12 +179,13 @@ const carSlice = createSlice({
             .addCase(getByBrand.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
+            .addCase(getByLocation.fulfilled, (state, action) => {
+                state.cars = action.payload;
+            })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
-                    // console.log('ERROR', action.payload);
                     state.errors = action.payload;
-                    console.log(state.errors, typeof state.errors, 'typeof slice');
                 } else {
                     state.errors = null;
                 }
@@ -189,6 +198,7 @@ const carActions = {
     getAll,
     getById,
     getByBrand,
+    getByLocation,
     postCar,
     getByDescription,
     postCarOrder,

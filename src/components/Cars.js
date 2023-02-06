@@ -8,9 +8,10 @@ import {useSearchParams} from "react-router-dom";
 const Cars = ({id, accountCompanyId}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
-    const {brand, company_id} = useParams();
+    const {brand, location, company_id} = useParams();
     const [searchParams, setSearchParams] = useSearchParams({page: 1});
     const [getPage, setPage] = useState(1);
+    console.log(getPage, ' get page START');
     const [geterror, seterror] = useState(null);
     console.log(geterror, 'get error');
     const [getButtons, setButtons] = useState(false);
@@ -22,10 +23,16 @@ const Cars = ({id, accountCompanyId}) => {
     }, [window.location.search])
 
     useEffect(() => {
-        if (brand) {
-            dispatch(carActions.getAllWithParams({params: searchParams}));
-
-        } else if (id) {
+        // if (brand) {
+        //     // dispatch(carActions.getAllWithParams({params: searchParams}));
+        //     dispatch(carActions.getByBrand({brand: brand}))
+        //
+        // } else if (location) {
+        //     console.log('LOCATION CARS>JS');
+        //     // dispatch(carActions.getAllWithParams({params: searchParams}));
+        //     dispatch(carActions.getByLocation({location: location}))
+        // } else
+            if (id) {
             dispatch(carActions.getById({_id: id}));
 
         } else if (company_id) {
@@ -41,82 +48,119 @@ const Cars = ({id, accountCompanyId}) => {
     }, [id, company_id]);
 
     console.log(getPage, 'GET PAGE OUT');
+
     useEffect(() => {
-            setSearchParams(searchParams);
-            console.log(getPage, 'GET PAGE');
-            if (getPage === 1) {
-                setButtons(true)
-            } else {
-                setButtons(false)
-            }
+        setSearchParams(searchParams);
+        console.log(getPage, 'GET PAGE');
+        if (getPage === 1) {
+            setButtons(true);
+        } else {
+            setButtons(false);
+        }
 
-            if (brand) {
-                searchParams.set('brand', brand);
-            }
+        if (brand) {
+            searchParams.set('brand', brand);
+        }
 
-            if (searchString.includes('from_date') === true) {
-                    searchParams.set('page', getPage);
-                const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
-                    info: {
-                        page: searchParams.get('page'),
-                        from_date: searchParams.get('from_date'),
-                        to_date: searchParams.get('to_date'),
-                        description: searchParams.get('description'),
-                        kiki: 'koko'
-                    }
-                })))
-                promise1.then((value) => {
-                    if(!value.payload[0]){
-                        throw new Error('No more cars with this parameters');
-                    }
-                    if (value.error) {
-                        throw new Error(value.payload + ' in catch');
-                    }
-                }).catch((error) => {
-                    seterror(error.message);
-                    setNextButtons(true);
-                })
-            } else if (searchString.includes('description') === true) {
-                searchParams.set('page', getPage);
-                setSearchParams(searchParams);
-                const promise1 = Promise.resolve(dispatch(carActions.getByDescription({
-                    description: {description: searchParams.get('description')},
-                    params: searchParams
-                })));
-                promise1.then((value) => {
-                    if (value.error) {
-                        throw new Error(value.payload + ' in catch');
-                    }
-                }).catch((error) => {
-                    seterror(error.message);
-                    setNextButtons(true);
-                })
-            } else {
-                const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
-                promise1.then((value) => {
-                    if (value.error) {
-                        throw new Error(value.payload + 'in catch');
-                    }
-                }).catch((error) => {
-                    seterror(error.message);
-                    setNextButtons(true);
-                });
-            }
+        if (location) {
+            searchParams.set('location', location);
+        }
+
+        if (searchString.includes('from_date') === true) {
+            searchParams.set('page', getPage);
+            const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({
+                info: {
+                    page: searchParams.get('page'),
+                    from_date: searchParams.get('from_date'),
+                    to_date: searchParams.get('to_date'),
+                    description: searchParams.get('description'),
+                    kiki: 'koko'
+                }
+            })))
+            promise1.then((value) => {
+                if (!value.payload[0]) {
+                    throw new Error('No more cars with this parameters');
+                }
+                if (value.error) {
+                    throw new Error(value.payload + ' in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                setNextButtons(true);
+            })
+        } else if (searchString.includes('description') === true) {
+            searchParams.set('page', getPage);
             setSearchParams(searchParams);
-        }, [getPage])
+            const promise1 = Promise.resolve(dispatch(carActions.getByDescription({
+                description: {description: searchParams.get('description')},
+                params: searchParams
+            })));
+            promise1.then((value) => {
+                if (value.error) {
+                    throw new Error(value.payload + ' in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                setNextButtons(true);
+            })
+        } else if (brand) {
+            // const promise1 = Promise.resolve(dispatch(carActions.getByBrand({brand: brand, page: getPage})));
+            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams, page: getPage})));
+            promise1.then((value) => {
+                if (value.error) {
+                    throw new Error(value.payload + 'in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                if(getPage !==1){
+                setNextButtons(true);
+                }
+            });
+        } else if (location) {
+            // const promise1 = Promise.resolve(dispatch(carActions.getByLocation({location: location, page: getPage})));
+            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams, page: getPage})));
+            promise1.then((value) => {
+                if (value.error) {
+                    throw new Error(value.payload + 'in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                setNextButtons(true);
+            });
+        } else {
+            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
+            promise1.then((value) => {
+                if (value.error) {
+                    throw new Error(value.payload + 'in catch');
+                }
+            }).catch((error) => {
+                seterror(error.message);
+                setNextButtons(true);
+            });
+        }
+        setSearchParams(searchParams);
+    }, [getPage])
+
+    useEffect(() => {
+        setPage(1);
+    }, [location, brand])
 
 
     const prevPage = () => {
         let page = searchParams.get('page');
+        console.log(page, 'prev before ****************');
         page = +page - 1
         searchParams.set('page', page)
+        console.log('prevPage after', page);
         setPage(page);
         setNextButtons(false);
     }
 
     const nextPage = () => {
         let page = searchParams.get('page');
+        console.log(page, 'next before ****************');
         page = +page + 1
+        console.log('nextPage after', page);
         searchParams.set('page', page)
         setPage(page);
     }
