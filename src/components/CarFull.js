@@ -44,6 +44,7 @@ export default function CarFull() {
             setValue('model', carForUpdate.model)
             setValue('model_year', carForUpdate.model_year)
             setValue('description', carForUpdate.description)
+            setValue('price_day_basis', carForUpdate.price_day_basis)
         }
     }, [carForUpdate])
 
@@ -158,6 +159,7 @@ export default function CarFull() {
                         <form onSubmit={handleSubmit(submit)}>
                             <div><input type="text" placeholder={'model'} {...register('model')}/></div>
                             <div><input type="number" placeholder={'model_year'} {...register('model_year')}/></div>
+                            <div><input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/></div>
                             <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="80"
                                            id="TITLE"/></div>
                             <button>Update car</button>

@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
 import CarPage from "./CarPage";
-import {history} from "../services";
+import {authService, history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
@@ -19,6 +19,9 @@ export default function HomePage() {
 
     const {errors} = useSelector(state => state.cars);
     console.log(errors, typeof errors, 'selector errors');
+
+    const token = authService.getAccessToken();
+    console.log(token, 'home page token');
 
     useEffect(() => {
         setErrors(null);
@@ -76,12 +79,9 @@ export default function HomePage() {
                         {getErrors}
                     </form>
                 </div>
-                <Modal active={modalActive} setActive={setModalActive}>
+                {!token ? <Modal active={modalActive} setActive={setModalActive}>
                     <LoginForm/>
-                </Modal>
-            </div>
-            <div>
-                {/*<CarPage/>*/}
+                </Modal> : null}
             </div>
             <div className="car_types_wrap">
                 <h2>Car types</h2>

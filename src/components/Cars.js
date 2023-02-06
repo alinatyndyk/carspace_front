@@ -20,6 +20,7 @@ const Cars = ({id, accountCompanyId}) => {
 
     useEffect(() => {
         seterror(null);
+        setNextButtons(false)
     }, [window.location.search])
 
     useEffect(() => {
