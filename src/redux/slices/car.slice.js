@@ -171,7 +171,7 @@ const carSlice = createSlice({
                 window.location.reload();
             })
             .addCase(postCar.fulfilled, (state, action) => {
-                state.cars.push(action.payload)
+                state.cars.push(action.payload);
             })
             .addCase(getById.fulfilled, (state, action) => {
                 state.car = action.payload;

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {companyService} from "../../services";
+import {carService, companyService} from "../../services";
 
 
 const initialState = {
@@ -83,6 +83,19 @@ const getById = createAsyncThunk(
     }
 )
 
+const deleteCarOrder = createAsyncThunk(
+    'companySlice/deleteCarOrder',
+    async ({_id}, {rejectWithValue}) => {
+        try {
+            const {data} = await carService.deleteCarOrder(_id);
+            return data
+        } catch (e) {
+            console.log(e.response.data, 'err in async');
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
 const companySlice = createSlice({
     name: 'companySlice',
     initialState,
@@ -111,6 +124,9 @@ const companySlice = createSlice({
             .addCase(update.fulfilled, (state, action) => {
                 window.location.reload();
             })
+            .addCase(deleteCarOrder.fulfilled, (state, action) => {
+                window.location.reload();
+            })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
@@ -132,7 +148,8 @@ const companyActions = {
     setCompanyForUpdate,
     getCompanyOrders,
     getCompanyOrdersToday,
-    getCompanyOrderById
+    getCompanyOrderById,
+    deleteCarOrder
 }
 
 export {

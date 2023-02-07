@@ -30,7 +30,7 @@ const CompanyFull = ({accountCompanyId}) => {
 
     useEffect(() => {
         if (!company_id) {
-            searchParams.set('company', accountCompanyId);
+            searchParams('company', accountCompanyId);
             setSearchParams(searchParams);
             dispatch(carActions.getAllWithParams({params: searchParams}));
         } else {

@@ -4,6 +4,7 @@ import {useForm} from "react-hook-form";
 import {useSearchParams} from "react-router-dom";
 import {brandActions, carActions} from "../../redux";
 import {useParams} from "react-router";
+import {history} from "../../services";
 
 export default function CarParamsForm() {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export default function CarParamsForm() {
     const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit, setValue} = useForm();
     const {brands} = useSelector(state => state.brands);
+    const {errors} = useSelector(state => state.cars);
 
     useEffect(() => {
         for (const [key, value] of searchParams) {
@@ -52,6 +54,7 @@ export default function CarParamsForm() {
     const [getPriceDay, setPriceDay] = useState(false);
     const [getPriceDayMax, setPriceDayMax] = useState(false);
     const [carFeatures, setCarFeatures] = useState(false);
+    const [getErrors, setErrors] = useState(null);
 
     useEffect(() => {
         setValue('brand', brand);
@@ -82,7 +85,20 @@ export default function CarParamsForm() {
         if (location) {
             searchParams.set('location', location);
         }
-        const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+        const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})))
+
+        promise1.then((value) => {
+            console.log(value, 'PROMISE VALUE');
+            if (value.error) {
+                throw new Error(value.payload);
+            } else {
+                history.push(`/cars?${searchParams}`);
+            }
+        }).catch((error) => {
+            console.log(error);
+            setErrors(error.message)
+        })
+        // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
             setSearchParams(searchParams);
         }
@@ -93,6 +109,7 @@ export default function CarParamsForm() {
         <div>
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
+                {getErrors}
                 <div onClick={() => setSearchParams('')}>Reset search params</div>
                 <span onClick={() => {
                     if (isBrand === false) {

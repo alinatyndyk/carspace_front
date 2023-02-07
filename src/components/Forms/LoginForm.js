@@ -11,7 +11,7 @@ export default function LoginForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        await dispatch(authActions.login({user: data}))
+        await dispatch(authActions.login({user: data}));
     }
 
     return (

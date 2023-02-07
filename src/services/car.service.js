@@ -21,6 +21,7 @@ const carService = {
         }
     }),
     postCarOrder: (_id, dates) => axiosService.post(`http://localhost:5000/cars/${_id}/order`, dates),
+    deleteCarOrder: (order_id) => axiosService.delete(`http://localhost:5000/auth/orders/${order_id}`),
     updateCar: (_id, car) => axiosService.patch(`http://localhost:5000/cars/${_id}`, car)
 }
 
