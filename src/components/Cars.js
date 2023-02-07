@@ -9,9 +9,11 @@ const Cars = ({id, accountCompanyId}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, location, company_id} = useParams();
-    const [searchParams, setSearchParams] = useSearchParams({page: 1});
+    // const [searchParams, setSearchParams] = useSearchParams({page: 1});
+    const [searchParams, setSearchParams] = useSearchParams();
     const [getPage, setPage] = useState(1);
     console.log(getPage, ' get page START');
+
     const [geterror, seterror] = useState(null);
     console.log(geterror, 'get error');
     const [getButtons, setButtons] = useState(false);
@@ -24,16 +26,7 @@ const Cars = ({id, accountCompanyId}) => {
     }, [window.location.search])
 
     useEffect(() => {
-        // if (brand) {
-        //     // dispatch(carActions.getAllWithParams({params: searchParams}));
-        //     dispatch(carActions.getByBrand({brand: brand}))
-        //
-        // } else if (location) {
-        //     console.log('LOCATION CARS>JS');
-        //     // dispatch(carActions.getAllWithParams({params: searchParams}));
-        //     dispatch(carActions.getByLocation({location: location}))
-        // } else
-            if (id) {
+        if (id) {
             dispatch(carActions.getById({_id: id}));
 
         } else if (company_id) {
@@ -106,20 +99,26 @@ const Cars = ({id, accountCompanyId}) => {
             })
         } else if (brand) {
             // const promise1 = Promise.resolve(dispatch(carActions.getByBrand({brand: brand, page: getPage})));
-            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams, page: getPage})));
+            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({
+                params: searchParams,
+                page: getPage
+            })));
             promise1.then((value) => {
                 if (value.error) {
                     throw new Error(value.payload + 'in catch');
                 }
             }).catch((error) => {
                 seterror(error.message);
-                if(getPage !==1){
-                setNextButtons(true);
+                if (getPage !== 1) {
+                    setNextButtons(true);
                 }
             });
         } else if (location) {
             // const promise1 = Promise.resolve(dispatch(carActions.getByLocation({location: location, page: getPage})));
-            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams, page: getPage})));
+            const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({
+                params: searchParams,
+                page: getPage
+            })));
             promise1.then((value) => {
                 if (value.error) {
                     throw new Error(value.payload + 'in catch');

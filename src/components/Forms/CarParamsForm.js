@@ -10,7 +10,7 @@ export default function CarParamsForm() {
     const dispatch = useDispatch();
     const {brand, location} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
-    const {register, handleSubmit, setValue} = useForm();
+    const {register, handleSubmit, setValue, reset} = useForm();
     const {brands} = useSelector(state => state.brands);
     const {errors} = useSelector(state => state.cars);
 
@@ -19,9 +19,9 @@ export default function CarParamsForm() {
             setValue(key, value);
             console.log(key, value, 'input');
 
-            if (value === 'true' || 'false') {
-                setValue(key, value);
-            } //todo checkbox read window.location.search
+            // if (value === 'true' || 'false') {
+            //     setValue(key, value);
+            // } //todo checkbox read window.location.search
 
             if (key === 'description') {
                 searchParams.delete('description');
@@ -30,7 +30,7 @@ export default function CarParamsForm() {
             }
         }
         dispatch(brandActions.getAll());
-    }, [window.location.search])
+    }, [window.location.search, searchParams])
 
 
     const handleParams = (e) => {
@@ -57,7 +57,9 @@ export default function CarParamsForm() {
     const [getErrors, setErrors] = useState(null);
 
     useEffect(() => {
-        setValue('brand', brand);
+        if (brand) {
+            setValue('brand', brand);
+        }
         if (getBrand === null) {
             searchParams.delete('brand');
         } else {
@@ -67,7 +69,9 @@ export default function CarParamsForm() {
         if (getLocation === null) {
             searchParams.delete('location');
         } else {
-            setValue('location', getLocation);
+            if (typeof getLocation === 'string') {
+                setValue('location', getLocation);
+            }
         }
         if (window.location.search.includes('description')) {
             searchParams.delete('description')
@@ -101,6 +105,7 @@ export default function CarParamsForm() {
         // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
         if (!errors) {
             setSearchParams(searchParams);
+            reset();
         }
     }
     const [isBrand, setIsBrand] = useState(false);
@@ -110,7 +115,10 @@ export default function CarParamsForm() {
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
                 {getErrors}
-                <div onClick={() => setSearchParams('')}>Reset search params</div>
+                <div onClick={() => {
+                    setSearchParams('');
+                }}>Reset search params ( + clear form)
+                </div>
                 <span onClick={() => {
                     if (isBrand === false) {
                         setIsBrand(true)
@@ -234,6 +242,12 @@ export default function CarParamsForm() {
                             setTransmission('manual');
                             searchParams.set('transmission', 'manual');
                         }}>Manual
+                        </div>
+                        <div onClick={() => {
+                            setValue('transmission', '');
+                            setTransmission('');
+                            searchParams.delete('transmission');
+                        }}>Doesnt matter
                         </div>
                     </div> : null}
                 </span>
