@@ -13,7 +13,6 @@ const Cars = ({id, accountCompanyId}) => {
     const [getPage, setPage] = useState(1);
 
     const [geterror, seterror] = useState(null);
-    console.log(geterror, 'get error');
     const [getButtons, setButtons] = useState(false);
     const [getNextButtons, setNextButtons] = useState(false);
     const searchString = window.location.search;
@@ -48,8 +47,6 @@ const Cars = ({id, accountCompanyId}) => {
 
         setSearchParams(searchParams);
     }, [id, company_id]);
-
-    console.log(getPage, 'GET PAGE OUT');
 
     useEffect(() => {
         setSearchParams(searchParams);
@@ -100,7 +97,6 @@ const Cars = ({id, accountCompanyId}) => {
                 setNextButtons(true);
             })
         } else if (brand) {
-            // const promise1 = Promise.resolve(dispatch(carActions.getByBrand({brand: brand, page: getPage})));
             const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({
                 params: searchParams,
                 page: getPage
@@ -116,14 +112,13 @@ const Cars = ({id, accountCompanyId}) => {
                 }
             });
         } else if (location) {
-            // const promise1 = Promise.resolve(dispatch(carActions.getByLocation({location: location, page: getPage})));
             const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({
                 params: searchParams,
                 page: getPage
             })));
             promise1.then((value) => {
                 if (value.error) {
-                    throw new Error(value.payload + 'in catch');
+                    throw new Error(value.payload);
                 }
             }).catch((error) => {
                 seterror(error.message);
@@ -133,7 +128,7 @@ const Cars = ({id, accountCompanyId}) => {
             const promise1 = Promise.resolve(dispatch(carActions.getAllWithParams({params: searchParams})));
             promise1.then((value) => {
                 if (value.error) {
-                    throw new Error(value.payload + 'in catch');
+                    throw new Error(value.payload);
                 }
             }).catch((error) => {
                 seterror(error.message);
@@ -150,20 +145,16 @@ const Cars = ({id, accountCompanyId}) => {
 
     const prevPage = () => {
         let page = searchParams.get('page');
-        console.log(page, 'prev before ****************');
         page = +page - 1
         searchParams.set('page', page)
-        console.log('prevPage after', page);
         setPage(page);
         setNextButtons(false);
     }
 
     const nextPage = () => {
         let page = searchParams.get('page');
-        console.log(page, 'next before ****************');
         page = +page + 1
-        console.log('nextPage after', page);
-        searchParams.set('page', page)
+        searchParams.set('page', page);
         setPage(page);
     }
 

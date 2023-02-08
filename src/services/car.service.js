@@ -16,7 +16,6 @@ const carService = {
     getByLocation: (location, page) => axiosService.get(`http://localhost:5000/cars?location=${location}&page=${page}`),
     postCar: (car) => axiosService.post('http://localhost:5000/cars', car, {
         headers: {
-            // access_token: `${authService.getAccessToken()}`,
             'Content-Type': 'multipart/form-data'
         }
     }),

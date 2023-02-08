@@ -352,7 +352,6 @@ export default function CarParamsForm() {
                         setCarFeatures(false)
                     }
                 }}>Car features ↓
-                    <br/>
                     <hr/>
                 </div>
                 {carFeatures === true ? <div className={'car_features_params'}>

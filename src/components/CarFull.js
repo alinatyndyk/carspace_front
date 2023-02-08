@@ -20,8 +20,7 @@ export default function CarFull() {
     const {register, handleSubmit, reset, setValue} = useForm();
 
     useEffect(() => {
-        const {errors} = dispatch(carActions.getById({_id: car_id}));
-        console.log(errors);
+        dispatch(carActions.getById({_id: car_id}));
     }, [car_id])
 
     const {car, carForUpdate, errors} = useSelector(state => state.cars);
@@ -82,7 +81,8 @@ export default function CarFull() {
     return (
         <div className={'car-full-wrap'}>
             {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
-            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD</div>
+            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD
+            </div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
                     <Swiper
@@ -159,7 +159,8 @@ export default function CarFull() {
                         <form onSubmit={handleSubmit(submit)}>
                             <div><input type="text" placeholder={'model'} {...register('model')}/></div>
                             <div><input type="number" placeholder={'model_year'} {...register('model_year')}/></div>
-                            <div><input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/></div>
+                            <div><input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>
+                            </div>
                             <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="80"
                                            id="TITLE"/></div>
                             <button>Update car</button>

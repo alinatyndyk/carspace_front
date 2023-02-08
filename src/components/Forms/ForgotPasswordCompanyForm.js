@@ -1,6 +1,5 @@
 import {useForm} from "react-hook-form";
 import {useDispatch} from "react-redux";
-import {useParams} from "react-router";
 import {authActions} from "../../redux";
 import "./Forms.css"
 

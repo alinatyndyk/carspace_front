@@ -6,7 +6,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
-import CarPage from "./CarPage";
 import {authService, history} from "../services";
 
 export default function HomePage() {
@@ -18,18 +17,14 @@ export default function HomePage() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const {errors} = useSelector(state => state.cars);
-    console.log(errors, typeof errors, 'selector errors');
 
     const token = authService.getAccessToken();
-    console.log(token, 'home page token');
 
     useEffect(() => {
         setErrors(null);
     }, [window.location.search])
 
     const submit = (data) => {
-        console.log(data);
-
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
 
         searchParams.set('from_date', data.from_date);
@@ -40,17 +35,14 @@ export default function HomePage() {
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
 
         promise1.then((value) => {
-            console.log(value, 'PROMISE VALUE');
             if (value.error) {
                 throw new Error(value.payload);
             } else {
                 history.push(`/cars?${searchParams}`);
             }
         }).catch((error) => {
-            console.log(error);
             setErrors(error.message)
         })
-
         setSearchParams(searchParams);
     }
 

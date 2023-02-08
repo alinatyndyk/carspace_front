@@ -15,7 +15,6 @@ const getAll = createAsyncThunk(
             const {data} = await carService.getAll();
             return data.cars
         } catch (e) {
-            console.log(e.response.status);
             return rejectWithValue(e.response.data);
         }
     }
@@ -28,7 +27,6 @@ const getAllWithParams = createAsyncThunk(
             const {data} = await carService.getAllWithParams(params, page);
             return data.cars
         } catch (e) {
-            console.log(e.response.status);
             return rejectWithValue(e.response.data);
         }
     }
@@ -55,7 +53,6 @@ const getFilteredByDate = createAsyncThunk(
             return data
 
         } catch (e) {
-            console.log(e.response.data);
             return rejectWithValue(e.response.data);
         }
     }
@@ -86,9 +83,8 @@ const postCar = createAsyncThunk(
             delete car['usb']
             delete car['chiller_freezer']
             const {data} = await carService.postCar(car);
-            return data //todo data car with pages
+            return data
         } catch (e) {
-            console.log(e.response.data, 'err in async');
             return rejectWithValue(e.response.data);
         }
     }
@@ -101,7 +97,6 @@ const updateCar = createAsyncThunk(
             const {data} = await carService.updateCar(_id, car);
             return data
         } catch (e) {
-            console.log(e.response.data, 'err in async');
             return rejectWithValue(e.response.data);
         }
     }
@@ -114,7 +109,6 @@ const postCarOrder = createAsyncThunk(
             const {data} = await carService.postCarOrder(_id, dates);
             return data
         } catch (e) {
-            console.log(e.response.data, 'err in async');
             return rejectWithValue(e.response.data);
         }
     }

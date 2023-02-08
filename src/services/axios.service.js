@@ -22,7 +22,6 @@ axiosService.interceptors.response.use((config) => {
         return config
     }, async (error) => {
         const refresh_token = authService.getRefreshToken();
-        console.log('ERROR RESPONSE', error);
         if (error.response?.status === 403) {
             throw error
         } else if (error.response?.status === 401 && refresh_token && !isRefreshing) {

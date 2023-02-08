@@ -1,8 +1,6 @@
 import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../redux";
-import {useEffect, useState} from "react";
-import {useSearchParams} from "react-router-dom";
 
 export default function ResetPasswordForm({resetToken}) {
     const {register, handleSubmit, reset} = useForm();

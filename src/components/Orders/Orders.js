@@ -1,11 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import OrderCard from "./OrderCard";
 import {useLocation, useNavigate} from "react-router";
 import {useSearchParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {companyActions, userActions} from "../../redux";
-import {authService} from "../../services";
 
 export default function Orders() {
     const {orders, order, errors} = useSelector(state => state.companies);
@@ -30,20 +29,6 @@ export default function Orders() {
             const {errors} = dispatch(companyActions.getCompanyOrders());
             console.log(errors);
         }
-        // else {
-        //     const token = authService.getAccessToken();
-        //     const first = token.split(' ')[0];
-        //     if (first === 'User') {
-        //         const {errors} = dispatch(userActions.getUserOrders());
-        //         console.log('NO STATE ORDERS USER');
-        //
-        //     } else if (first === 'Company') {
-        //         const {errors} = dispatch(companyActions.getCompanyOrdersToday());
-        //         console.log('NO STATE ORDERS COMPANY');
-        //
-        //     }
-        //     console.log('NO STATE ORDERS');
-        // }
     }, [today])
 
     const submit = (data) => {
@@ -67,7 +52,19 @@ export default function Orders() {
                 <button>get order</button>
             </form>
             {errors}
-            {JSON.stringify(order)}
+            {/*{JSON.stringify(order)}*/}
+            {order ? <div>
+                <div>Order id: {order._id}</div>
+                <div>Car id: {order?.car}</div>
+                <div>User id: {order?.user?._id}</div>
+                <div>User: {order.user?.name} {order.user?.last_name}</div>
+                <div>User-email/phone: {order.user?.email}/{order.user?.contact_number}</div>
+                <div>Order starting date: {order.from_date}</div>
+                <div>Order finishing date: {order.to_date}</div>
+                <div>Order duration: {order?.Difference_In_Days}</div>
+                <hr/>
+                <br/>
+            </div> : null}
             <hr/>
             {orders?.map(order => <OrderCard key={order._id} order={order}/>)}
         </div>

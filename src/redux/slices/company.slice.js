@@ -90,7 +90,6 @@ const deleteCarOrder = createAsyncThunk(
             const {data} = await carService.deleteCarOrder(_id);
             return data
         } catch (e) {
-            console.log(e.response.data, 'err in async');
             return rejectWithValue(e.response.data);
         }
     }
@@ -130,7 +129,6 @@ const companySlice = createSlice({
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
-                    console.log('ERROR', action.payload);
                     state.errors = action.payload
                 } else {
                     state.errors = null;

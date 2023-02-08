@@ -2,7 +2,6 @@ import {useForm} from "react-hook-form";
 import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../redux";
 import "./Forms.css"
-import {useState} from "react";
 
 export default function ForgotPasswordForm() {
 

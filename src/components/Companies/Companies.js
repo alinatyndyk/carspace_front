@@ -10,11 +10,9 @@ const Companies = ({id}) => {
 
     useEffect(() => {
         if (id) {
-            const res = dispatch(companyActions.getById({_id: id}))
-            console.log(res);
+            dispatch(companyActions.getById({_id: id}))
         } else {
-            const res = dispatch(companyActions.getAll())
-            console.log(res);
+            dispatch(companyActions.getAll())
         }
     }, [id])
     if (id) {

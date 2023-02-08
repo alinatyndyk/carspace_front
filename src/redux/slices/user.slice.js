@@ -71,7 +71,6 @@ const userSlice = createSlice({
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
-                    console.log('ERROR', action.payload);
                     state.errors = action.payload
                 } else {
                     state.errors = null;

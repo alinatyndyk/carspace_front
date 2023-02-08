@@ -21,10 +21,8 @@ const CompanyFull = ({accountCompanyId}) => {
             navigate('/login');
         } else if (!company_id) {
             const {errors} = dispatch(companyActions.getById({_id: accountCompanyId}));
-            console.log(errors);
         } else {
             const {errors} = dispatch(companyActions.getById({_id: company_id}));
-            console.log(errors);
         }
     }, [company_id]);
 

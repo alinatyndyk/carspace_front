@@ -59,7 +59,6 @@ export default function CheckoutComponent({car, carErrors}) {
                 <button onClick={() => {
                     if (fromDate === '' || toDate === '') {
                         setErrors('Choose a date');
-                        console.log(getErrors, 'geterrors');
                     } else {
                         setErrors(false)
                         setCheckout(true);
