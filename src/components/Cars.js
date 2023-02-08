@@ -13,22 +13,22 @@ const Cars = ({id, accountCompanyId}) => {
     const [getPage, setPage] = useState(1);
 
     const [geterror, seterror] = useState(null);
-    const [getButtons, setButtons] = useState(false);
+    const [getButtons, setButtons] = useState(true);
     const [getNextButtons, setNextButtons] = useState(false);
     const searchString = window.location.search;
 
     useEffect(() => {
         seterror(null);
-        const navPage = searchParams.get('page')
+        const navPage = searchParams.get('page');
         setPage(navPage);
-        setNextButtons(false);
-        if(!navPage){
-            searchParams.set('page', 1);
+
+        if (navPage === 1) {
+            setButtons(true);
         }
+
+        setNextButtons(false);
         if (getPage === 1) {
             setButtons(true);
-        } else {
-            setButtons(false);
         }
     }, [window.location.search])
 
@@ -58,6 +58,14 @@ const Cars = ({id, accountCompanyId}) => {
         if (location) {
             searchParams.set('location', location);
         }
+
+        if(getPage === 1){
+            setButtons(true);
+        }
+
+        // if(getPage !==1){
+        //     setButtons(false);
+        // }
 
         if (searchString.includes('from_date') === true) {
             searchParams.set('page', getPage);
@@ -156,6 +164,7 @@ const Cars = ({id, accountCompanyId}) => {
         page = +page + 1
         searchParams.set('page', page);
         setPage(page);
+        setButtons(false);
     }
 
     return (

@@ -14,7 +14,7 @@ export default function ResetPasswordPage() {
         const token = searchParams.get('tokenAction');
         setToken(token);
         setSearchParams(searchParams);
-    }, [tokenAction])
+    }, [tokenAction]);
 
     if (element) {
         return (

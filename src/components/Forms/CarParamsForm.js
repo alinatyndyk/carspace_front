@@ -121,7 +121,7 @@ export default function CarParamsForm() {
                         setIsBrand(false)
                     }
                 }}>
-                    <input type="text"  disabled={true} placeholder={'brand'} {...register('brand')}/>↓
+                    <input type="text" placeholder={'brand'} {...register('brand')}/>↓
                     {isBrand && !brand === true ?
                         <div>{brands.map(item => <div
                             onClick={() => {

@@ -20,9 +20,9 @@ const CompanyFull = ({accountCompanyId}) => {
         if (!company_id && !accountCompanyId) { //todo
             navigate('/login');
         } else if (!company_id) {
-            const {errors} = dispatch(companyActions.getById({_id: accountCompanyId}));
+            dispatch(companyActions.getById({_id: accountCompanyId}));
         } else {
-            const {errors} = dispatch(companyActions.getById({_id: company_id}));
+            dispatch(companyActions.getById({_id: company_id}));
         }
     }, [company_id]);
 

@@ -16,6 +16,7 @@ import CompanyFull from "./components/Companies/CompanyFull";
 import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
 import CheckoutComponent from "./components/CheckoutComponent";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
     return (
@@ -44,7 +45,7 @@ function App() {
                         <Route path={'password-forgot/:element'} element={<ForgotPasswordPage/>}/>
                         <Route path={'password-reset'} element={<ResetPasswordPage/>}/>
                         <Route path={'password-reset/:element'} element={<ResetPasswordPage/>}/>
-                        {/*<Route path={'*'} element={<AboutPage/>}/>*/}
+                        <Route path={'*'} element={<ErrorPage/>}/>
                     </Route>
                 </Routes>
             </div>
