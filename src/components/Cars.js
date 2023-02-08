@@ -9,10 +9,8 @@ const Cars = ({id, accountCompanyId}) => {
     const {cars, car, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, location, company_id} = useParams();
-    // const [searchParams, setSearchParams] = useSearchParams({page: 1});
     const [searchParams, setSearchParams] = useSearchParams();
     const [getPage, setPage] = useState(1);
-    console.log(getPage, ' get page START');
 
     const [geterror, seterror] = useState(null);
     console.log(geterror, 'get error');
@@ -55,13 +53,6 @@ const Cars = ({id, accountCompanyId}) => {
 
     useEffect(() => {
         setSearchParams(searchParams);
-        console.log(getPage, 'GET PAGE');
-        // if (getPage === 1) {
-        //     console.log('*****************GETPgw sETA BUTTOS', getPage);
-        //     setButtons(true);
-        // } else {
-        //     setButtons(false);
-        // }
 
         if (brand) {
             searchParams.set('brand', brand);

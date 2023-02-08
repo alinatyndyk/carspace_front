@@ -11,6 +11,7 @@ const forgotPasswordUser = createAsyncThunk(
     async ({info}, {rejectWithValue}) => {
         try {
             const {data} = await authService.forgotPasswordUser(info);
+            console.log(data, 'FORGOT PASS USER DATA');
             return data
         } catch (e) {
             return rejectWithValue(e.response.data);
@@ -32,9 +33,9 @@ const forgotPasswordCompany = createAsyncThunk(
 
 const resetPasswordUser = createAsyncThunk(
     'authSlice/resetPasswordUser',
-    async ({password}, {rejectWithValue}) => {
+    async ({password, actionToken}, {rejectWithValue}) => {
         try {
-            await authService.resetPasswordUser(password);
+            await authService.resetPasswordUser(password, actionToken);
         } catch (e) {
             return rejectWithValue(e.response.data);
         }
@@ -43,9 +44,9 @@ const resetPasswordUser = createAsyncThunk(
 
 const resetPasswordCompany = createAsyncThunk(
     'authSlice/resetPasswordCompany',
-    async ({password}, {rejectWithValue}) => {
+    async ({password, actionToken}, {rejectWithValue}) => {
         try {
-            await authService.resetPasswordCompany(password);
+            await authService.resetPasswordCompany(password, actionToken);
         } catch (e) {
             return rejectWithValue(e.response.data);
         }
@@ -141,12 +142,12 @@ const authSlice = createSlice({
                 authService.deleteTokens();
                 window.location.reload();
             })
-            .addCase(forgotPasswordUser.fulfilled, (state, action) => {
-                authService.setActionToken(action.payload);
-            })
-            .addCase(forgotPasswordCompany.fulfilled, (state, action) => {
-                authService.setActionToken(action.payload);
-            })
+            // .addCase(forgotPasswordUser.fulfilled, (state, action) => {
+            //     authService.setActionToken(action.payload);
+            // })
+            // .addCase(forgotPasswordCompany.fulfilled, (state, action) => {
+            //     authService.setActionToken(action.payload);
+            // })
             .addDefaultCase((state, action) => {
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {

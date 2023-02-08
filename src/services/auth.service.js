@@ -17,8 +17,16 @@ const authService = {
     }),
     forgotPasswordUser: (email) => axiosService.post('http://localhost:5000/auth/password_forgot/user', email),
     forgotPasswordCompany: (contact_number) => axiosService.post('http://localhost:5000/auth/password_forgot/company', contact_number),
-    resetPasswordUser: (password) => axiosService.put('http://localhost:5000/auth/password_reset/user', password),
-    resetPasswordCompany: (password) => axiosService.put('http://localhost:5000/auth/password_reset/company', password),
+    resetPasswordUser: (password, actionToken) => axiosService.put('http://localhost:5000/auth/password_reset/user', password, {
+        headers: {
+            'Authorization': actionToken
+        }
+    }),
+    resetPasswordCompany: (password, actionToken) => axiosService.put('http://localhost:5000/auth/password_reset/company', password, {
+        headers: {
+            'Authorization': actionToken
+        }
+    }),
     refreshUser: (refresh_token) => axiosService.post(`${urls.auth}/user/refresh`, refresh_token, {
         headers: {
             refresh_token: `${authService.getRefreshToken()}`

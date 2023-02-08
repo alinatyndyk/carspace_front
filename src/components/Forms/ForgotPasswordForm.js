@@ -1,9 +1,12 @@
 import {useForm} from "react-hook-form";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../redux";
 import "./Forms.css"
+import {useState} from "react";
 
 export default function ForgotPasswordForm() {
+
+    const {errors} = useSelector(state => state.auth);
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
 
@@ -16,6 +19,7 @@ export default function ForgotPasswordForm() {
             <form className={'pass_forgot_form'} onSubmit={handleSubmit(submit)}>
                 <input type="text" placeholder={'email'} {...register('email')}/>
                 <button>Send email</button>
+                {errors ? <div className={'error'}>{errors}</div> : null}
             </form>
         </div>
     )
