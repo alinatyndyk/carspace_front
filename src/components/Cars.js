@@ -21,15 +21,12 @@ const Cars = ({id, accountCompanyId}) => {
         seterror(null);
         const navPage = searchParams.get('page');
         setPage(navPage);
-
-        if (navPage === 1) {
+        if(!navPage){
+            searchParams.set('page', 1);
             setButtons(true);
         }
 
         setNextButtons(false);
-        if (getPage === 1) {
-            setButtons(true);
-        }
     }, [window.location.search])
 
     useEffect(() => {
@@ -62,10 +59,6 @@ const Cars = ({id, accountCompanyId}) => {
         if(getPage === 1){
             setButtons(true);
         }
-
-        // if(getPage !==1){
-        //     setButtons(false);
-        // }
 
         if (searchString.includes('from_date') === true) {
             searchParams.set('page', getPage);
@@ -146,9 +139,9 @@ const Cars = ({id, accountCompanyId}) => {
         setSearchParams(searchParams);
     }, [getPage])
 
-    useEffect(() => {
-        setPage(1);
-    }, [location, brand])
+    // useEffect(() => {
+    //     setPage(1);
+    // }, [location, brand])
 
 
     const prevPage = () => {
@@ -161,10 +154,10 @@ const Cars = ({id, accountCompanyId}) => {
 
     const nextPage = () => {
         let page = searchParams.get('page');
+        setButtons(false);
         page = +page + 1
         searchParams.set('page', page);
         setPage(page);
-        setButtons(false);
     }
 
     return (
