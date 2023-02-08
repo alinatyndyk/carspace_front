@@ -17,11 +17,6 @@ export default function CarParamsForm() {
     useEffect(() => {
         for (const [key, value] of searchParams) {
             setValue(key, value);
-            console.log(key, value, 'input');
-
-            // if (value === 'true' || 'false') {
-            //     setValue(key, value);
-            // } //todo checkbox read window.location.search
 
             if (key === 'description') {
                 searchParams.delete('description');
@@ -81,7 +76,7 @@ export default function CarParamsForm() {
 
     const submit = async (data) => {
         searchParams.set('page', 1);
-        setSearchParams(data)
+        setSearchParams(data);
 
         if (brand) {
             searchParams.set('brand', brand);
@@ -102,7 +97,7 @@ export default function CarParamsForm() {
             console.log(error);
             setErrors(error.message)
         })
-        // const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
+
         if (!errors) {
             setSearchParams(searchParams);
             reset();
@@ -114,9 +109,9 @@ export default function CarParamsForm() {
         <div>
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType={'multipart/form-data'}>
                 <div>Search cars by params</div>
-                {getErrors}
                 <div onClick={() => {
-                    setSearchParams('');
+                    setSearchParams([]);
+                    reset();
                 }}>Reset search params ( + clear form)
                 </div>
                 <span onClick={() => {
@@ -126,7 +121,7 @@ export default function CarParamsForm() {
                         setIsBrand(false)
                     }
                 }}>
-                    <input type="text" placeholder={'brand'} {...register('brand')}/>↓
+                    <input type="text"  disabled={true} placeholder={'brand'} {...register('brand')}/>↓
                     {isBrand && !brand === true ?
                         <div>{brands.map(item => <div
                             onClick={() => {
@@ -357,6 +352,8 @@ export default function CarParamsForm() {
                         setCarFeatures(false)
                     }
                 }}>Car features ↓
+                    <br/>
+                    <hr/>
                 </div>
                 {carFeatures === true ? <div className={'car_features_params'}>
                         <span>
@@ -440,7 +437,7 @@ export default function CarParamsForm() {
                        placeholder={'chiller_freezer'} {...register('chiller_freezer')}/>chiller/freezer
                 </span>
                 </div> : null}
-
+                <span className={'error'}>{getErrors}</span>
                 <button>Search Cars</button>
             </form>
         </div>

@@ -62,9 +62,6 @@ export default function CheckoutComponent({car, carErrors}) {
                         console.log(getErrors, 'geterrors');
                     } else {
                         setErrors(false)
-                    }
-                    if (typeof getErrors === 'boolean') {
-                        console.log(getErrors, 'geterrors');
                         setCheckout(true);
                     }
                 }}>Set dates

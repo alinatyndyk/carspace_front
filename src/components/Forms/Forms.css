@@ -128,3 +128,7 @@
     color: white;
     border: none;
 }
+
+.error{
+    color: orangered;
+}

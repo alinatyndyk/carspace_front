@@ -22,7 +22,17 @@ const Cars = ({id, accountCompanyId}) => {
 
     useEffect(() => {
         seterror(null);
-        setNextButtons(false)
+        const navPage = searchParams.get('page')
+        setPage(navPage);
+        setNextButtons(false);
+        if(!navPage){
+            searchParams.set('page', 1);
+        }
+        if (getPage === 1) {
+            setButtons(true);
+        } else {
+            setButtons(false);
+        }
     }, [window.location.search])
 
     useEffect(() => {
@@ -46,11 +56,12 @@ const Cars = ({id, accountCompanyId}) => {
     useEffect(() => {
         setSearchParams(searchParams);
         console.log(getPage, 'GET PAGE');
-        if (getPage === 1) {
-            setButtons(true);
-        } else {
-            setButtons(false);
-        }
+        // if (getPage === 1) {
+        //     console.log('*****************GETPgw sETA BUTTOS', getPage);
+        //     setButtons(true);
+        // } else {
+        //     setButtons(false);
+        // }
 
         if (brand) {
             searchParams.set('brand', brand);
