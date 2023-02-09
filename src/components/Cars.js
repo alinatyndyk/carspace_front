@@ -137,11 +137,11 @@ const Cars = ({id, accountCompanyId}) => {
             });
         }
         setSearchParams(searchParams);
-    }, [getPage])
+    }, [getPage, geterror])
 
-    // useEffect(() => {
-    //     setPage(1);
-    // }, [location, brand])
+    useEffect(() => {
+        setPage(1);
+    }, [location, brand])
 
 
     const prevPage = () => {

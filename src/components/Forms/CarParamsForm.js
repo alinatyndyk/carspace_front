@@ -78,6 +78,8 @@ export default function CarParamsForm() {
         searchParams.set('page', 1);
         setSearchParams(data);
 
+
+
         if (brand) {
             searchParams.set('brand', brand);
         }
@@ -91,7 +93,12 @@ export default function CarParamsForm() {
             if (value.error) {
                 throw new Error(value.payload);
             } else {
+                setErrors('');
                 history.push(`/cars?${searchParams}`);
+                reset();
+                for (const [key, value] of searchParams) {
+                    setValue(key, value);
+                }
             }
         }).catch((error) => {
             console.log(error);
