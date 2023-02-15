@@ -38,7 +38,7 @@ const CompanyFull = ({accountCompanyId}) => {
 
 
     const {company} = useSelector(state => state.companies);
-    const {name, email, contact_number, image, description, cars} = company; //cars
+    const {name, email, contact_number, image, description} = company; //cars
 
     const [equal, setEqual] = useState(false);
     const [getDecoded, setDecoded] = useState(false);

@@ -2,7 +2,7 @@ import {axiosService} from "./axios.service";
 import {urls} from "../constants/urls";
 
 const _accessTokenKey = 'access_token'
-const _actionTokenKey = 'Authorization'
+// const _actionTokenKey = 'Authorization'
 const _refreshTokenKey = 'refresh_token'
 
 const authService = {
@@ -43,19 +43,19 @@ const authService = {
         localStorage.setItem(_refreshTokenKey, refresh_token)
     },
 
-    setActionToken: ({action_token}) => {
-        localStorage.setItem(_actionTokenKey, action_token)
-    },
+    // setActionToken: ({action_token}) => {
+    //     localStorage.setItem(_actionTokenKey, action_token)
+    // },
+    //
+    // getActionToken: () => {
+    //     const action = localStorage.getItem(_actionTokenKey);
+    //     console.log(action);
+    //     return action
+    // },
 
-    getActionToken: () => {
-        const action = localStorage.getItem(_actionTokenKey);
-        console.log(action);
-        return action
-    },
-
-    deleteActionToken: () => {
-        localStorage.removeItem(_actionTokenKey)
-    },
+    // deleteActionToken: () => {
+    //     localStorage.removeItem(_actionTokenKey)
+    // },
 
     deleteTokens: () => {
         localStorage.removeItem(_accessTokenKey)
@@ -63,13 +63,15 @@ const authService = {
     },
 
     getAccessToken: () => {
-        const access = localStorage.getItem(_accessTokenKey);
-        return access
+        // const access = localStorage.getItem(_accessTokenKey);
+        // return access
+        return localStorage.getItem(_accessTokenKey);
     },
 
     getRefreshToken: () => {
-        const refresh = localStorage.getItem(_refreshTokenKey);
-        return refresh
+        // const refresh = localStorage.getItem(_refreshTokenKey);
+        // return refresh
+        return localStorage.getItem(_refreshTokenKey);
     },
 
 }

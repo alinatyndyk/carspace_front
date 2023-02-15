@@ -18,16 +18,13 @@ export default function Orders() {
     const today = searchParams.get("today");
     useEffect(() => {
         if (today && state?.type === 'company-orders') {
-            const {errors} = dispatch(companyActions.getCompanyOrdersToday());
-            console.log(errors);
+            dispatch(companyActions.getCompanyOrdersToday());
         } else if (state?.type === 'user-orders') {
-            const {errors} = dispatch(userActions.getUserOrders());
-            console.log(errors);
+            dispatch(userActions.getUserOrders());
             navigate(`/account/orders`, {state: {type: 'user-orders'}})
 
         } else if (state?.type === 'company-orders') {
-            const {errors} = dispatch(companyActions.getCompanyOrders());
-            console.log(errors);
+            dispatch(companyActions.getCompanyOrders());
         }
     }, [today])
 

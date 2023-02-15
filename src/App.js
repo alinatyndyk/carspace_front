@@ -1,5 +1,5 @@
 import './App.css';
-import {Routes, Route, Navigate} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import CarPage from "./pages/CarPage";
 import LayoutPage from "./pages/LayoutPage";
 import BrandsPage from "./pages/BrandsPage";

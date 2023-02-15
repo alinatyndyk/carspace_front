@@ -4,7 +4,7 @@ import {useEffect} from "react";
 import {companyActions} from "../../redux";
 
 export default function CompanyForm({company}) {
-    const {companyForUpdate, errors} = useSelector(state => state.companies);
+    const {errors} = useSelector(state => state.companies);
     const dispatch = useDispatch();
 
     useEffect(() => {

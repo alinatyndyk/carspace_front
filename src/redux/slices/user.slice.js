@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {carService, userService} from "../../services";
+import {userService} from "../../services";
 
 const initialState = {
     users: [],
@@ -65,7 +65,7 @@ const userSlice = createSlice({
             .addCase(getUserOrders.fulfilled, (state, action) => {
                 state.orders = action.payload;
             })
-            .addCase(updateUser.fulfilled, (state, action) => {
+            .addCase(updateUser.fulfilled, () => {
                 window.location.reload();
             })
             .addDefaultCase((state, action) => {

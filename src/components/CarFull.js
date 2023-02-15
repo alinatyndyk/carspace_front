@@ -17,7 +17,7 @@ import 'swiper/css/pagination';
 export default function CarFull() {
     const dispatch = useDispatch();
     const {car_id} = useParams();
-    const {register, handleSubmit, reset, setValue} = useForm();
+    const {register, handleSubmit, setValue} = useForm();
 
     useEffect(() => {
         dispatch(carActions.getById({_id: car_id}));

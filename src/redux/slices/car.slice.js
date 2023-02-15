@@ -160,7 +160,7 @@ const carSlice = createSlice({
             .addCase(getFilteredByDate.fulfilled, (state, action) => {
                 state.cars = action.payload;
             })
-            .addCase(updateCar.fulfilled, (state, action) => {
+            .addCase(updateCar.fulfilled, (state) => {
                 state.carForUpdate = null;
                 window.location.reload();
             })

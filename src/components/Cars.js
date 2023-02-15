@@ -6,7 +6,7 @@ import {useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
 
 const Cars = ({id, accountCompanyId}) => {
-    const {cars, car, errors} = useSelector(state => state.cars);
+    const {cars, errors} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, location, company_id} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();

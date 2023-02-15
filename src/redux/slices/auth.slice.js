@@ -126,7 +126,7 @@ const authSlice = createSlice({
                 authService.setTokens({...action.payload});
                 window.location.reload();
             })
-            .addCase(logoutUser.fulfilled, (state, action) => {
+            .addCase(logoutUser.fulfilled, (state) => {
                 state.isAuth = false;
                 authService.deleteTokens();
                 window.location.reload();
@@ -136,7 +136,7 @@ const authSlice = createSlice({
                 authService.setTokens({...action.payload});
                 window.location.reload();
             })
-            .addCase(logoutCompany.fulfilled, (state, action) => {
+            .addCase(logoutCompany.fulfilled, (state) => {
                 state.isAuth = false;
                 authService.deleteTokens();
                 window.location.reload();

@@ -1,4 +1,4 @@
-import {Link, useSearchParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import './Header.css'
 import {useForm} from "react-hook-form";
@@ -20,14 +20,14 @@ export default function Header() {
     const [getBrand, setBrand] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit} = useForm();
     const {brands} = useSelector(state => state.brands);
 
     const access = authService.getAccessToken();
     useEffect(() => {
         dispatch(brandActions.getAll());
-        setSearchParams(undefined);
+        // setSearchParams(undefined);
         if (access) {
             const first = access.split(' ')[0];
             const {_id} = jwt_decode(access);

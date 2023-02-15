@@ -1,7 +1,6 @@
 import Cars from "../components/Cars";
 import {useParams} from "react-router";
 import CarParamsForm from "../components/Forms/CarParamsForm";
-import {useSelector} from "react-redux";
 
 export default function CarPage({accountCompanyId}) {
     const {car_id} = useParams();

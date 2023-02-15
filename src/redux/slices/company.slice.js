@@ -120,10 +120,10 @@ const companySlice = createSlice({
             .addCase(getCompanyOrdersToday.fulfilled, (state, action) => {
                 state.orders = action.payload;
             })
-            .addCase(update.fulfilled, (state, action) => {
+            .addCase(update.fulfilled, () => {
                 window.location.reload();
             })
-            .addCase(deleteCarOrder.fulfilled, (state, action) => {
+            .addCase(deleteCarOrder.fulfilled, () => {
                 window.location.reload();
             })
             .addDefaultCase((state, action) => {
