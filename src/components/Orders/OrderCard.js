@@ -1,10 +1,11 @@
-import {useLocation} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useDispatch} from "react-redux";
 import {companyActions} from "../../redux";
 
 export default function OrderCard({order}) {
     const {state} = useLocation();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {_id, user, from_date, to_date, car, Difference_In_Days} = order;
 
     const deleteOrder = (_id) => {
@@ -15,7 +16,7 @@ export default function OrderCard({order}) {
     const orderStart = new Date(from_date).getTime();
 
     return (
-        <div>
+        <div onClick={() => navigate(`/cars/${car._id}`)}>
             <h3>Order Card</h3>
             <div>Order id: {_id}</div>
             {state?.type === 'company-orders' ? <div className={'user'}>

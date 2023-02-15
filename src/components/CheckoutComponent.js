@@ -54,14 +54,29 @@ export default function CheckoutComponent({car, carErrors}) {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                     </div>
                 </div>
-                <div>{carErrors}</div>
-                <div>{getErrors}</div>
+                <div className={'error'}>{carErrors}</div>
+                <div className={'error'}>{getErrors}</div>
                 <button onClick={() => {
-                    if (fromDate === '' || toDate === '') {
-                        setErrors('Choose a date');
-                    } else {
-                        setErrors(false)
+                    try {
+                        const x = new Date(fromDate).getTime();
+                        const y = new Date(toDate).getTime();
+                        const t = new Date().getTime();
+                        if (fromDate === '' || toDate === '') {
+                            throw new Error(`Choose rent dates!`);
+                        }
+                        if(t > x){
+                            throw new Error(`Choose a starting date after today!`);
+                        }
+                        if(y < x){
+                            throw new Error(`Choose a finishing date after the starting date!`);
+                        }
+                        if (Difference_In_Days < car?.min_rent_time) {
+                            throw new Error(`Minimum rent time is ${car?.min_rent_time}!`);
+                        }
+                        setErrors(false);
                         setCheckout(true);
+                    } catch (e) {
+                        setErrors(e.message);
                     }
                 }}>Set dates
                 </button>
