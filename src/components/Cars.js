@@ -21,7 +21,7 @@ const Cars = ({id, accountCompanyId}) => {
         seterror(null);
         const navPage = searchParams.get('page');
         setPage(navPage);
-        if(!navPage){
+        if (!navPage) {
             searchParams.set('page', 1);
             setButtons(true);
         }
@@ -56,7 +56,7 @@ const Cars = ({id, accountCompanyId}) => {
             searchParams.set('location', location);
         }
 
-        if(getPage === 1){
+        if (getPage === 1) {
             setButtons(true);
         }
 

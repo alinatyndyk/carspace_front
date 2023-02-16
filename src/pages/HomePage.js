@@ -24,6 +24,7 @@ export default function HomePage() {
         setErrors(null);
     }, [window.location.search])
 
+    console.log('str49');
     const submit = (data) => {
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
 
@@ -31,7 +32,6 @@ export default function HomePage() {
         searchParams.set('to_date', data.to_date);
         searchParams.set('description', str);
         setSearchParams(searchParams);
-
         const promise1 = Promise.resolve(dispatch(carActions.getFilteredByDate({info: data})))
 
         promise1.then((value) => {
@@ -46,10 +46,10 @@ export default function HomePage() {
 
         setSearchParams(searchParams);
     }
-
     const [getType, setType] = useState();
     useEffect(() => {
         if (getType !== undefined) {
+            console.log('str54');
             const {errors} = dispatch(carActions.getAllWithParams({params: searchParams}));
             if (!errors) {
                 navigate(`/cars?vehicle_type=${getType}`);

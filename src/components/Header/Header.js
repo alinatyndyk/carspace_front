@@ -10,6 +10,7 @@ import {authService} from "../../services";
 import jwt_decode from "jwt-decode";
 
 export default function Header() {
+
     const [isShown, setIsShown] = useState(false);
     const [isLocation, setIsLocation] = useState(false);
     const [location, setLocation] = useState();
@@ -20,14 +21,12 @@ export default function Header() {
     const [getBrand, setBrand] = useState();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const [searchParams, setSearchParams] = useSearchParams();
     const {register, handleSubmit} = useForm();
     const {brands} = useSelector(state => state.brands);
 
     const access = authService.getAccessToken();
     useEffect(() => {
         dispatch(brandActions.getAll());
-        // setSearchParams(undefined);
         if (access) {
             const first = access.split(' ')[0];
             const {_id} = jwt_decode(access);
@@ -42,12 +41,11 @@ export default function Header() {
     }, []);
 
     useEffect(() => {
-        dispatch(carActions.getByBrand({brand: getBrand}))
+        dispatch(carActions.getByBrand({brand: getBrand}));
     }, [getBrand])
 
     useEffect(() => {
         dispatch(carActions.getByLocation({location}))
-
     }, [location])
 
     const submit = async (data) => {
