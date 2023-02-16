@@ -10,10 +10,10 @@ import {authService, history} from "../services";
 
 export default function HomePage() {
     const dispatch = useDispatch();
-    const {register, handleSubmit} = useForm();
-    const [modalActive, setModalActive] = useState(true);
     const navigate = useNavigate();
+    const {register, handleSubmit} = useForm();
     const [getErrors, setErrors] = useState(null);
+    const [modalActive, setModalActive] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const {errors} = useSelector(state => state.cars);
@@ -43,6 +43,7 @@ export default function HomePage() {
         }).catch((error) => {
             setErrors(error.message)
         })
+
         setSearchParams(searchParams);
     }
 

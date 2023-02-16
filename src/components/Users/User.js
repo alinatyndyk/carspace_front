@@ -20,7 +20,7 @@ const User = ({accountUserId}) => {
             <div>id:{user?._id}</div>
             <div>user:{user?.name} {user?.last_name} {user?.age}</div>
             <div>{user?.email} -- {user?.contact_number}</div>
-            <img src={`${user?.image.link}`} alt="Red dot"/>
+            <img className={'order-card-img'} src={`${user?.image?.link}`} alt="Red dot"/>
             {update === true ? <UserForm user={user}/> : null}
             <div>
                 <button onClick={() => setUpdate(true)}>update user</button>

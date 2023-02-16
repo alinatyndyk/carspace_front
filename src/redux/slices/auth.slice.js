@@ -56,7 +56,7 @@ const register = createAsyncThunk(
     'authSlice/register',
     async ({user}, {rejectWithValue}) => {
         try {
-            await authService.registerUser(user)
+            await authService.registerUser(user);
         } catch (e) {
             return rejectWithValue(e.response.data);
         }
@@ -83,7 +83,6 @@ const loginCompany = createAsyncThunk(
             const {data} = await authService.loginCompany(company);
             return data
         } catch (e) {
-            console.log(e.response.data);
             return rejectWithValue(e.response.data);
         }
     }
@@ -124,7 +123,6 @@ const authSlice = createSlice({
             .addCase(login.fulfilled, (state, action) => {
                 state.isAuth = true;
                 authService.setTokens({...action.payload});
-                window.location.reload();
             })
             .addCase(logoutUser.fulfilled, (state) => {
                 state.isAuth = false;
@@ -134,7 +132,6 @@ const authSlice = createSlice({
             .addCase(loginCompany.fulfilled, (state, action) => {
                 state.isAuth = true;
                 authService.setTokens({...action.payload});
-                window.location.reload();
             })
             .addCase(logoutCompany.fulfilled, (state) => {
                 state.isAuth = false;

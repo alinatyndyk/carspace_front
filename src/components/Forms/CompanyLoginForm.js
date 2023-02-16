@@ -12,11 +12,16 @@ export default function CompanyLoginForm() {
     const {errors} = useSelector(state => state.auth)
 
     const submit = async (data) => {
-        const {error} = await dispatch(authActions.loginCompany({company: data}))
-        if (!error) {
-            navigate('/account')
-        }
-        console.log(error, 'error');
+        const promise1 = Promise.resolve(dispatch(authActions.loginCompany({company: data})))
+
+        promise1.then((value) => {
+            if (value.error) {
+                throw new Error(value.payload);
+            } else {
+                navigate('/account');
+                window.location.reload();
+            }
+        })
     }
 
     return (

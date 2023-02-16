@@ -3,14 +3,25 @@ import {useDispatch, useSelector} from "react-redux";
 import {authActions} from "../../redux";
 import "./Forms.css"
 import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 export default function LoginForm() {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
-    const {errors} = useSelector(state => state.auth)
+    const navigate = useNavigate();
+    const {errors} = useSelector(state => state.auth);
 
     const submit = async (data) => {
-        await dispatch(authActions.login({user: data}));
+        const promise1 = Promise.resolve(dispatch(authActions.login({user: data})))
+
+        promise1.then((value) => {
+            if (value.error) {
+                throw new Error(value.payload);
+            } else {
+               navigate('/account');
+               window.location.reload();
+            }
+        })
     }
 
     return (

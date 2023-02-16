@@ -5,7 +5,7 @@ import {authActions} from "../../redux";
 export default function ResetPasswordForm({resetToken}) {
     const {register, handleSubmit, reset} = useForm();
     const dispatch = useDispatch();
-    const {errors} = useSelector(state => state.auth)
+    const {errors} = useSelector(state => state.auth);
 
     const submit = async (data) => {
         await dispatch(authActions.resetPasswordUser({password: data, actionToken: resetToken}));
