@@ -13,12 +13,12 @@ export default function Header() {
 
     const [isShown, setIsShown] = useState(false);
     const [isLocation, setIsLocation] = useState(false);
-    const [location, setLocation] = useState();
+    const [location, setLocation] = useState(null);
     const [isAccount, setIsAccount] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [isAuthUser, setIsAuthUser] = useState(false);
     const [Id, setId] = useState(null);
-    const [getBrand, setBrand] = useState();
+    const [getBrand, setBrand] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
@@ -41,11 +41,15 @@ export default function Header() {
     }, []);
 
     useEffect(() => {
-        dispatch(carActions.getByBrand({brand: getBrand}));
+        if (getBrand !== null) {
+            dispatch(carActions.getByBrand({brand: getBrand}));
+        }
     }, [getBrand])
 
     useEffect(() => {
-        dispatch(carActions.getByLocation({location}))
+        if (location !== null) {
+            dispatch(carActions.getByLocation({location}))
+        }
     }, [location])
 
     const submit = async (data) => {
@@ -85,7 +89,8 @@ export default function Header() {
                             <div onClick={() => navigate(`/account/orders`, {state: {type: 'company-orders'}})}>Orders
                             </div>
                             <div
-                                onClick={() => navigate(`/account/orders?today=true`, {state: {type: 'company-orders'}})}>Today Orders
+                                onClick={() => navigate(`/account/orders?today=true`, {state: {type: 'company-orders'}})}>Today
+                                Orders
                             </div>
                             <span><button onClick={() => logout()}>Logout</button></span>
                         </div>
