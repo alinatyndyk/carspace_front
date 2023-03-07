@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+.df{
+  display: flex;
+}
+
 .menu{
   background-color: #080050;
   color: silver;

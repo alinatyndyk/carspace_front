@@ -25,6 +25,14 @@ const getById = createAsyncThunk(
     }
 )
 
+const adminVerificationCode = createAsyncThunk(
+    'brandSlice/verificationCode',
+    async ({email}) => {
+        const {data} = await userService.verifyAdmin(email);
+        return data
+    }
+)
+
 const getUserOrders = createAsyncThunk(
     'authSlice/getUserOrders',
     async (_, {rejectWithValue}) => {
@@ -84,7 +92,8 @@ const userActions = {
     getAll,
     getById,
     getUserOrders,
-    updateUser
+    updateUser,
+    adminVerificationCode
 }
 
 export {

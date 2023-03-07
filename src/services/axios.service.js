@@ -29,7 +29,7 @@ axiosService.interceptors.response.use((config) => {
             try {
                 const first = refresh_token.split(' ')[0];
                 console.log(first);
-                if (first === 'User') {
+                if (first === 'User' || first === 'Admin') {
                     const {data} = await authService.refreshUser(refresh_token);
                     authService.setTokens(data);
                 } else if (first === 'Company') {

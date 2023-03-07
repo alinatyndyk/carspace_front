@@ -17,6 +17,7 @@ import OrdersPage from "./pages/OrdersPage";
 import AccountPage from "./pages/AccountPage";
 import CheckoutComponent from "./components/CheckoutComponent";
 import ErrorPage from "./pages/ErrorPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
     return (
@@ -29,9 +30,11 @@ function App() {
                         <Route path={'/cars'} element={<CarPage/>}/>
                         <Route path={'/cars/:car_id'} element={<CarFull/>}/>
                         <Route path={'/account'} element={<AccountPage/>}/>
+                        <Route path={'/admin'} element={<AdminPage/>}>
+                            <Route path={'users'} element={<Users/>}/>
+                        </Route>
                         <Route path={'/account/orders'} element={<OrdersPage/>}/>
                         <Route path={'/payment'} element={<CheckoutComponent/>}/>
-                        <Route path={'users'} element={<Users/>}/>
                         <Route path={'users/:user_id'} element={<Users/>}/>
                         <Route path={'/companies'} element={<CompanyPage/>}/>
                         <Route path={'/companies/:company_id'} element={<CompanyFull/>}/>

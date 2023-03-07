@@ -17,6 +17,7 @@ export default function Header() {
     const [isAccount, setIsAccount] = useState(false);
     const [isAuth, setIsAuth] = useState(false);
     const [isAuthUser, setIsAuthUser] = useState(false);
+    const [isAuthAdmin, setIsAuthAdmin] = useState(false);
     const [Id, setId] = useState(null);
     const [getBrand, setBrand] = useState(null);
     const dispatch = useDispatch();
@@ -29,13 +30,19 @@ export default function Header() {
         dispatch(brandActions.getAll());
         if (access) {
             const first = access.split(' ')[0];
-            const {_id} = jwt_decode(access);
+            const {_id, status} = jwt_decode(access);
             if (first === 'Company') {
                 setId(_id);
                 setIsAuth(true);
             } else if (first === 'User') {
                 setId(_id);
                 setIsAuthUser(true);
+            } else if (first === 'Admin') {
+                setId(_id);
+                setIsAuthUser(true);
+                if (status === 'admin') {
+                    setIsAuthAdmin(true);
+                }
             }
         }
     }, []);
@@ -70,7 +77,7 @@ export default function Header() {
     const logoutUser = () => {
         const {errors} = dispatch(authActions.logoutUser());
         if (!errors) {
-            navigate('/login')
+            navigate('/login');
         }
     }
 
@@ -186,6 +193,8 @@ export default function Header() {
                         <p><Link onDoubleClick={() => window.location.reload()} className={'menu_navbar_link'}
                                  to={'/cars'}>Cars</Link></p>
                         <p><Link className={'menu_navbar_link'} to={'/companies'}>Companies</Link></p>
+                        {isAuthAdmin === true ?
+                            <p><Link className={'menu_navbar_link'} to={'/admin'}>Admin control panel</Link></p> : null}
                     </div>
                     <div className={'menu_navbar_form'}>
                         <form onSubmit={handleSubmit(submit)}>

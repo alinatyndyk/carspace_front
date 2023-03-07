@@ -15,6 +15,11 @@ const authService = {
             'Content-type': 'multipart/form-data'
         }
     }),
+    registerCompany: (company) => axiosService.post('http://localhost:5000/company', company, {
+        headers: {
+            'Content-type': 'multipart/form-data'
+        }
+    }),
     forgotPasswordUser: (email) => axiosService.post('http://localhost:5000/auth/password_forgot/user', email),
     forgotPasswordCompany: (contact_number) => axiosService.post('http://localhost:5000/auth/password_forgot/company', contact_number),
     resetPasswordUser: (password, actionToken) => axiosService.put('http://localhost:5000/auth/password_reset/user', password, {

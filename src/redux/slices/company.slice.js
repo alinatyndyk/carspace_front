@@ -83,6 +83,18 @@ const getById = createAsyncThunk(
     }
 )
 
+const deleteById = createAsyncThunk(
+    'authSlice/delete',
+    async ({_id}, {rejectWithValue}) => {
+        try {
+            const {data} = await companyService.deleteById(_id)
+            return data
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
 const deleteCarOrder = createAsyncThunk(
     'companySlice/deleteCarOrder',
     async ({_id}, {rejectWithValue}) => {
@@ -142,6 +154,7 @@ const {reducer: companyReducer, actions: {setCompanyForUpdate}} = companySlice;
 const companyActions = {
     getAll,
     getById,
+    deleteById,
     update,
     setCompanyForUpdate,
     getCompanyOrders,

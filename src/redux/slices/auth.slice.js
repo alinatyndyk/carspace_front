@@ -63,11 +63,23 @@ const register = createAsyncThunk(
     }
 )
 
+const registerCompany = createAsyncThunk(
+    'authSlice/registerCompany',
+    async ({company}, {rejectWithValue}) => {
+        try {
+            await authService.registerCompany(company);
+        } catch (e) {
+            return rejectWithValue(e.response.data);
+        }
+    }
+)
+
 const login = createAsyncThunk(
     'authSlice/login',
     async ({user}, {rejectWithValue}) => {
         try {
             const {data} = await authService.loginUser(user);
+            console.log(data);
             return data
         } catch (e) {
             console.log(e);
@@ -153,6 +165,7 @@ const {reducer: authReducer, actions: {}} = authSlice;
 
 const authActions = {
     register,
+    registerCompany,
     login,
     forgotPasswordUser,
     resetPasswordUser,

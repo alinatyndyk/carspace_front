@@ -5,7 +5,7 @@ import {Link, useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import {useNavigate} from "react-router";
 
-export default function RegisterForm() {
+export default function RegisterCompanyForm() {
     const {register, handleSubmit} = useForm();
     const {errors} = useSelector(state => state.auth)
     const dispatch = useDispatch();
@@ -13,24 +13,22 @@ export default function RegisterForm() {
 
     const [getErrors, setErrors] = useState(null);
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const verify = searchParams.get('adminVerify');
-
     const submit = async (data) => {
         let promise1;
 
-        if(!verify){
-         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, testImage: data.testImage[0]}})))
-        } else {
-         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, status: 'admin', testImage: data.testImage[0]}})))
-        }
+            promise1 = Promise.resolve(dispatch(authActions.registerCompany({
+                company: {
+                    ...data,
+                    testImage: data.testImage[0]
+                }
+            })))
 
         promise1.then((value) => {
             if (value.error) {
                 throw new Error(value.payload);
             } else {
                 setErrors(null);
-                navigate('/login');
+                navigate('/login/company');
             }
         }).catch((error) => {
             setErrors(error.message)
@@ -40,15 +38,15 @@ export default function RegisterForm() {
     return (
         <div>
             <form className={'register_form'} onSubmit={handleSubmit(submit)} encType="multipart/form-data">
+                REGISTER A NEW COMPANY
                 <input type="text" placeholder={'name'} {...register('name')}/>
-                <input type="text" placeholder={'last_name'} {...register('last_name')}/>
                 <input type="text" placeholder={'contact_number'} {...register('contact_number')}/>
-                <input type="number" placeholder={'age'} {...register('age')}/>
                 <input type="text" placeholder={'email'} {...register('email')}/>
                 <input type="text" placeholder={'password'} {...register('password')}/>
                 <input type="file" name={'testImage'} placeholder={'testImage'} {...register('testImage')}/>
-                <button>Register</button>
-                <Link to={'/login'}>Already have an account?</Link>
+                <div><textarea placeholder={'description'} {...register('description')} rows="5" cols="50"
+                               id="TITLE"/></div>
+                <button>Register Company</button>
                 {errors}
                 <div className={'error'}>{getErrors}</div>
             </form>

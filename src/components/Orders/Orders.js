@@ -49,7 +49,6 @@ export default function Orders() {
                 <button>get order</button>
             </form>
             {errors}
-            {/*{JSON.stringify(order)}*/}
             {order ? <div>
                 <div>Order id: {order._id}</div>
                 <div>Car id: {order?.car}</div>
