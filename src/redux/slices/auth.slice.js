@@ -54,9 +54,10 @@ const resetPasswordCompany = createAsyncThunk(
 
 const register = createAsyncThunk(
     'authSlice/register',
-    async ({user}, {rejectWithValue}) => {
+    async ({user, code}, {rejectWithValue}) => {
         try {
-            await authService.registerUser(user);
+            await authService.registerUser(user, code);
+            console.log(code);
         } catch (e) {
             return rejectWithValue(e.response.data);
         }

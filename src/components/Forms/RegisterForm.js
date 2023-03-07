@@ -19,10 +19,10 @@ export default function RegisterForm() {
     const submit = async (data) => {
         let promise1;
 
-        if(!verify){
-         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, testImage: data.testImage[0]}})))
+        if(verify){
+         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, status: 'admin', testImage: data.testImage[0]}, code: verify})))
         } else {
-         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, status: 'admin', testImage: data.testImage[0]}})))
+         promise1 = Promise.resolve(dispatch(authActions.register({user: {...data, testImage: data.testImage[0]}})))
         }
 
         promise1.then((value) => {

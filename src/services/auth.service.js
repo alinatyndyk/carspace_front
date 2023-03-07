@@ -10,9 +10,10 @@ const authService = {
     logoutUser: () => axiosService.post('http://localhost:5000/auth/user/logout'),
     loginCompany: (company) => axiosService.post('http://localhost:5000/auth/company/login', company),
     logoutCompany: () => axiosService.post('http://localhost:5000/auth/company/logout'),
-    registerUser: (user) => axiosService.post('http://localhost:5000/users', user, {
+    registerUser: (user, code) => axiosService.post('http://localhost:5000/users', user, {
         headers: {
-            'Content-type': 'multipart/form-data'
+            'Content-type': 'multipart/form-data',
+            'verification_string': `${code}`
         }
     }),
     registerCompany: (company) => axiosService.post('http://localhost:5000/company', company, {
