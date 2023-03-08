@@ -84,7 +84,7 @@ export default function Header() {
     return (
         <div className={'header'}>
             <div className={'menu'}>
-                <h3>Carspace.</h3>
+                <h3 onClick={() => navigate('/home')}>Carspace.</h3>
                 {isAuth === true ?
                     <span
                         onMouseOver={() => setIsAccount(true)}
