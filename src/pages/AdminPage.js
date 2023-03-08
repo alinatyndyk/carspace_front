@@ -23,8 +23,8 @@ export default function AdminPage() {
     }
 
     const deleteCompanyById = (data) => {
-        dispatch(companyActions.deleteById({_id: data._id}));
-        reset();
+        console.log(data);
+        dispatch(companyActions.deleteById({_id: data._idCompany}));
     }
 
     const addCarBrand = (data) => {
@@ -41,7 +41,7 @@ export default function AdminPage() {
         <div className={'df'}>
             <div>
                 <RegisterCompanyForm/>
-                {errors}
+                <h2>{errors}</h2>
                 <form className={'register_form'} onSubmit={handleSubmit(sendVerificationCode)}>
                     Create admin (send verification code)
                     <input type="text" placeholder={'email'} {...register('email')}/>
@@ -49,7 +49,7 @@ export default function AdminPage() {
                 </form>
                 <form className={'register_form'} onSubmit={handleSubmit(deleteCompanyById)}>
                     Delete company by ID
-                    <input type="text" placeholder={'_id'} {...register('_id')}/>
+                    <input type="text" placeholder={'_id'} {...register('_idCompany')}/>
                     <button>Remove</button>
                 </form>
                 <form className={'register_form'} onSubmit={handleSubmit(findUserById)}>

@@ -2,7 +2,6 @@ import {axiosService} from "./axios.service";
 import {urls} from "../constants/urls";
 
 const _accessTokenKey = 'access_token'
-// const _actionTokenKey = 'Authorization'
 const _refreshTokenKey = 'refresh_token'
 
 const authService = {
@@ -16,7 +15,7 @@ const authService = {
             'verification_string': `${code}`
         }
     }),
-    registerCompany: (company) => axiosService.post('http://localhost:5000/company', company, {
+    registerCompany: (company) => axiosService.post('http://localhost:5000/companies', company, {
         headers: {
             'Content-type': 'multipart/form-data'
         }

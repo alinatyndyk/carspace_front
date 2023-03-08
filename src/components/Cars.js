@@ -20,14 +20,19 @@ const Cars = ({id, accountCompanyId}) => {
     useEffect(() => {
         seterror(null);
         const navPage = searchParams.get('page');
-        setPage(navPage);
+        if (navPage === '1') {
+            setButtons(true);
+        }
         if (!navPage) {
             searchParams.set('page', 1);
             setButtons(true);
         }
 
+        console.log(getPage, 'get');
+        console.log(navPage, 'nav');
+
         setNextButtons(false);
-    }, [window.location.search])
+    }, [window.location.search, searchParams])
 
     useEffect(() => {
         if (id) {
@@ -54,10 +59,6 @@ const Cars = ({id, accountCompanyId}) => {
 
         if (location) {
             searchParams.set('location', location);
-        }
-
-        if (getPage === 1) {
-            setButtons(true);
         }
 
         if (searchString.includes('from_date') === true) {
