@@ -36,7 +36,8 @@ export default function CarFull() {
         car_features,
         min_rent_time,
         security_deposit,
-        price_day_basis
+        price_day_basis,
+        min_drivers_age
     } = car;
 
     useEffect(() => {
@@ -81,8 +82,7 @@ export default function CarFull() {
 
     return (
         <div className={'car-full-wrap'}>
-            {/*<h2>Rent {brand} {model} in {location.charAt(0).toUpperCase() + location.slice(1)}</h2>*/}
-            <div>{min_rent_time === 1 ? <div>1 day rent available</div> : null} security deposit:{security_deposit}USD
+            <div>{min_rent_time === 1 ? <div className={'green'}>1 day rent available</div> : null} security deposit:{security_deposit}USD
             </div>
             <div className={'car-full'}>
                 <div className={'car-full-top'}>
@@ -119,7 +119,6 @@ export default function CarFull() {
                         <div>
                             <p className={'car-full-data-property-name'}>Location</p>
                             <p>{location}</p>
-                            {/*<p>{location.charAt(0).toUpperCase() + location.slice(1)}</p>*/}
                         </div>
                         <button className={'book-car_button'} onClick={() => {
                             if (book === false) {
@@ -136,6 +135,7 @@ export default function CarFull() {
                         <h3>Description</h3>
                         <br/>
                         <div>{description}</div>
+                        <div className={'error'}>You have to be at least {min_drivers_age} to rent this car</div>
                         <div><Link to={`/companies/${company}`}>More cars from this company</Link></div>
                     </div>
                     <div>

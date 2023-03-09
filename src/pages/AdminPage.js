@@ -23,8 +23,8 @@ export default function AdminPage() {
     }
 
     const deleteCompanyById = (data) => {
-        console.log(data);
         dispatch(companyActions.deleteById({_id: data._idCompany}));
+        reset();
     }
 
     const addCarBrand = (data) => {
