@@ -7,7 +7,6 @@ export default function AccountPage() {
     const access = authService.getAccessToken();
     const decode = jwt_decode(access);
     const first = access.split(' ')[0];
-    console.log(decode._id, '--------------------------------------');
 
     if (first === 'Company') {
         return (

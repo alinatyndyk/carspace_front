@@ -23,7 +23,7 @@ export default function CarForm() {
             filesArr.push(file);
         }
 
-        await dispatch(carActions.postCar({
+        const promise1 = Promise.resolve(dispatch(carActions.postCar({
             car: {
                 ...data,
                 files: filesArr,
@@ -50,10 +50,16 @@ export default function CarForm() {
                     chiller_freezer: data.chiller_freezer
                 }
             }
-        }))
+        })))
+        promise1.then((value) => {
+            if (value.error) {
+                throw new Error(value.payload);
+            } else {
+                console.log(value.payload, '!!!!!!!!!!');
+                navigate(`/cars/${value.payload._id}`);
+            }
+        })
         setImg({filePreview: URL.createObjectURL(data.files[0])});
-        navigate('/account');
-        window.location.reload();
     }
 
     const {brands} = useSelector(state => state.brands);

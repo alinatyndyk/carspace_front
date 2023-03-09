@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {carActions} from "../redux";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {authService} from "../services";
@@ -17,6 +17,7 @@ import 'swiper/css/pagination';
 export default function CarFull() {
     const dispatch = useDispatch();
     const {car_id} = useParams();
+    const navigate = useNavigate();
     const {register, handleSubmit, setValue} = useForm();
 
     useEffect(() => {
@@ -151,6 +152,11 @@ export default function CarFull() {
                         <button onClick={() => {
                             dispatch(carActions.setCarForUpdate(car));
                         }}>set for update
+                        </button>
+                        <button onClick={() => {
+                            dispatch(carActions.deleteById({_id: car_id}));
+                            navigate('/account');
+                        }}>delete car
                         </button>
                     </div>
                     : null}

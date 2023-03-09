@@ -82,7 +82,9 @@ const postCar = createAsyncThunk(
             delete car['bluetooth']
             delete car['usb']
             delete car['chiller_freezer']
+            console.log(car);
             const {data} = await carService.postCar(car);
+            console.log(data);
             return data
         } catch (e) {
             return rejectWithValue(e.response.data);
@@ -118,6 +120,14 @@ const getById = createAsyncThunk(
     'carSlice/getById',
     async ({_id}) => {
         const {data} = await carService.getById(_id);
+        return data
+    }
+)
+
+const deleteById = createAsyncThunk(
+    'carSlice/deleteById',
+    async ({_id}) => {
+        const {data} = await carService.deleteById(_id);
         return data
     }
 )
@@ -180,6 +190,10 @@ const carSlice = createSlice({
                 const [type] = action.type.split('/').splice(-1);
                 if (type === 'rejected') {
                     state.errors = action.payload;
+                    console.log(action.payload, '***');
+                    if (action.payload === 'No cars with given parameters') {
+                        state.cars = [];
+                    }
                 } else {
                     state.errors = null;
                 }
@@ -191,6 +205,7 @@ const {reducer: carReducer, actions: {setCarForUpdate}} = carSlice;
 const carActions = {
     getAll,
     getById,
+    deleteById,
     getByBrand,
     getByLocation,
     postCar,

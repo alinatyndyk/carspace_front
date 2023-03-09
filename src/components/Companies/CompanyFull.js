@@ -17,7 +17,10 @@ const CompanyFull = ({accountCompanyId}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!company_id && !accountCompanyId) { //todo
+        if(accountCompanyId){
+            searchParams.set('company', accountCompanyId);
+        }
+        if (!company_id && !accountCompanyId) {
             navigate('/login');
         } else if (!company_id) {
             dispatch(companyActions.getById({_id: accountCompanyId}));
@@ -76,7 +79,7 @@ const CompanyFull = ({accountCompanyId}) => {
             <div className={'company-full-wrap'}>
                 <div className={'company-full-cars'}>
                     <h3>Company cars</h3>
-                    <CarPage/>
+                    <CarPage accountCompanyId={accountCompanyId}/>
                 </div>
                 <div>
                     {equal === true ? <div><CarForm/></div> : null}

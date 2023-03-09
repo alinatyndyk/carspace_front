@@ -7,6 +7,7 @@ const carService = {
     getAll: () => axiosService.get(urls.cars),
     getFilteredByDate: (data, query) => axiosService.post(`http://localhost:5000/cars/filter/date?${query}`, data),
     getById: (_id) => axiosService.get(`http://localhost:5000/cars/${_id}`),
+    deleteById: (_id) => axiosService.delete(`http://localhost:5000/cars/${_id}`),
     getByDescription: (description, params = {page: 1}) => axiosService.post(`http://localhost:5000/cars/search/description?${params}`, description),
     getByBrand: (brand, page) => axiosService.get(`http://localhost:5000/cars?brand=${brand}&page=${page}`, {
         headers: {

@@ -28,9 +28,6 @@ const Cars = ({id, accountCompanyId}) => {
             setButtons(true);
         }
 
-        console.log(getPage, 'get');
-        console.log(navPage, 'nav');
-
         setNextButtons(false);
     }, [window.location.search, searchParams])
 
@@ -40,15 +37,13 @@ const Cars = ({id, accountCompanyId}) => {
 
         } else if (company_id) {
             searchParams.set('company', company_id);
-            dispatch(carActions.getAllWithParams({params: searchParams}));
-
-        } else if (accountCompanyId) {
-            searchParams.set('company', accountCompanyId);
+            console.log('here');
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
+
         }
 
         setSearchParams(searchParams);
-    }, [id, company_id]);
+    }, [id, company_id, accountCompanyId]);
 
     useEffect(() => {
         setSearchParams(searchParams);
@@ -59,6 +54,13 @@ const Cars = ({id, accountCompanyId}) => {
 
         if (location) {
             searchParams.set('location', location);
+        }
+
+        if (accountCompanyId) {
+            searchParams.set('company', accountCompanyId);
+            setSearchParams(searchParams);
+            dispatch(carActions.getAllWithParams({params: {...searchParams}}));
+            console.log('here');
         }
 
         if (searchString.includes('from_date') === true) {
@@ -77,7 +79,7 @@ const Cars = ({id, accountCompanyId}) => {
                     throw new Error('No more cars with this parameters');
                 }
                 if (value.error) {
-                    throw new Error(value.payload + ' in catch');
+                    throw new Error(value.payload);
                 }
             }).catch((error) => {
                 seterror(error.message);
@@ -92,7 +94,7 @@ const Cars = ({id, accountCompanyId}) => {
             })));
             promise1.then((value) => {
                 if (value.error) {
-                    throw new Error(value.payload + ' in catch');
+                    throw new Error(value.payload);
                 }
             }).catch((error) => {
                 seterror(error.message);
@@ -105,7 +107,7 @@ const Cars = ({id, accountCompanyId}) => {
             })));
             promise1.then((value) => {
                 if (value.error) {
-                    throw new Error(value.payload + 'in catch');
+                    throw new Error(value.payload);
                 }
             }).catch((error) => {
                 seterror(error.message);
@@ -163,7 +165,6 @@ const Cars = ({id, accountCompanyId}) => {
 
     return (
         <div className={'cars'}>
-            <div>{errors}</div>
             <div>{geterror !== null ? geterror : null}</div>
             {cars?.map(car => <CarCard key={car._id} car={car}/>)}
             <button disabled={getButtons} onClick={() => prevPage()}>prev</button>

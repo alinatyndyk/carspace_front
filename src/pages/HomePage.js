@@ -2,7 +2,7 @@ import Modal from "../components/Modal/Modal";
 import LoginForm from "../components/Forms/LoginForm";
 import {useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router";
 import {carActions} from "../redux";
 import {useSearchParams} from "react-router-dom";
@@ -16,15 +16,12 @@ export default function HomePage() {
     const [modalActive, setModalActive] = useState(true);
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const {errors} = useSelector(state => state.cars);
-
     const token = authService.getAccessToken();
 
     useEffect(() => {
         setErrors(null);
     }, [window.location.search])
 
-    console.log('str49');
     const submit = (data) => {
         const str = data?.description.replaceAll(" ", '_').toLowerCase();
 
@@ -68,7 +65,6 @@ export default function HomePage() {
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
                         <input type="text" placeholder={'Car search'} {...register('description')}/>
                         <button>Find</button>
-                        {errors}
                         {getErrors}
                     </form>
                 </div>

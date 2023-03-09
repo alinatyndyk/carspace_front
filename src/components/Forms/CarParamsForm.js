@@ -101,7 +101,6 @@ export default function CarParamsForm() {
                 }
             }
         }).catch((error) => {
-            console.log(error);
             setErrors(error.message)
         })
 
