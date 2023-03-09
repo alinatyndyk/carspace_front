@@ -53,6 +53,7 @@ export default function CarForm() {
         }))
         setImg({filePreview: URL.createObjectURL(data.files[0])});
         navigate('/account');
+        window.location.reload();
     }
 
     const {brands} = useSelector(state => state.brands);
