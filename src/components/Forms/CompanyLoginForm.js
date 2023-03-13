@@ -4,18 +4,21 @@ import {authActions} from "../../redux";
 import {useNavigate} from "react-router";
 import "./Forms.css"
 import {Link} from "react-router-dom";
+import {useState} from "react";
+
 
 export default function CompanyLoginForm() {
     const {register, handleSubmit} = useForm();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {errors} = useSelector(state => state.auth)
+    const [getErrors, setErrors] = useState();
 
     const submit = async (data) => {
         const promise1 = Promise.resolve(dispatch(authActions.loginCompany({company: data})))
 
         promise1.then((value) => {
             if (value.error) {
+                setErrors(value.payload);
                 throw new Error(value.payload);
             } else {
                 navigate('/account');
@@ -31,7 +34,7 @@ export default function CompanyLoginForm() {
             <form className={'login_form'} onSubmit={handleSubmit(submit)}>
                 <input type="text" placeholder={'contact_number'} {...register('contact_number')}/>
                 <input type="text" placeholder={'password'} {...register('password')}/>
-                {errors}
+                <div className={'error'}>{getErrors}</div>
                 <button>Login Company</button>
                 <Link to={'/password-forgot/company'}>Forgot password?</Link>
             </form>

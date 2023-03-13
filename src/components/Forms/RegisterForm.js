@@ -49,7 +49,6 @@ export default function RegisterForm() {
                 <input type="file" name={'testImage'} placeholder={'testImage'} {...register('testImage')}/>
                 <button>Register</button>
                 <Link to={'/login'}>Already have an account?</Link>
-                {errors}
                 <div className={'error'}>{getErrors}</div>
             </form>
 
