@@ -17,6 +17,21 @@ export default function CheckoutComponent({car, carErrors}) {
     const Difference_In_Time = new Date(toDate).getTime() - new Date(fromDate).getTime();
     const Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
+    let today = new Date();
+    let dd = today.getDate() + 1;
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+
     const payNow = async token => {
         try {
             const response = await axiosService.post(`http://localhost:5000/cars/${car_id}/order`, {
@@ -48,7 +63,7 @@ export default function CheckoutComponent({car, carErrors}) {
             <form onSubmit={handleSubmit(submit)}>
                 <div className={'checkout-form-dates'}>
                     <div>
-                        <input type="date" placeholder={'from_date'} {...register('from_date')}/>
+                        <input type="date"  placeholder={'from_date'} min={today} {...register('from_date')}/>
                     </div>
                     <div>
                         <input type="date" placeholder={'to_date'} {...register('to_date')}/>
@@ -61,6 +76,8 @@ export default function CheckoutComponent({car, carErrors}) {
                         const x = new Date(fromDate).getTime();
                         const y = new Date(toDate).getTime();
                         const t = new Date().getTime();
+                        const In_Time = x - t;
+                        const In_Days = In_Time / (1000 * 3600 * 24);
                         if (fromDate === '' || toDate === '') {
                             throw new Error(`Choose rent dates!`);
                         }
@@ -72,6 +89,12 @@ export default function CheckoutComponent({car, carErrors}) {
                         }
                         if (Difference_In_Days < car?.min_rent_time) {
                             throw new Error(`Minimum rent time is ${car?.min_rent_time}!`);
+                        }
+                        if(Difference_In_Days > 120){
+                            throw new Error(`You are not allowed to make orders for more than 4 month`);
+                        }
+                        if(In_Days > 150){
+                            throw new Error(`You are not allowed to preorder for 5 month`);
                         }
                         setErrors(false);
                         setCheckout(true);

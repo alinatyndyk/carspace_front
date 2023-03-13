@@ -72,13 +72,15 @@ export default function CarForm() {
         <div>
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType='multipart/form-data'>
                 <div>Create a car</div>
-                <input onClick={() => {
-                    if (isBrand === false) {
-                        setIsBrand(true)
-                    } else {
-                        setIsBrand(false)
-                    }
-                }} type="text" placeholder={'brand'} {...register('brand')}/>
+                <div> brand
+                    <input onClick={() => {
+                        if (isBrand === false) {
+                            setIsBrand(true)
+                        } else {
+                            setIsBrand(false)
+                        }
+                    }} type="text" placeholder={'brand'} {...register('brand')}/>
+                </div>
                 {isBrand === true ?
                     <div>{brands.map(item => <div
                         onClick={() => {
@@ -86,13 +88,28 @@ export default function CarForm() {
                         }}>{item.brand}</div>)}
                     </div>
                     : null}
-                <input type="text" placeholder={'model'} {...register('model')}/>
-                <input type="number" placeholder={'model_year'} {...register('model_year')}/>
-                <input type="text" placeholder={'description'} {...register('description')}/>
-                <input type="file" multiple='multiple' placeholder={'files'} {...register('files')}/>
-                <input type="text" onClick={() => {
-                    isLocation === false ? setIsLocation(true) : setIsLocation(false)
-                }} placeholder={'location'} {...register('location')}/>
+                <div>
+                    model
+                    <input type="text" placeholder={'model'} {...register('model')}/>
+                </div>
+                <div>
+                    model year
+                    <input type="number" placeholder={'model_year'} min={'1960'} {...register('model_year')}/>
+                </div>
+                <div>
+                    description
+                    <input type="text" placeholder={'description'} {...register('description')}/>
+                </div>
+                <div>
+                    avatar
+                    <input type="file" multiple='multiple' placeholder={'files'} {...register('files')}/>
+                </div>
+                <div>
+                    location
+                    <input type="text" onClick={() => {
+                        isLocation === false ? setIsLocation(true) : setIsLocation(false)
+                    }} placeholder={'location'} {...register('location')}/>
+                </div>
                 {isLocation === true ?
                     <div>
                         <div onClick={() => {
@@ -128,8 +145,14 @@ export default function CarForm() {
                         }}>Wakefield
                         </div>
                     </div> : null}
-                <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}/>
-                <input type="number" placeholder={'min_rent_time'} {...register('min_rent_time')}/>
+                <div>
+                    min driver age
+                    <input type="number" placeholder={'min_drivers_age'} min={'18'} {...register('min_drivers_age')}/>
+                </div>
+                <div>
+                    min rent time
+                    <input type="number" placeholder={'min_rent_time'} min={'1'} {...register('min_rent_time')}/>
+                </div>
                 <span>
                 <input type="checkbox" placeholder={'driver_included'} {...register('driver_included')}/>driver
                 </span>
@@ -146,8 +169,12 @@ export default function CarForm() {
                         </div>
                     </div> : null}
                 </span>
-                <input type="text" placeholder={'engine_capacity'} {...register('engine_capacity')}/>
+                <div>
+                    engine capacity
+                    <input type="text" placeholder={'engine_capacity'} {...register('engine_capacity')}/>
+                </div>
                 <span onMouseOver={() => setIsType(true)} onMouseLeave={() => setIsType(false)}>
+                    car type
                 <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
                     {getIsType === true ?
                         <div>
@@ -198,11 +225,26 @@ export default function CarForm() {
                         </div> : null}
 
                 </span>
-                <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}/>
-                <input type="number" placeholder={'fits_bags'} {...register('fits_bags')}/>
-                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis')}/>
-                <input type="number" placeholder={'security_deposit'} {...register('security_deposit')}/>
-                <input type="number" placeholder={'add_milage_charge'} {...register('add_milage_charge')}/>
+                <div>
+                    num of seats
+                    <input type="number" placeholder={'no_of_seats'} min={'1'} {...register('no_of_seats')}/>
+                </div>
+                <div>
+                    fits bags
+                    <input type="number" placeholder={'fits_bags'} min={'1'} {...register('fits_bags')}/>
+                </div>
+                <div>
+                    price/day
+                    <input type="number" placeholder={'price_day_basis'} max={'1000000'} {...register('price_day_basis')}/>
+                </div>
+                <div>
+                    security deposit
+                    <input type="number" placeholder={'security_deposit'} min={'0'} {...register('security_deposit')}/>
+                </div>
+                <div>
+                    add milage charge
+                    <input type="number" placeholder={'add_milage_charge'} min={'0'} {...register('add_milage_charge')}/>
+                </div>
                 <span>
                 <input type="checkbox" placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
                 </span>

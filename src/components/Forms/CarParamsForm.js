@@ -142,7 +142,7 @@ export default function CarParamsForm() {
                         : null}
                 </span>
                 <span>
-                <input type="number" placeholder={'model_year'} {...register('model_year')}
+                <input type="number" placeholder={'model_year'} min={'1960'} {...register('model_year')}
                        onChange={(e) => {
                            setYear(e.target.value);
                            searchParams.set('model_year', e.target.value)
@@ -163,25 +163,21 @@ export default function CarParamsForm() {
                 <input type="text" placeholder={'location'} {...register('location')}/>↓{isLocation === true ?
                     <div>
                         <div onClick={() => {
-                            // setValue('location', 'london');
                             setLocation('london');
                             searchParams.set('location', 'london');
                         }}>London
                         </div>
                         <div onClick={() => {
-                            // setValue('location', 'birmingham');
                             setLocation('Birmingham');
                             searchParams.set('location', 'birmingham');
                         }}>Birmingham
                         </div>
                         <div onClick={() => {
-                            // setValue('location', 'Manchester');
                             setLocation('Manchester');
                             searchParams.set('location', 'Manchester');
                         }}>Manchester
                         </div>
                         <div onClick={() => {
-                            // setValue('location', 'Leeds');
                             setLocation('Leeds');
                             searchParams.set('location', 'Leeds');
                         }}>Leeds
@@ -218,7 +214,7 @@ export default function CarParamsForm() {
                         </div>
                     </div> : null}
                 </span>
-                <input type="number" placeholder={'min_drivers_age'} {...register('min_drivers_age')}
+                <input type="number" placeholder={'min_drivers_age'} min={'18'} {...register('min_drivers_age')}
                        onChange={(e) => {
                            searchParams.set('min_drivers_age', e.target.value);
                            setAge(e.target.value)
@@ -332,20 +328,20 @@ export default function CarParamsForm() {
                             </div>
                         </div> : null}
                 </span>
-                <input type="number" placeholder={'no_of_seats'} {...register('no_of_seats')}
+                <input type="number" min={'1'} placeholder={'no_of_seats'} {...register('no_of_seats')}
                        onChange={(e) => {
                            searchParams.set('no_of_seats', e.target.value);
                            setSeats(e.target.value);
                        }}/>
                 <span>
-                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis_max')}
+                <input type="number" min={'0'} placeholder={'price_day_basis'} {...register('price_day_basis_max')}
                        onChange={(e) => {
                            searchParams.set('price_day_basis_max', e.target.value);
                            setPriceDayMax(e.target.value);
                        }}/>(Enter your minimum budget in USD...)
                 </span>
                 <span>
-                <input type="number" placeholder={'price_day_basis'} {...register('price_day_basis_min')}
+                <input type="number"  max={'1000000'} placeholder={'price_day_basis'} {...register('price_day_basis_min')}
                        onChange={(e) => {
                            searchParams.set('price_day_basis_min', e.target.value);
                            setPriceDay(e.target.value);
