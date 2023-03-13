@@ -34,6 +34,8 @@ export default function CarParamsForm() {
             searchParams.set(e.target.name, e.target.checked);
         } else if (e.target.checked === false) {
             searchParams.delete(e.target.name, e.target.checked);
+        } else if(!e.target?.value){
+            searchParams.delete(e.target.name);
         }
     }
 
@@ -76,9 +78,9 @@ export default function CarParamsForm() {
 
 
     const submit = async (data) => {
+        console.log(data, '************************');
         searchParams.set('page', 1);
         setSearchParams(data);
-
 
 
         if (brand) {
@@ -121,33 +123,30 @@ export default function CarParamsForm() {
                     reset();
                 }}>Reset search params ( + clear form)
                 </div>
-                <span onClick={() => {
-                    if (isBrand === false) {
-                        setIsBrand(true)
-                    } else {
-                        setIsBrand(false)
-                    }
-                }}>
-                    <input type="text" placeholder={'brand'} {...register('brand')}/>↓
-                    {isBrand && !brand === true ?
-                        <div>{brands.map(item => <div
-                            onClick={() => {
-                                setBrand(item.brand.charAt(0).toUpperCase() + item.brand.slice(1));
-                                searchParams.set('brand', item.brand);
-                            }}>{item.brand}</div>)}
-                            <div onClick={() => {
-                                setBrand(null);
-                            }}>None
-                            </div>
-                        </div>
-                        : null}
-                </span>
+                <div>
+                    <select onClick={(e) => {
+                        if (e.target?.value !== 'None') {
+                            setBrand(e.target?.value);
+                            searchParams.set('brand', e.target?.value);
+                        } else {
+                            setBrand('');
+                            searchParams.delete('brand');
+                        }
+                    }} {...register('brand')}>
+                        {brands.map(item => <option>{item.brand}</option>)}
+                        <option>None</option>
+                    </select>
+                </div>
                 <span>
-                <input type="number" placeholder={'model_year'} min={'1960'} max={`${yearNow}`} {...register('model_year')}
+                    <div>
+                model year
+                <input type="number" placeholder={'model_year'} min={'1960'}
+                       max={`${yearNow}`} {...register('model_year')}
                        onChange={(e) => {
                            setYear(e.target.value);
                            searchParams.set('model_year', e.target.value)
                        }}/>
+                    </div>
                     <div onClick={() => {
                         setValue('model_year', '');
                         setYear(null);
@@ -161,65 +160,73 @@ export default function CarParamsForm() {
                         }
                     }}
                     onMouseLeave={() => setIsLocation(false)}>
-                <input type="text" placeholder={'location'} {...register('location')}/>↓{isLocation === true ?
                     <div>
-                        <div onClick={() => {
-                            setLocation('london');
-                            searchParams.set('location', 'london');
-                        }}>London
-                        </div>
-                        <div onClick={() => {
-                            setLocation('Birmingham');
-                            searchParams.set('location', 'birmingham');
-                        }}>Birmingham
-                        </div>
-                        <div onClick={() => {
-                            setLocation('Manchester');
-                            searchParams.set('location', 'Manchester');
-                        }}>Manchester
-                        </div>
-                        <div onClick={() => {
-                            setLocation('Leeds');
-                            searchParams.set('location', 'Leeds');
-                        }}>Leeds
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Sheffield');
-                            setLocation('Sheffield');
-                            searchParams.set('location', 'Sheffield');
-                        }}>Sheffield
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Liverpool');
-                            setLocation('Liverpool');
-                            searchParams.set('location', 'Liverpool');
-                        }}>Liverpool
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Bristol');
-                            setLocation('Bristol');
-                            searchParams.set('location', 'Bristol');
-                        }}>Bristol
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Wakefield');
-                            setLocation('Wakefield');
-                            searchParams.set('location', 'Wakefield');
-                        }}>Wakefield
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', '');
-                            setLocation(null);
-                            searchParams.delete('location')
-                        }}>No location
-                        </div>
-                    </div> : null}
+                        Location
+                <input type="text" placeholder={'location'} {...register('location')}/>↓
+                    </div>
+                    {isLocation === true ?
+                        <div>
+                            <div onClick={() => {
+                                setLocation('london');
+                                searchParams.set('location', 'london');
+                            }}>London
+                            </div>
+                            <div onClick={() => {
+                                setLocation('Birmingham');
+                                searchParams.set('location', 'birmingham');
+                            }}>Birmingham
+                            </div>
+                            <div onClick={() => {
+                                setLocation('Manchester');
+                                searchParams.set('location', 'Manchester');
+                            }}>Manchester
+                            </div>
+                            <div onClick={() => {
+                                setLocation('Leeds');
+                                searchParams.set('location', 'Leeds');
+                            }}>Leeds
+                            </div>
+                            <div onClick={() => {
+                                setValue('location', 'Sheffield');
+                                setLocation('Sheffield');
+                                searchParams.set('location', 'Sheffield');
+                            }}>Sheffield
+                            </div>
+                            <div onClick={() => {
+                                setValue('location', 'Liverpool');
+                                setLocation('Liverpool');
+                                searchParams.set('location', 'Liverpool');
+                            }}>Liverpool
+                            </div>
+                            <div onClick={() => {
+                                setValue('location', 'Bristol');
+                                setLocation('Bristol');
+                                searchParams.set('location', 'Bristol');
+                            }}>Bristol
+                            </div>
+                            <div onClick={() => {
+                                setValue('location', 'Wakefield');
+                                setLocation('Wakefield');
+                                searchParams.set('location', 'Wakefield');
+                            }}>Wakefield
+                            </div>
+                            <div onClick={() => {
+                                setValue('location', '');
+                                setLocation(null);
+                                searchParams.delete('location')
+                            }}>No location
+                            </div>
+                        </div> : null}
                 </span>
-                <input type="number" placeholder={'min_drivers_age'} min={'18'} max={90} {...register('min_drivers_age')}
-                       onChange={(e) => {
-                           searchParams.set('min_drivers_age', e.target.value);
-                           setAge(e.target.value)
-                       }}/>
+                <div>
+                    min drivers age
+                    <input type="number" placeholder={'min_drivers_age'} min={'18'}
+                           max={90} {...register('min_drivers_age')}
+                           onChange={(e) => {
+                               searchParams.set('min_drivers_age', e.target.value);
+                               setAge(e.target.value)
+                           }}/>
+                </div>
                 <span>
                 <input type="checkbox" name={'driver_included'} defaultChecked={false} onClick={handleParams}
                        placeholder={'driver_included'} {...register('driver_included')}/>driver
@@ -227,7 +234,10 @@ export default function CarParamsForm() {
                 <span
                     onMouseOver={() => setIsTransmission(true)}
                     onMouseLeave={() => setIsTransmission(false)}>
-                <input type="text" placeholder={'transmission'} {...register('transmission')}/>
+                    <div>
+                        transmission
+                        <input type="text" placeholder={'transmission'} {...register('transmission')}/>
+                    </div>
                     {isTransmission === true ? <div>
                         <div onClick={() => {
                             setValue('transmission', 'auto');
@@ -252,7 +262,10 @@ export default function CarParamsForm() {
                 <span
                     onMouseOver={() => setIsType(true)}
                     onMouseLeave={() => setIsType(false)}>
+                    <div>
+                        car type
                 <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
+                    </div>
                     {getIsType === true ?
                         <div>
                             <div onClick={() => {
@@ -329,20 +342,25 @@ export default function CarParamsForm() {
                             </div>
                         </div> : null}
                 </span>
-                <input type="number" min={'1'} max={'60'} placeholder={'no_of_seats'} {...register('no_of_seats')}
-                       onChange={(e) => {
-                           searchParams.set('no_of_seats', e.target.value);
-                           setSeats(e.target.value);
-                       }}/>
+                <div>
+                    no of seast
+                    <input type="number" min={'1'} max={'60'} placeholder={'no_of_seats'} {...register('no_of_seats')}
+                           onChange={(e) => {
+                               searchParams.set('no_of_seats', e.target.value);
+                               setSeats(e.target.value);
+                           }}/>
+                </div>
                 <span>
-                <input type="number" min={'0'} max={getPriceDay} placeholder={'price_day_basis'} {...register('price_day_basis_max')}
+                <input type="number" min={'0'} max={getPriceDay}
+                       placeholder={'price_day_basis'} {...register('price_day_basis_max')}
                        onChange={(e) => {
                            searchParams.set('price_day_basis_max', e.target.value);
                            setPriceDayMax(e.target.value);
                        }}/>(Enter your minimum budget in USD...)
                 </span>
                 <span>
-                <input type="number" min={getPriceDayMax} max={'1000000'} placeholder={'price_day_basis'} {...register('price_day_basis_min')}
+                <input type="number" min={getPriceDayMax} max={'1000000'}
+                       placeholder={'price_day_basis'} {...register('price_day_basis_min')}
                        onChange={(e) => {
                            searchParams.set('price_day_basis_min', e.target.value);
                            setPriceDay(e.target.value);

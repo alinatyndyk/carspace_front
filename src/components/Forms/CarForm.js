@@ -16,6 +16,7 @@ export default function CarForm() {
     });
 
     const submit = async (data) => {
+        console.log(data);
         const fileList = data.files;
         let filesArr = [];
         for (let index = 0; index < fileList.length; index++) {
@@ -72,29 +73,23 @@ export default function CarForm() {
         <div>
             <form className={'car-params-form'} onSubmit={handleSubmit(submit)} encType='multipart/form-data'>
                 <div>Create a car</div>
-                <div> brand
-                    <input onClick={() => {
-                        if (isBrand === false) {
-                            setIsBrand(true)
-                        } else {
-                            setIsBrand(false)
-                        }
-                    }} type="text" placeholder={'brand'} {...register('brand')}/>
+                <div>
+                    brand
+                    <select onClick={(e) => {
+                        setValue('brand', e.target?.value);
+                    }} {...register('brand')}>
+                        {brands.map(item => <option>{item.brand}</option>)}
+                        <option>None</option>
+                    </select>
                 </div>
-                {isBrand === true ?
-                    <div>{brands.map(item => <div
-                        onClick={() => {
-                            setValue('brand', item.brand);
-                        }}>{item.brand}</div>)}
-                    </div>
-                    : null}
                 <div>
                     model
                     <input type="text" placeholder={'model'} {...register('model')}/>
                 </div>
                 <div>
                     model year
-                    <input type="number" placeholder={'model_year'} min={'1960'} max={`${new Date().getFullYear()}`} {...register('model_year')}/>
+                    <input type="number" placeholder={'model_year'} min={'1960'}
+                           max={`${new Date().getFullYear()}`} {...register('model_year')}/>
                 </div>
                 <div>
                     description
@@ -147,11 +142,13 @@ export default function CarForm() {
                     </div> : null}
                 <div>
                     min driver age
-                    <input type="number" placeholder={'min_drivers_age'} min={'18'} max={90} {...register('min_drivers_age')}/>
+                    <input type="number" placeholder={'min_drivers_age'} min={'18'}
+                           max={90} {...register('min_drivers_age')}/>
                 </div>
                 <div>
                     min rent time
-                    <input type="number" placeholder={'min_rent_time'} min={'1'} max={'60'} {...register('min_rent_time')}/>
+                    <input type="number" placeholder={'min_rent_time'} min={'1'}
+                           max={'60'} {...register('min_rent_time')}/>
                 </div>
                 <span>
                 <input type="checkbox" placeholder={'driver_included'} {...register('driver_included')}/>driver
@@ -171,7 +168,8 @@ export default function CarForm() {
                 </span>
                 <div>
                     engine capacity
-                    <input type="number" min={'1'} max={'100'} placeholder={'engine_capacity'} {...register('engine_capacity')}/>
+                    <input type="number" min={'1'} max={'100'}
+                           placeholder={'engine_capacity'} {...register('engine_capacity')}/>
                 </div>
                 <span onMouseOver={() => setIsType(true)} onMouseLeave={() => setIsType(false)}>
                     car type
@@ -235,15 +233,18 @@ export default function CarForm() {
                 </div>
                 <div>
                     price/day
-                    <input type="number" placeholder={'price_day_basis'} min={0} max={'1000000'} {...register('price_day_basis')}/>
+                    <input type="number" placeholder={'price_day_basis'} min={0}
+                           max={'1000000'} {...register('price_day_basis')}/>
                 </div>
                 <div>
                     security deposit
-                    <input type="number" placeholder={'security_deposit'} min={'0'} max={'1000000'} {...register('security_deposit')}/>
+                    <input type="number" placeholder={'security_deposit'} min={'0'}
+                           max={'1000000'} {...register('security_deposit')}/>
                 </div>
                 <div>
                     add milage charge
-                    <input type="number" placeholder={'add_milage_charge'} min={'0'} max={'100000'} {...register('add_milage_charge')}/>
+                    <input type="number" placeholder={'add_milage_charge'} min={'0'}
+                           max={'100000'} {...register('add_milage_charge')}/>
                 </div>
                 <span>
                 <input type="checkbox" placeholder={'digital_hud'} {...register('digital_hud')}/>digital hud
