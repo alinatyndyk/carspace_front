@@ -64,10 +64,6 @@ export default function CarForm() {
     }
 
     const {brands} = useSelector(state => state.brands);
-    const [isBrand, setIsBrand] = useState(false);
-    const [isLocation, setIsLocation] = useState(false);
-    const [getTransmission, setTransmission] = useState(false);
-    const [getIsType, setIsType] = useState(false);
 
     return (
         <div>
@@ -101,45 +97,19 @@ export default function CarForm() {
                 </div>
                 <div>
                     location
-                    <input type="text" onClick={() => {
-                        isLocation === false ? setIsLocation(true) : setIsLocation(false)
-                    }} placeholder={'location'} {...register('location')}/>
+                    <select defaultValue={''} {...register('location')} onClick={(e) => {
+                        setValue('location', e.target?.value);
+                    }}>
+                        <option>London</option>
+                        <option>Birmingham</option>
+                        <option>Manchester</option>
+                        <option>Leeds</option>
+                        <option>Sheffield</option>
+                        <option>Liverpool</option>
+                        <option>Bristol</option>
+                        <option>Wakefield</option>
+                    </select>
                 </div>
-                {isLocation === true ?
-                    <div>
-                        <div onClick={() => {
-                            setValue('location', 'London');
-                        }}>London
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Birmingham');
-                        }}>Birmingham
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Manchester');
-                        }}>Manchester
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Leeds');
-                        }}>Leeds
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Sheffield');
-                        }}>Sheffield
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Liverpool');
-                        }}>Liverpool
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Bristol');
-                        }}>Bristol
-                        </div>
-                        <div onClick={() => {
-                            setValue('location', 'Wakefield');
-                        }}>Wakefield
-                        </div>
-                    </div> : null}
                 <div>
                     min driver age
                     <input type="number" placeholder={'min_drivers_age'} min={'18'}
@@ -153,75 +123,39 @@ export default function CarForm() {
                 <span>
                 <input type="checkbox" placeholder={'driver_included'} {...register('driver_included')}/>driver
                 </span>
-                <span onMouseOver={() => setTransmission(true)} onMouseLeave={() => setTransmission(false)}>
-                <input type="text" placeholder={'transmission'} {...register('transmission')}/>
-                    {getTransmission === true ? <div>
-                        <div onClick={() => {
-                            setValue('transmission', 'auto');
-                        }}>Auto
-                        </div>
-                        <div onClick={() => {
-                            setValue('transmission', 'manual');
-                        }}>Manual
-                        </div>
-                    </div> : null}
+                <span>
+                transmission
+                <select {...register('transmission')}
+                        onClick={(e) => {
+                            setValue('transmission', e.target?.value);
+                        }}>
+                    <option>Auto</option>
+                    <option>Manual</option>
+                </select>
                 </span>
                 <div>
                     engine capacity
                     <input type="number" min={'1'} max={'100'}
                            placeholder={'engine_capacity'} {...register('engine_capacity')}/>
                 </div>
-                <span onMouseOver={() => setIsType(true)} onMouseLeave={() => setIsType(false)}>
+                <span>
                     car type
-                <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
-                    {getIsType === true ?
-                        <div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Luxury');
-                            }}>Luxury
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Economy');
-                            }}>Economy
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'SUV');
-                            }}>SUV
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Sedan');
-                            }}>Sedan
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Sports');
-                            }}>Sports
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Crossover');
-                            }}>Crossover
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Convertible');
-                            }}>Convertible
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Electric');
-                            }}>Electric
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Truck');
-                            }}>Truck
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Minivan');
-                            }}>Minivan
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Coupe');
-                            }}>Coupe
-                            </div>
-                        </div> : null}
-
+                    <select {...register('vehicle_type')}
+                            onClick={(e) => {
+                                setValue('vehicle_type', e.target?.value);
+                            }}>
+                            <option>Luxury</option>
+                            <option>Economy</option>
+                            <option>SUV</option>
+                            <option>Sedan</option>
+                            <option>Sports</option>
+                            <option>Crossover</option>
+                            <option>Convertible</option>
+                            <option>Electric</option>
+                            <option>Truck</option>
+                            <option>Minivan</option>
+                            <option>Coupe</option>
+                        </select>
                 </span>
                 <div>
                     num of seats

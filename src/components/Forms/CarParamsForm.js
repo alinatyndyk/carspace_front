@@ -34,7 +34,7 @@ export default function CarParamsForm() {
             searchParams.set(e.target.name, e.target.checked);
         } else if (e.target.checked === false) {
             searchParams.delete(e.target.name, e.target.checked);
-        } else if(!e.target?.value){
+        } else if (!e.target?.value) {
             searchParams.delete(e.target.name);
         }
     }
@@ -43,11 +43,8 @@ export default function CarParamsForm() {
     const [getLocation, setLocation] = useState(null);
     const [getYear, setYear] = useState(null);
     const [getAge, setAge] = useState(null);
-    const [isLocation, setIsLocation] = useState(false);
-    const [isTransmission, setIsTransmission] = useState(false);
     const [getTransmission, setTransmission] = useState(false);
     const [getType, setType] = useState(false);
-    const [getIsType, setIsType] = useState(false);
     const [getSeats, setSeats] = useState(false);
     const [getPriceDay, setPriceDay] = useState(false);
     const [getPriceDayMax, setPriceDayMax] = useState(false);
@@ -78,9 +75,9 @@ export default function CarParamsForm() {
 
 
     const submit = async (data) => {
-        console.log(data, '************************');
-        searchParams.set('page', 1);
-        setSearchParams(data);
+        console.log(data);
+        searchParams.set('page', 1)
+        setSearchParams({...data, ...searchParams});
 
 
         if (brand) {
@@ -112,7 +109,6 @@ export default function CarParamsForm() {
             reset();
         }
     }
-    const [isBrand, setIsBrand] = useState(false);
 
     return (
         <div>
@@ -124,7 +120,7 @@ export default function CarParamsForm() {
                 }}>Reset search params ( + clear form)
                 </div>
                 <div>
-                    <select onClick={(e) => {
+                    <select defaultValue={''} onClick={(e) => {
                         if (e.target?.value !== 'None') {
                             setBrand(e.target?.value);
                             searchParams.set('brand', e.target?.value);
@@ -133,8 +129,8 @@ export default function CarParamsForm() {
                             searchParams.delete('brand');
                         }
                     }} {...register('brand')}>
-                        {brands.map(item => <option>{item.brand}</option>)}
                         <option>None</option>
+                        {brands.map(item => <option>{item.brand}</option>)}
                     </select>
                 </div>
                 <span>
@@ -153,70 +149,30 @@ export default function CarParamsForm() {
                         searchParams.delete('model_year');
                     }}>Reset year</div>
                 </span>
-                <span
-                    onMouseOver={() => {
-                        if (!location) {
-                            setIsLocation(true);
-                        }
-                    }}
-                    onMouseLeave={() => setIsLocation(false)}>
+                <span>
                     <div>
                         Location
-                <input type="text" placeholder={'location'} {...register('location')}/>↓
+                        <select defaultValue={''} {...register('location')} onClick={(e) => {
+                            if (e.target?.value !== 'None') {
+                                setLocation(e.target?.value);
+                                searchParams.set('location', e.target?.value);
+                            } else {
+                                setLocation('');
+                                setValue('location', '')
+                                searchParams.delete('location');
+                            }
+                        }}>
+                            <option>None</option>
+                            <option>London</option>
+                            <option>Birmingham</option>
+                            <option>Manchester</option>
+                            <option>Leeds</option>
+                            <option>Sheffield</option>
+                            <option>Liverpool</option>
+                            <option>Bristol</option>
+                            <option>Wakefield</option>
+                        </select>
                     </div>
-                    {isLocation === true ?
-                        <div>
-                            <div onClick={() => {
-                                setLocation('london');
-                                searchParams.set('location', 'london');
-                            }}>London
-                            </div>
-                            <div onClick={() => {
-                                setLocation('Birmingham');
-                                searchParams.set('location', 'birmingham');
-                            }}>Birmingham
-                            </div>
-                            <div onClick={() => {
-                                setLocation('Manchester');
-                                searchParams.set('location', 'Manchester');
-                            }}>Manchester
-                            </div>
-                            <div onClick={() => {
-                                setLocation('Leeds');
-                                searchParams.set('location', 'Leeds');
-                            }}>Leeds
-                            </div>
-                            <div onClick={() => {
-                                setValue('location', 'Sheffield');
-                                setLocation('Sheffield');
-                                searchParams.set('location', 'Sheffield');
-                            }}>Sheffield
-                            </div>
-                            <div onClick={() => {
-                                setValue('location', 'Liverpool');
-                                setLocation('Liverpool');
-                                searchParams.set('location', 'Liverpool');
-                            }}>Liverpool
-                            </div>
-                            <div onClick={() => {
-                                setValue('location', 'Bristol');
-                                setLocation('Bristol');
-                                searchParams.set('location', 'Bristol');
-                            }}>Bristol
-                            </div>
-                            <div onClick={() => {
-                                setValue('location', 'Wakefield');
-                                setLocation('Wakefield');
-                                searchParams.set('location', 'Wakefield');
-                            }}>Wakefield
-                            </div>
-                            <div onClick={() => {
-                                setValue('location', '');
-                                setLocation(null);
-                                searchParams.delete('location')
-                            }}>No location
-                            </div>
-                        </div> : null}
                 </span>
                 <div>
                     min drivers age
@@ -231,119 +187,57 @@ export default function CarParamsForm() {
                 <input type="checkbox" name={'driver_included'} defaultChecked={false} onClick={handleParams}
                        placeholder={'driver_included'} {...register('driver_included')}/>driver
                 </span>
-                <span
-                    onMouseOver={() => setIsTransmission(true)}
-                    onMouseLeave={() => setIsTransmission(false)}>
+                <span>
                     <div>
                         transmission
-                        <input type="text" placeholder={'transmission'} {...register('transmission')}/>
+                        <select {...register('transmission')}
+                                onClick={(e) => {
+                                    if (e.target?.value !== 'None') {
+                                        setValue('transmission', e.target?.value);
+                                        setTransmission(e.target?.value);
+                                        searchParams.set('transmission', e.target?.value);
+                                    } else {
+                                        setTransmission('');
+                                        searchParams.delete('transmission');
+                                    }
+                                }}>
+                            <option>None</option>
+                            <option>Auto</option>
+                            <option>Manual</option>
+                        </select>
                     </div>
-                    {isTransmission === true ? <div>
-                        <div onClick={() => {
-                            setValue('transmission', 'auto');
-                            setTransmission('auto');
-                            searchParams.set('transmission', 'auto');
-                        }}>Auto
-                        </div>
-                        <div onClick={() => {
-                            setValue('transmission', 'manual');
-                            setTransmission('manual');
-                            searchParams.set('transmission', 'manual');
-                        }}>Manual
-                        </div>
-                        <div onClick={() => {
-                            setValue('transmission', '');
-                            setTransmission('');
-                            searchParams.delete('transmission');
-                        }}>Doesnt matter
-                        </div>
-                    </div> : null}
                 </span>
-                <span
-                    onMouseOver={() => setIsType(true)}
-                    onMouseLeave={() => setIsType(false)}>
+                <span>
                     <div>
                         car type
-                <input type="text" placeholder={'vehicle_type'} {...register('vehicle_type')}/>
+                        <select {...register('vehicle_type')}
+                                onClick={(e) => {
+                                    if (e.target?.value !== 'None') {
+                                        setValue('vehicle_type', e.target?.value);
+                                        setType(e.target?.value);
+                                        searchParams.set('vehicle_type', e.target.value);
+                                    } else {
+                                        setType('');
+                                        searchParams.delete('vehicle_type');
+                                    }
+                                }}>
+                            <option>None</option>
+                            <option>Luxury</option>
+                            <option>Economy</option>
+                            <option>SUV</option>
+                            <option>Sedan</option>
+                            <option>Sports</option>
+                            <option>Crossover</option>
+                            <option>Convertible</option>
+                            <option>Electric</option>
+                            <option>Truck</option>
+                            <option>Minivan</option>
+                            <option>Coupe</option>
+                        </select>
                     </div>
-                    {getIsType === true ?
-                        <div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Luxury');
-                                setType('luxury');
-                                searchParams.set('vehicle_type', 'luxury')
-                            }}>Luxury
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Economy');
-                                setType('economy');
-                                searchParams.set('vehicle_type', 'economy')
-                            }}>Economy
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'SUV');
-                                setType('suv');
-                                searchParams.set('vehicle_type', 'suv')
-                            }}>SUV
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Sedan');
-                                setType('sedan');
-                                searchParams.set('vehicle_type', 'sedan')
-                            }}>Sedan
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Sports');
-                                setType('sports');
-                                searchParams.set('vehicle_type', 'sports')
-                            }}>Sports
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Crossover');
-                                setType('crossover');
-                                searchParams.set('vehicle_type', 'crossover');
-                            }}>Crossover
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Convertible');
-                                setType('convertible');
-                                searchParams.set('vehicle_type', 'convertible');
-                            }}>Convertible
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Electric');
-                                setType('electric');
-                                searchParams.set('vehicle_type', 'electric');
-                            }}>Electric
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Truck');
-                                setType('truck');
-                                searchParams.set('vehicle_type', 'truck');
-                            }}>Truck
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Minivan');
-                                setType('minivan');
-                                searchParams.set('vehicle_type', 'minivan');
-                            }}>Minivan
-                            </div>
-                            <div onClick={() => {
-                                setValue('vehicle_type', 'Coupe');
-                                setType('coupe');
-                                searchParams.set('vehicle_type', 'coupe');
-                            }}>Coupe
-                            </div>
-                            <div onClick={() => {
-                                setType('');
-                                searchParams.delete('vehicle_type');
-                                setValue('vehicle_type', '');
-                            }}>No type
-                            </div>
-                        </div> : null}
                 </span>
                 <div>
-                    no of seast
+                    no of seats
                     <input type="number" min={'1'} max={'60'} placeholder={'no_of_seats'} {...register('no_of_seats')}
                            onChange={(e) => {
                                searchParams.set('no_of_seats', e.target.value);

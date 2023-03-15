@@ -6,11 +6,13 @@ import {useParams} from "react-router";
 import {useSearchParams} from "react-router-dom";
 
 const Cars = ({id, accountCompanyId}) => {
-    const {cars, errors} = useSelector(state => state.cars);
+    const {cars} = useSelector(state => state.cars);
     const dispatch = useDispatch();
     const {brand, location, company_id} = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [getPage, setPage] = useState(1);
+    const [getPage, setPage] = useState(searchParams.get('page'));
+    const {errors} = useSelector(state => state.cars);
+
 
     const [geterror, seterror] = useState(null);
     const [getButtons, setButtons] = useState(true);
@@ -18,8 +20,8 @@ const Cars = ({id, accountCompanyId}) => {
     const searchString = window.location.search;
 
     useEffect(() => {
-        seterror(null);
         const navPage = searchParams.get('page');
+        console.log(navPage, 'CARJS NAVPAGE');
         if (navPage === '1') {
             setButtons(true);
         }
@@ -29,7 +31,7 @@ const Cars = ({id, accountCompanyId}) => {
         }
 
         setNextButtons(false);
-    }, [window.location.search, searchParams])
+    }, [window.location.search, searchParams]);
 
     useEffect(() => {
         if (id) {
@@ -37,15 +39,14 @@ const Cars = ({id, accountCompanyId}) => {
 
         } else if (company_id) {
             searchParams.set('company', company_id);
-            console.log('here');
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
-
         }
 
         setSearchParams(searchParams);
     }, [id, company_id, accountCompanyId]);
 
     useEffect(() => {
+        console.log(getPage, 'CARSJS GET APGE');
         setSearchParams(searchParams);
 
         if (brand) {
@@ -60,7 +61,6 @@ const Cars = ({id, accountCompanyId}) => {
             searchParams.set('company', accountCompanyId);
             setSearchParams(searchParams);
             dispatch(carActions.getAllWithParams({params: {...searchParams}}));
-            console.log('here');
         }
 
         if (searchString.includes('from_date') === true) {
@@ -71,7 +71,6 @@ const Cars = ({id, accountCompanyId}) => {
                     from_date: searchParams.get('from_date'),
                     to_date: searchParams.get('to_date'),
                     description: searchParams.get('description'),
-                    kiki: 'koko'
                 }
             })))
             promise1.then((value) => {
@@ -111,7 +110,9 @@ const Cars = ({id, accountCompanyId}) => {
                 }
             }).catch((error) => {
                 seterror(error.message);
-                if (getPage !== 1) {
+                const navPage = searchParams.get('page');
+                if (
+                    navPage !== 1) {
                     setNextButtons(true);
                 }
             });
@@ -134,9 +135,14 @@ const Cars = ({id, accountCompanyId}) => {
                 if (value.error) {
                     throw new Error(value.payload);
                 }
+                console.log("hello here");
             }).catch((error) => {
+                for (const par of searchParams ){
+                    console.log(par);
+                }
                 seterror(error.message);
                 setNextButtons(true);
+                console.log("hello here err");
             });
         }
         setSearchParams(searchParams);
@@ -150,22 +156,26 @@ const Cars = ({id, accountCompanyId}) => {
     const prevPage = () => {
         let page = searchParams.get('page');
         page = +page - 1
-        searchParams.set('page', page)
+        searchParams.set('page', page);
         setPage(page);
         setNextButtons(false);
+        if(page <= 1){
+            setButtons(true);
+        }
     }
 
     const nextPage = () => {
+        setSearchParams(searchParams);
         let page = searchParams.get('page');
-        setButtons(false);
         page = +page + 1
         searchParams.set('page', page);
         setPage(page);
+        setButtons(false);
     }
 
     return (
         <div className={'cars'}>
-            <div>{geterror !== null ? geterror : null}</div>
+            {errors}
             {cars?.map(car => <CarCard key={car._id} car={car}/>)}
             <button disabled={getButtons} onClick={() => prevPage()}>prev</button>
             <button disabled={getNextButtons} onClick={() => nextPage()}>next</button>
