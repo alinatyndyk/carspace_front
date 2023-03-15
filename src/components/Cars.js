@@ -21,7 +21,6 @@ const Cars = ({id, accountCompanyId}) => {
 
     useEffect(() => {
         const navPage = searchParams.get('page');
-        console.log(navPage, 'CARJS NAVPAGE');
         if (navPage === '1') {
             setButtons(true);
         }
@@ -46,7 +45,6 @@ const Cars = ({id, accountCompanyId}) => {
     }, [id, company_id, accountCompanyId]);
 
     useEffect(() => {
-        console.log(getPage, 'CARSJS GET APGE');
         setSearchParams(searchParams);
 
         if (brand) {
@@ -135,14 +133,9 @@ const Cars = ({id, accountCompanyId}) => {
                 if (value.error) {
                     throw new Error(value.payload);
                 }
-                console.log("hello here");
             }).catch((error) => {
-                for (const par of searchParams ){
-                    console.log(par);
-                }
                 seterror(error.message);
                 setNextButtons(true);
-                console.log("hello here err");
             });
         }
         setSearchParams(searchParams);
