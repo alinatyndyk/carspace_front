@@ -9,15 +9,12 @@ const Users = () => {
     const {users, user} = useSelector(state => state.users);
     const dispatch = useDispatch();
     const {user_id} = useParams();
-    console.log(users, '*******************');
 
     useEffect(() => {
         if (user_id) {
-            const {errors} = dispatch(userActions.getById({_id: user_id}))
-            console.log(errors);
+            dispatch(userActions.getById({_id: user_id}))
         } else {
-            const res = dispatch(userActions.getAll())
-            console.log(res);
+            dispatch(userActions.getAll())
         }
     }, [])
 
@@ -27,12 +24,12 @@ const Users = () => {
         )
     }
 
-        return (
-            <div>
-                Users Components like page
-                {users?.map(user => <UserCard key={user._id} user={user}/>)}
-            </div>
-        );
+    return (
+        <div>
+            Users Components like page
+            {users?.map(user => <UserCard key={user._id} user={user}/>)}
+        </div>
+    );
 
 
 };

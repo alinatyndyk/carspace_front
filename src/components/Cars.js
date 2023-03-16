@@ -75,7 +75,7 @@ const Cars = ({id, accountCompanyId}) => {
                 if (!value.payload[0]) {
                     throw new Error('No more cars with this parameters');
                 }
-                if (value.error) {
+                if (value?.error) {
                     throw new Error(value.payload);
                 }
             }).catch((error) => {

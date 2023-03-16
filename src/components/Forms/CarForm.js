@@ -53,7 +53,7 @@ export default function CarForm() {
             }
         })))
         promise1.then((value) => {
-            if (value.error) {
+            if (value?.error) {
                 throw new Error(value.payload);
             } else {
                 console.log(value.payload, '!!!!!!!!!!');

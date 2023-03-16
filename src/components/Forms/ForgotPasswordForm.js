@@ -15,7 +15,7 @@ export default function ForgotPasswordForm() {
         const promise1 = Promise.resolve(dispatch(authActions.forgotPasswordUser({info: data})))
 
         promise1.then((value) => {
-            if (value.error) {
+            if (value?.error) {
                 setResponse(null);
                 throw new Error(value.payload);
             }else {
